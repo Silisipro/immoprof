@@ -1,0 +1,5 @@
+# pour configurer la traduction de la label pour les formulaires.
+#aller dans config\packages\translation.yaml pour changer en fr le en.
+#sans oublier de mettre dans $resolver 'translation_domaine'=>'forms' dans la classtype.
+city: Ville
+
