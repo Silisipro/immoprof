@@ -9,14 +9,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BienController extends AbstractController
 {
-    #[Route('/bien', name: 'app_bien')]
-    public function index(): Response
-    {
-        return $this->render('bien/index.html.twig', [
-            'controller_name' => 'BienController',
-        ]);
-    }
-     
     #[Route('/bien/{id}', name: 'bien.show')]
     public function show(Bien  $bien): Response
     {
