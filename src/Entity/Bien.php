@@ -42,7 +42,7 @@ class Bien
 
     #[ORM\Column]
     #[Assert\Positive()]
-    #[Assert\LessThan(100)]
+    #[Assert\LessThan(4000)]
     private ?int $surface;
 
     #[ORM\Column]
@@ -61,8 +61,6 @@ class Bien
     private ?int $floor = null;
 
     #[ORM\Column]
-    #[Assert\Positive()]
-    #[Assert\LessThan(5)]
     private ?int $heat = null;
 
     #[ORM\Column(length: 255)]
