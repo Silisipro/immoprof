@@ -9,8 +9,7 @@
   <meta content="" name="keywords">
 
       {% block stylesheets  %}
-        {% include 'admin/partiel/stulo.html.twig' %}
-        
+        {% include 'admin/partiel/stulo.html.twig' %}        
       {% endblock %}
   
 </head>
@@ -65,7 +64,7 @@
                 <table class="table table-hover m-4">
                       <thead>
                           <tr>
-                              <th scope="col"><h6>Nom</h6></th>
+                              <th scope="col"><h6>Titre</h6></th>
                               <th scope="col"><h6>Prix</h6></th>
                               <th scope="col"><h6>Edition</h6></th>
                               <th scope="col"><h6>Supression</h6></th>
@@ -94,7 +93,9 @@
                           {% endfor %}
                       </tbody>
                  </table>            
-
+                <div class="pagination page-item disabled">
+                 {{knp_pagination_render(biens) }}
+                </div>
             </div>
           </div>
 

@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 
 
@@ -22,10 +24,14 @@ class AdminController extends AbstractController
   */
 
     #[Route('/admin/bien', name: 'app.admin.bien', methods: ['GET', 'POST'])]
-    public function index(BienRepository $bienRepository): Response
+    public function index(BienRepository $bienRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $biens = $paginator->paginate(
+         $bienRepository->findAll(),
+            $request->query->getInt('page', 1),
+            10
+        );
 
-        $biens=$bienRepository->findAll();
         return $this->render('admin/index.html.twig', [
             'biens' => $biens,
         ]);
