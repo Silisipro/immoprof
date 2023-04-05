@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Bien;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
@@ -20,12 +21,26 @@ class AppFixtures extends Fixture
     {
         $this->faker = Factory::create('fr_FR');
     }
-
-
-
     public function load(ObjectManager $manager): void
+
+
     {
-        for ($i=0; $i <25; $i++) { 
+       
+        for ($i=0; $i < 5 ; $i++) {            
+            $user = new User();
+            $user ->setFullName($this->faker->word())
+                  ->setLieu(mt_rand(0, 1) === 1 ? $this->faker->firstName(): null)
+                  ->setEmail($this->faker->email())
+                  ->setTelephone(mt_rand(0,9))
+                  ->setRoles(['ROLE_USER'])
+                  ->setPlainPassword('password');
+                  
+             
+            $manager->persist($user);    
+        }
+
+
+        for ($i=0; $i <15; $i++) { 
             $bien = new Bien();
             $bien ->setName($this->faker->word(20))
                   ->setCity($this->faker->word(20))
@@ -44,6 +59,7 @@ class AppFixtures extends Fixture
         }
 
         $manager->flush();
+
 
     }
 }
