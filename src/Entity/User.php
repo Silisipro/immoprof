@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -63,10 +65,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $updateAt;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Bien::class)]
+    private Collection $biens;
+
     public function __construct()
     {
          $this -> createdAt = new \DateTimeImmutable;
          $this -> updateAt = new \DateTimeImmutable;
+         $this->biens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -219,6 +225,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdateAt(\DateTimeImmutable $updateAt): self
     {
         $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Bien>
+     */
+    public function getBiens(): Collection
+    {
+        return $this->biens;
+    }
+
+    public function addBien(Bien $bien): self
+    {
+        if (!$this->biens->contains($bien)) {
+            $this->biens->add($bien);
+            $bien->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBien(Bien $bien): self
+    {
+        if ($this->biens->removeElement($bien)) {
+            // set the owning side to null (unless already changed)
+            if ($bien->getUser() === $this) {
+                $bien->setUser(null);
+            }
+        }
 
         return $this;
     }

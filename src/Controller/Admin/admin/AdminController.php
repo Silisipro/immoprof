@@ -9,10 +9,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
-
-
 
 
 class AdminController extends AbstractController
@@ -22,7 +22,7 @@ class AdminController extends AbstractController
   * @param BienRepository $bienRepository
   * @return Response
   */
-
+    #[IsGranted('ROLE_USER')]
     #[Route('/admin/bien', name: 'app.admin.bien', methods: ['GET', 'POST'])]
     public function index(BienRepository $bienRepository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -32,7 +32,7 @@ class AdminController extends AbstractController
             10
         );
 
-        return $this->render('admin/index.html.twig', [
+        return $this->render('admin/bien/index.html.twig', [
             'biens' => $biens,
         ]);
     }
@@ -43,6 +43,7 @@ class AdminController extends AbstractController
     * @param Request $request
     * @return Response
     */
+    #[IsGranted('ROLE_USER')]
     #[Route('/admin/creation/bien', name: 'app.bien.new', methods: ['GET', 'POST'])]
    public function new (Request $request, EntityManagerInterface $manager ): Response
    {
@@ -64,12 +65,12 @@ class AdminController extends AbstractController
                    return $this->redirectToRoute('app.admin.bien');   
                };
 
-       return $this->render('admin/new.html.twig', [
+       return $this->render('admin/bien/new.html.twig', [
            'form'=>$form->createView()
        ]);
    }
 
-
+    #[Security("is_granted('ROLE_USER') and user===bien.getUser()")]
     #[Route('/admin/edit/bien/{id}', name: 'app.admin.edit', methods: ['GET', 'POST'])]
     public function edit(Bien $bien, Request $request, EntityManagerInterface $manager): Response
     {
@@ -91,7 +92,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app.admin.bien');
          };
 
-        return $this->render('admin/edit.html.twig', [
+        return $this->render('admin/bien/edit.html.twig', [
             'form'=>$form->createView()
             
         ]);
@@ -104,6 +105,7 @@ class AdminController extends AbstractController
     * @param Request $request
     * @return Response
     */
+    #[IsGranted('ROLE_USER')]
     #[Route('/admin/supression/bien/{id}', name: 'app.admin.delete', methods:['GET'])]
     public function delete(Bien  $bien, Request $request, EntityManagerInterface $manager ) : Response
     { 
@@ -119,9 +121,14 @@ class AdminController extends AbstractController
         );
 
 
-        return $this->redirectToRoute('admin/index.html.twig');   
+        return $this->redirectToRoute('admin/bien/index.html.twig');   
     }  
     
 
 
 }
+
+
+
+
+

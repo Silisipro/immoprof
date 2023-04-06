@@ -72,6 +72,10 @@ class Bien
     #[ORM\Column]
     private ?bool $sold = false;
 
+    #[ORM\ManyToOne(inversedBy: 'biens')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
 
     public function __construct()
     {
@@ -237,6 +241,18 @@ class Bien
     public function setSold(bool $sold): self
     {
         $this->sold = $sold;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -7,6 +7,7 @@ use App\Form\InscriptionType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -16,7 +17,7 @@ class SecurityController extends AbstractController
     #[Route('/connexion', name: 'app_security_login', methods:['GET', 'POST'])]
     public function logiin( AuthenticationUtils $authenticationUtils): Response
     {
-        return $this->render('admin/security/login.html.twig', [
+        return $this->render('pages/security/login.html.twig', [
             'Last_username' => $authenticationUtils->getLastUsername(),
              'error' =>$authenticationUtils->getLastAuthenticationError()
         ]);
@@ -56,7 +57,7 @@ class SecurityController extends AbstractController
                     );
                     return $this->redirectToRoute('app_security_login');   
                 };
-        return $this->render('admin/security/inscription.html.twig',[
+        return $this->render('pages/security/inscription.html.twig',[
             'form'=>$form->createView()
             
         ]);

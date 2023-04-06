@@ -7,6 +7,7 @@ use App\Form\UserType;
 use App\Form\UserPasswordType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
+
+  #[Route("/profil",name:"admin_index", methods:['GET']) ]
+   public function index(UserRepository $userRepository ) : Response
+   {
+    return $this->render('admin/user/index.html.twig',[
+        'Users'=>$userRepository->findAll(),
+            
+    ]);
+   } 
+
+
+   #[Route('/{id}/show', name: 'app_user_show', methods: ['GET'])]
+   public function show(User $user): Response
+   {
+       return $this->render('user/show.html.twig', [
+           'user' => $user,
+       ]);
+   }
     /**
     * This controller edit user information
     *@param  User $choosenUser
@@ -23,8 +42,8 @@ class UserController extends AbstractController
     * @param Request $request
     * @return Response
     */
-
-    #[Route('/utilisateur/edition/{id}', name: 'app_user', methods:['GET','POST']) ]
+    #[Security("is_granted('ROLE_USER') and user===choosenUser")]
+    #[Route('/utilisateur/edition/{id}', name: 'app_user_edit', methods:['GET','POST']) ]
     public function edit(User $choosenUser,Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher ): Response
     {
        /**  ceci peut remplacer security
@@ -45,14 +64,17 @@ class UserController extends AbstractController
                  
             if ($hasher->isPasswordValid($choosenUser , $form->getData()->getPlainPassword())){
                 $user = $form ->getData();
+
                 $manager->persist($user);
+                
                 $manager->flush();
             
                 $this->addFlash(
                     'success',
                     'Les information de votre compte ont été modifiées avec succès'
                 );
-                return $this->redirectToRoute('app.admin.bien');
+                return $this->redirectToRoute('admin_index');
+
             }else{
                 $this->addFlash(
                     'warning',
@@ -73,7 +95,7 @@ class UserController extends AbstractController
     * @param Request $request
     * @return Response
     */
-    
+    #[Security("is_granted('ROLE_USER') and user===choosenUser")]
     #[Route('/utilisateur/edition-mot-de-passe/{id}', name: 'app_user_edit_password', methods:['GET','POST']) ]
     public function editPassword(User $choosenUser, Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher) : Response
     {
@@ -96,7 +118,7 @@ class UserController extends AbstractController
                 $manager->persist($choosenUser);
                 $manager->flush();
 
-                return $this->redirectToRoute('app.admin.bien');
+                return $this->redirectToRoute('admin_index');
 
             }
 
@@ -109,36 +131,15 @@ class UserController extends AbstractController
 
    }
 
-   #[Route('/', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+   #[Route('/utilisateur/liste', name: 'app_user_index', methods: ['GET'])]
+    public function listuser (UserRepository $userRepository): Response
     {
-        return $this->render('admin/user/index.html.twig', [
+        return $this->render('admin/user/show.html.twig', [
             'users' => $userRepository->findAll()
                
         ]);
     }
 
 
-    #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $hashedPassword = $passwordHasher->hashPassword(
-                $user,
-                $user->getPassword()
-            );
-            $user->setPassword($hashedPassword);
-            $role = [$form->get('role')->getData()];
-            $user->setRoles($role);
-            $userRepository->add($user, true);
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-        }
-        return $this->render('admin/user/new.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
-   }
+    
 }

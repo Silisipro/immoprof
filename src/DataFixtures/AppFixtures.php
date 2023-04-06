@@ -25,21 +25,23 @@ class AppFixtures extends Fixture
 
 
     {
-       
+       //user 
+        $users =[];    
         for ($i=0; $i < 5 ; $i++) {            
             $user = new User();
             $user ->setFullName($this->faker->word())
                   ->setLieu(mt_rand(0, 1) === 1 ? $this->faker->firstName(): null)
                   ->setEmail($this->faker->email())
-                  ->setTelephone(mt_rand(0,9))
+                  ->setTelephone(61256235)
                   ->setRoles(['ROLE_USER'])
                   ->setPlainPassword('password');
                   
-             
+             $users[]= $user;
             $manager->persist($user);    
         }
 
-
+       //biens
+       $biens = [];
         for ($i=0; $i <15; $i++) { 
             $bien = new Bien();
             $bien ->setName($this->faker->word(20))
@@ -52,8 +54,11 @@ class AppFixtures extends Fixture
                   ->setSurface(mt_rand(1, 100))
                   ->setFloor(mt_rand(1, 10))
                   ->setRooms(mt_rand(0, 50))
-                  ->setHeat(mt_rand(0, 4));
-        
+                  ->setHeat(mt_rand(0, 4))
+                  ->setUser($users[mt_rand(0, count($users) - 1)]);         
+
+
+        $biens[] = $bien;
          $manager->persist($bien);
 
         }
