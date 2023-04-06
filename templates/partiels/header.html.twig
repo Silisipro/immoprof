@@ -49,11 +49,11 @@
               </li>
               <li><a href="#">Gestion Locative</a></li>
               <li><a href="#">A propos</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><a href="{{ path('app_contact') }}">Contact</a></li>
                  {% if app.user %}
 
               <li class="has-children">
-                <a href="{{ path('app_user_show', {'id': app.user.id}) }}">
+                <a href="{{ path('admin_index', {'id': app.user.id}) }}">
                   <i class="fa fa-user-o"></i> &nbsp;{{ app.user.fullName }}
                 </a>
                 <ul class="dropdown">

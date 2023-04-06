@@ -27,13 +27,6 @@ class UserController extends AbstractController
    } 
 
 
-   #[Route('/{id}/show', name: 'app_user_show', methods: ['GET'])]
-   public function show(User $user): Response
-   {
-       return $this->render('user/show.html.twig', [
-           'user' => $user,
-       ]);
-   }
     /**
     * This controller edit user information
     *@param  User $choosenUser
@@ -58,22 +51,18 @@ class UserController extends AbstractController
         */
 
         $form = $this->createForm(UserType::class, $choosenUser);
-    
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
                  
             if ($hasher->isPasswordValid($choosenUser , $form->getData()->getPlainPassword())){
                 $user = $form ->getData();
 
-                $manager->persist($user);
                 
-                $manager->flush();
             
                 $this->addFlash(
                     'success',
                     'Les information de votre compte ont été modifiées avec succès'
                 );
-                return $this->redirectToRoute('admin_index');
 
             }else{
                 $this->addFlash(
@@ -140,6 +129,6 @@ class UserController extends AbstractController
         ]);
     }
 
-
+    
     
 }

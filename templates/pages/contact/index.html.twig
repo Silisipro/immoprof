@@ -11,7 +11,7 @@
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-lg-9 text-center mt-5">
-            <h1 class="heading" data-aos="fade-up">Contact Us</h1>
+            <h1 class="heading" data-aos="fade-up">Contact-Nous</h1>
 
             <nav
               aria-label="breadcrumb"
@@ -19,7 +19,7 @@
               data-aos-delay="200"
             >
               <ol class="breadcrumb text-center justify-content-center">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="index.html">Aceuil</a></li>
                 <li
                   class="breadcrumb-item active text-white-50"
                   aria-current="page"
@@ -44,79 +44,77 @@
             <div class="contact-info">
               <div class="address mt-2">
                 <i class="icon-room"></i>
-                <h4 class="mb-2">Location:</h4>
+                <h4 class="mb-2">Adresse:</h4>
                 <p>
                   43 Raymouth Rd. Baltemoer,<br />
-                  London 3910
+                  Cotonou 3910
                 </p>
               </div>
 
               <div class="open-hours mt-4">
                 <i class="icon-clock-o"></i>
-                <h4 class="mb-2">Open Hours:</h4>
+                <h4 class="mb-2">Heure de service:</h4>
                 <p>
-                  Sunday-Friday:<br />
-                  11:00 AM - 2300 PM
+                  Lundi-Samedi:<br />
+                  07:30 - 17:30 PM
                 </p>
               </div>
 
               <div class="email mt-4">
                 <i class="icon-envelope"></i>
                 <h4 class="mb-2">Email:</h4>
-                <p>info@Untree.co</p>
+                <p>immopro@contact.com</p>
               </div>
 
               <div class="phone mt-4">
                 <i class="icon-phone"></i>
                 <h4 class="mb-2">Call:</h4>
-                <p>+1 1234 55488 55</p>
+                <p>+229 97 55 88 55</p>
+                <p>+229 99 55 88 55</p>
               </div>
             </div>
           </div>
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+              {% for message in app.flashes('success') %}
+                <div class = 'alert alert-success mt-4'>
+                {{message}}
+                </div> 
+              {% endfor %}
+
+          {{ form_start(form) }}
             <form action="#">
               <div class="row">
                 <div class="col-6 mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Your Name"
-                  />
+                 {{ form_row(form.name) }}
+                 <div class="form-error">
+                    {{ form_errors(form.name) }}
+                 </div>
                 </div>
                 <div class="col-6 mb-3">
-                  <input
-                    type="email"
-                    class="form-control"
-                    placeholder="Your Email"
-                  />
+                 {{ form_row(form.email) }}
+                    <div class="form-error">
+                      {{ form_errors(form.email) }}
+                    </div>
                 </div>
                 <div class="col-12 mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Subject"
-                  />
+                  {{ form_row(form.objet) }}
+                    <div class="form-error">
+                      {{ form_errors(form.objet) }}
+                   </div>
                 </div>
                 <div class="col-12 mb-3">
-                  <textarea
-                    name=""
-                    id=""
-                    cols="30"
-                    rows="7"
-                    class="form-control"
-                    placeholder="Message"
-                  ></textarea>
+                  {{ form_row(form.message) }}
+                   <div class="form-error">
+                      {{ form_errors(form.message) }}
+                   </div>
                 </div>
-
                 <div class="col-12">
-                  <input
-                    type="submit"
-                    value="Send Message"
-                    class="btn btn-primary"
-                  />
+                {{ form_row(form.submit) }}
+                 
                 </div>
               </div>
             </form>
+            {{ form_end(form) }}
           </div>
         </div>
       </div>

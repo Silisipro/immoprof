@@ -1,0 +1,99 @@
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>{% block title %}Immopro | Edition des biens {% endblock %}</title>
+
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+
+      {% block stylesheets  %}
+        {% include 'admin/partiel/stulo.html.twig' %}
+        
+      {% endblock %}
+  
+</head>
+
+<body>
+    {% block header %}
+        {% include 'admin/partiel/header.html.twig' %}
+        {% endblock %}
+
+      {% block body %}
+      {% include 'admin/partiel/body.html.twig' %}
+
+    <section class="section profile">
+      <div class="row">
+        <div class="col-xl-4">
+
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+              <img src="{{asset('asset/img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
+              <h2> {{app.user.fullName}}</h2>
+              <h3>Agent Immobilier</h3>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-xl-8">
+
+          <div class="card">
+            <div class="card-body pt-3"> 
+                <h1>Edition des biens</h1>
+
+                {{ form_start(form) }}
+                    <div class="row mb-3">
+                    <div class="row mb-3">
+                      <div class="col-md-4 col-lg-4"> {{ form_row(form.name) }}</div>
+                      <div class="col-md-4 col-lg-4"> {{ form_row(form.surface) }} </div>
+                      <div class="col-md-4 col-lg-4"> {{ form_row(form.price) }}</div>
+                    </div>
+                    <div class="row mb-3">
+                      <div class="col-md-2 col-lg-4"> {{ form_row(form.rooms) }} </div>
+                      <div class="col-md-2 col-lg-4"> {{ form_row(form.bedrooms) }} </div>
+                      <div class="col-md-2 col-lg-4"> {{ form_row(form.heat) }}</div>
+                    </div>
+
+                     <div class="row mb-3">
+                      <div class="col-md-2 col-lg-4"> {{ form_row(form.floor) }} </div>
+                      <div class="col-md-2 col-lg-4"> {{ form_row(form.city) }} </div>
+                      <div class="col-md-4 col-lg-4"> {{ form_row(form.adress) }}</div>
+
+                    </div>
+                    <div class="row mb-3">
+                      <div class="col-md-2 col-lg-4"> {{ form_row(form.sold) }} </div>
+                    </div>
+                    <div class="row mb-3">
+                      <div class="form-group"> {{ form_row(form.description) }} </div>
+                    </div>
+                    
+                    
+                 {{ form_widget(form) }}
+                   <button class=" col-md-4 col-lg-4 btn btn-primary">Enreistrer les modifications</button>
+                     
+                 {{ form_end(form) }}
+
+               <!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+ {% endblock %}
+
+    {% block footer %}
+    {% include 'admin/partiel/footer.html.twig' %}
+        
+    {% endblock %}
+</body>
+
+</html>

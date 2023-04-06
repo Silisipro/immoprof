@@ -27,7 +27,7 @@ class AdminController extends AbstractController
     public function index(BienRepository $bienRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $biens = $paginator->paginate(
-         $bienRepository->findAll(),
+            $bienRepository->findBy(['user'=> $this->getUser()]),
             $request->query->getInt('page', 1),
             10
         );
@@ -51,7 +51,9 @@ class AdminController extends AbstractController
                $form = $this->createForm(BienType::class, $bien);
                $form->handleRequest($request);
                    if ($form->isSubmitted() && $form->isValid()) {
-                       $recipe = $form ->getData();
+                       $bien = $form ->getData();
+                       $bien->setUser($this->getUser());
+
 
                    $manager->persist($bien);
                    $manager->flush();
