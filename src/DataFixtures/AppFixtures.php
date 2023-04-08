@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Bien;
+use App\Entity\Contact;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -26,7 +27,18 @@ class AppFixtures extends Fixture
 
     {
        //user 
-        $users =[];    
+       $users =[];
+       $admin = new User();
+       $admin ->setFullName('Administrateur de Sylove')
+              ->setLieu('Cotonou')
+              ->setTelephone(67922379)
+              ->setEmail('adminsylove@gmail.com')
+              ->setRoles(['ROLE_USER','ROLE_ADMIN'])
+              ->setPlainPassword('password');
+
+       $users[] = $admin;  
+       $manager->persist($admin);
+       
         for ($i=0; $i < 5 ; $i++) {            
             $user = new User();
             $user ->setFullName($this->faker->word())
@@ -62,9 +74,22 @@ class AppFixtures extends Fixture
          $manager->persist($bien);
 
         }
+        //contact
+
+        for ($i=0; $i <5 ; $i++) { 
+            $contact = new Contact();
+            $contact ->setName($this->faker->word())
+                    ->setEmail($this->faker->email())
+                    ->setObjet('Demande n°' . ($i + 1))
+                    ->setMessage($this->faker->text());
+
+               $manager->persist($contact); 
+
+
 
         $manager->flush();
 
+        }
 
     }
 }

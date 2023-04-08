@@ -116,7 +116,7 @@ class AdminController extends AbstractController
         #    $manager->flush();
         # }
         $manager->remove($bien);
-            $manager->flush();
+        $manager->flush();
         $this->addFlash(
             'success',
             ' Votre ingrédient a été suprimé avec succès'

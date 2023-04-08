@@ -1,0 +1,96 @@
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>{% block title %}Immopro | Demande de contact {% endblock %}</title>
+
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+
+      {% block stylesheets  %}
+        {% include 'admin/partiel/stulo.html.twig' %}
+        
+      {% endblock %}
+  
+</head>
+
+<body>
+    {% block header %}
+        {% include 'admin/partiel/header.html.twig' %}
+        {% endblock %}
+
+      {% block body %}
+      {% include 'admin/partiel/body.html.twig' %}
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h1 class="card-title">Liste des demandes de contacts</h1>
+                   {% for message in app.flashes('success') %}
+                 <div class = 'alert alert-success mt-4'>
+                  {{message}}
+                 </div> 
+               {% endfor %}
+              <!-- Table with stripped rows -->
+              <table class="table table-striped">
+                <thead>
+
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Objet</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action 1</th>
+                    <th scope="col">Action 2</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for contact in contacts %}
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>{{contact.name}}</td>
+                    <td>{{contact.email}}</td>
+                    <td>{{contact.objet}}</td>
+                    <td>{{contact.message}}</td>
+                    <td>a revoir</td>
+                    <td>
+                    <a href="mailto:{{contact.email}}" class="btn btn-primary">Repondre</a> </td>
+                    <td>
+                    <a href="{{path('app_contact_delete', {id: contact.id })}}" class="btn btn-danger">Suprimer</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+            </div>
+          </div>
+                
+
+               <!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+ {% endblock %}
+
+    {% block footer %}
+    {% include 'admin/partiel/footer.html.twig' %}
+        
+    {% endblock %}
+</body>
+
+</html>
