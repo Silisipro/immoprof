@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Bien;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -96,6 +97,24 @@ class BienType extends AbstractType
                    new Assert\Positive(),
                    new Assert\LessThan(50)
                     ] 
+            ])
+            ->add('standing', EntityType::class, [
+                'class' => Standing::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('s')
+                        ->orderBy('s.libelle', 'ASC');
+                },
+                'choice_label' => 'libelle',
+                'expanded' => false,
+                'multiple' => false,
+                'label' => 'Standing',
+                'required' => false,
+                'mapped' => false,
+                'placeholder' => '-- Sélectionner --',
+                'attr' => [
+                    'class' => 'select2',
+                    'style' => 'display: block; width: 100%;',
+                ]
             ])
             ->add('floor', IntegerType::class,[ 
                 'attr'=> [

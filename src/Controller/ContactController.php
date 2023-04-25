@@ -6,17 +6,20 @@ use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Repository\ContactRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'app_contact')]
-    public function index(Request $request, EntityManagerInterface $manager): Response
+    public function index(Request $request, EntityManagerInterface $manager, MailerInterface $mailer): Response
     {
         $contact = new Contact();
 
@@ -31,7 +34,20 @@ class ContactController extends AbstractController
               $contact = $form ->getData();
 
                 $manager->persist($contact);
-                $manager->flush();  
+                $manager->flush();
+                
+                $email = (new TemplatedEmail())
+                ->from($contact ->getEmail())
+                ->to('adminsylove@immopro.com')
+                ->subject($contact->getObjet())
+                ->htmlTemplate('emails/contact.html.twig')
+                
+                ->context([
+                   'contact' => $contact
+                ]);
+
+            $mailer->send($email);
+
             
                 $this->addFlash(
                     'success',

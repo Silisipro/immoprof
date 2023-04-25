@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BienRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -76,10 +78,14 @@ class Bien
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\OneToMany(mappedBy: 'Bien', targetEntity: Standing::class, orphanRemoval: true)]
+    private Collection $standings;
+
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable;
+        $this->standings = new ArrayCollection();
        
     }
 
@@ -253,6 +259,36 @@ class Bien
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Standing>
+     */
+    public function getStandings(): Collection
+    {
+        return $this->standings;
+    }
+
+    public function addStanding(Standing $standing): self
+    {
+        if (!$this->standings->contains($standing)) {
+            $this->standings->add($standing);
+            $standing->setBien($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStanding(Standing $standing): self
+    {
+        if ($this->standings->removeElement($standing)) {
+            // set the owning side to null (unless already changed)
+            if ($standing->getBien() === $this) {
+                $standing->setBien(null);
+            }
+        }
 
         return $this;
     }

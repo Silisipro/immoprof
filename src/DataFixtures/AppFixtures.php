@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Bien;
 use App\Entity\Contact;
+use App\Entity\Standing;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -74,6 +75,20 @@ class AppFixtures extends Fixture
          $manager->persist($bien);
 
         }
+
+        //standing
+        foreach ( $biens as $bien){
+            for ($k=0; $k < mt_rand(0, 10) ; $k++){
+                $standing = new Standing();
+                $standing ->setName($this->faker->word())
+                          ->setBien($bien);
+
+               $manager->persist($standing);    
+             }               
+        }
+
+
+
         //contact
 
         for ($i=0; $i <5 ; $i++) { 
@@ -87,9 +102,11 @@ class AppFixtures extends Fixture
 
 
 
-        $manager->flush();
 
         }
 
+        $manager->flush();
+
     }
+
 }
