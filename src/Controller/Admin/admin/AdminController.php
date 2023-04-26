@@ -4,7 +4,9 @@ namespace App\Controller\Admin\admin;
 
 use App\Entity\Bien;
 use App\Entity\Standing;
+use App\Entity\TypeBien;
 use App\Form\BienType;
+use App\Form\LogeType;
 use App\Form\StandingType;
 use App\Repository\BienRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -128,12 +130,12 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin/bien/index.html.twig'); 
     }  
     
-     #[IsGranted('ROLE_ADMIN')]
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/admin/ajout/standing', name: 'app.standing.new', methods: ['GET', 'POST'])]
     public function standing(Request $request, EntityManagerInterface $manager )
     {
 
-       $standing = new Standing;
+       $standing = new Standing();
        $form = $this ->createForm(StandingType::class, $standing);
        $form->handleRequest($request);
        
@@ -142,8 +144,36 @@ class AdminController extends AbstractController
         $standing = $form ->getData();
     
 
-
     $manager->persist($standing);
+    $manager->flush();
+
+
+            return $this->redirectToRoute('app.bien.new');      
+       };
+
+       return $this->render('admin/standing/new.html.twig', [
+        'form'=>$form->createView()
+    ]);
+
+    }
+
+     
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin/ajout/typebien', name: 'app.typebien.new', methods: ['GET', 'POST'])]
+    public function typebien(Request $request, EntityManagerInterface $manager )
+    {
+
+       $typebien = new TypeBien();
+       $form = $this ->createForm(LogeType::class, $typebien);
+       $form->handleRequest($request);
+       
+       if ($form->isSubmitted() && $form->isValid()) { 
+
+        $typebien = $form ->getData();
+    
+
+
+    $manager->persist($typebien);
     $manager->flush();
 
 
@@ -152,7 +182,7 @@ class AdminController extends AbstractController
 
 
 
-       return $this->render('admin/standing/new.html.twig', [
+       return $this->render('admin/typebien/new.html.twig', [
         'form'=>$form->createView()
     ]);
 

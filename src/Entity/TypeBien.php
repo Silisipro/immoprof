@@ -2,42 +2,42 @@
 
 namespace App\Entity;
 
+use App\Repository\TypeBienRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use App\Repository\StandingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[UniqueEntity('name')]
-#[ORM\Entity(repositoryClass: StandingRepository::class)]
-class Standing
+#[UniqueEntity('type')]
+#[ORM\Entity(repositoryClass: TypeBienRepository::class)]
+class TypeBien
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $type;
 
     #[ORM\Column]
     #[Assert\NotBlank()]
     private ?\DateTimeImmutable $createdAt;
 
-
     #[ORM\Column]
     #[Assert\NotBlank()]
-    private ?\DateTimeImmutable $updateAt;
+    private ?\DateTimeImmutable $updatedAt;
 
-    #[ORM\OneToMany(mappedBy: 'standing', targetEntity: Bien::class)]
+    #[ORM\OneToMany(mappedBy: 'typeBien', targetEntity: Bien::class)]
     private Collection $biens;
 
+    
 
     public function __construct()
     {
         $this ->createdAt = new \DateTimeImmutable;
-        $this ->updateAt= new \DateTimeImmutable;
+        $this ->updatedAt= new \DateTimeImmutable;
         $this->biens = new ArrayCollection();
     }
 
@@ -46,14 +46,14 @@ class Standing
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getType(): ?string
     {
-        return $this->name;
+        return $this->type;
     }
 
-    public function setName(string $name): self
+    public function setType(string $type): self
     {
-        $this->name = $name;
+        $this->type = $type;
 
         return $this;
     }
@@ -70,15 +70,14 @@ class Standing
         return $this;
     }
 
-
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updateAt;
+        return $this->updatedAt;
     }
 
-    public function setUpdateAt(\DateTimeImmutable $updateAt): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
-        $this->updateAt = $updateAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -95,7 +94,7 @@ class Standing
     {
         if (!$this->biens->contains($bien)) {
             $this->biens->add($bien);
-            $bien->setStanding($this);
+            $bien->setTypeBien($this);
         }
 
         return $this;
@@ -105,11 +104,12 @@ class Standing
     {
         if ($this->biens->removeElement($bien)) {
             // set the owning side to null (unless already changed)
-            if ($bien->getStanding() === $this) {
-                $bien->setStanding(null);
+            if ($bien->getTypeBien() === $this) {
+                $bien->setTypeBien(null);
             }
         }
 
         return $this;
     }
+
 }

@@ -3,11 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Bien;
+use App\Entity\Standing;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\TypeBien;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\VichimageType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -98,22 +100,20 @@ class BienType extends AbstractType
                    new Assert\LessThan(50)
                     ] 
             ])
-            ->add('standing', EntityType::class, [
-                'class' => Standing::class,
+            ->add('typeBien', EntityType::class, [
+                'class' => TypeBien::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('s')
-                        ->orderBy('s.libelle', 'ASC');
+                        ->orderBy('s.type', 'ASC');
                 },
-                'choice_label' => 'libelle',
+                'choice_label' => 'type',
                 'expanded' => false,
                 'multiple' => false,
-                'label' => 'Standing',
+                'label' => 'Type de logement',
                 'required' => true,
-                'mapped' => false,
                 'placeholder' => '-- Sélectionner --',
                 'attr' => [
-                    'class' => 'select2',
-                    'style' => 'display: block; width: 100%;',
+                    'class' => 'form-control',
                 ]
             ])
             ->add('floor', IntegerType::class,[ 
@@ -147,6 +147,22 @@ class BienType extends AbstractType
                     new Assert\NotBlank()
                     ]
         
+                ])
+                ->add('standing', EntityType::class, [
+                    'class' => Standing::class,
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('g')
+                            ->orderBy('g.name', 'ASC');
+                    },
+                    'choice_label' => 'name',
+                    'expanded' => false,
+                    'multiple' => false,
+                    'label' => 'Standing',
+                    'required' => true,
+                    'placeholder' => '-- Sélectionner --',
+                    'attr' => [
+                        'class' => 'form-control',
+                    ]
                 ])
             ->add('adress', TextType::class, [ 
                 'attr'=> [

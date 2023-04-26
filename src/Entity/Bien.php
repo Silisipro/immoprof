@@ -78,14 +78,20 @@ class Bien
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'Bien', targetEntity: Standing::class, orphanRemoval: true)]
-    private Collection $standings;
+   
+
+    #[ORM\ManyToOne(inversedBy: 'biens')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?TypeBien $typeBien = null;
+
+    #[ORM\ManyToOne(inversedBy: 'biens')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Standing $standing = null;
 
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable;
-        $this->standings = new ArrayCollection();
        
     }
 
@@ -115,9 +121,6 @@ class Bien
     {
         return number_format($this->price ,  0, '', '');
     }
-
-
-
 
     public function setPrice(float $price): self
     {
@@ -263,33 +266,30 @@ class Bien
         return $this;
     }
 
-    /**
-     * @return Collection<int, Standing>
-     */
-    public function getStandings(): Collection
+    
+
+    public function getTypeBien(): ?TypeBien
     {
-        return $this->standings;
+        return $this->typeBien;
     }
 
-    public function addStanding(Standing $standing): self
+    public function setTypeBien(?TypeBien $typeBien): self
     {
-        if (!$this->standings->contains($standing)) {
-            $this->standings->add($standing);
-            $standing->setBien($this);
-        }
+        $this->typeBien = $typeBien;
 
         return $this;
     }
 
-    public function removeStanding(Standing $standing): self
+    public function getStanding(): ?Standing
     {
-        if ($this->standings->removeElement($standing)) {
-            // set the owning side to null (unless already changed)
-            if ($standing->getBien() === $this) {
-                $standing->setBien(null);
-            }
-        }
+        return $this->standing;
+    }
+
+    public function setStanding(?Standing $standing): self
+    {
+        $this->standing = $standing;
 
         return $this;
     }
+
 }
