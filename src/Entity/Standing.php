@@ -21,16 +21,20 @@ class Standing
 
     #[ORM\Column]
     #[Assert\NotBlank()]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $createdAt;
 
     #[ORM\ManyToOne(inversedBy: 'standings')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Bien $Bien = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updateAt;
+
 
     public function __construct()
     {
         $this ->createdAt = new \DateTimeImmutable;
+        $this ->updateAt= new \DateTimeImmutable;
     }
 
     public function getId(): ?int
@@ -70,6 +74,18 @@ class Standing
     public function setBien(?Bien $Bien): self
     {
         $this->Bien = $Bien;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeImmutable
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(\DateTimeImmutable $updateAt): self
+    {
+        $this->updateAt = $updateAt;
 
         return $this;
     }

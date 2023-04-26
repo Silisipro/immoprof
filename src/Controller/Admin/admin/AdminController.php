@@ -3,7 +3,9 @@
 namespace App\Controller\Admin\admin;
 
 use App\Entity\Bien;
+use App\Entity\Standing;
 use App\Form\BienType;
+use App\Form\StandingType;
 use App\Repository\BienRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,7 +66,7 @@ class AdminController extends AbstractController
                 );
 
 
-                   return $this->redirectToRoute('app.admin.bien');   
+                   return $this->redirectToRoute('app.admin.bien');  
                };
 
        return $this->render('admin/bien/new.html.twig', [
@@ -123,10 +125,38 @@ class AdminController extends AbstractController
         );
 
 
-        return $this->redirectToRoute('admin/bien/index.html.twig');   
+        return $this->redirectToRoute('admin/bien/index.html.twig'); 
     }  
     
+     #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin/ajout/standing', name: 'app.standing.new', methods: ['GET', 'POST'])]
+    public function standing(Request $request, EntityManagerInterface $manager )
+    {
 
+       $standing = new Standing;
+       $form = $this ->createForm(StandingType::class, $standing);
+       $form->handleRequest($request);
+       
+       if ($form->isSubmitted() && $form->isValid()) { 
+
+        $standing = $form ->getData();
+    
+
+
+    $manager->persist($standing);
+    $manager->flush();
+
+
+            return $this->redirectToRoute('app.admin.bien');      
+       };
+
+
+
+       return $this->render('admin/standing/new.html.twig', [
+        'form'=>$form->createView()
+    ]);
+
+    }
 
 }
 

@@ -108,7 +108,7 @@ class BienType extends AbstractType
                 'expanded' => false,
                 'multiple' => false,
                 'label' => 'Standing',
-                'required' => false,
+                'required' => true,
                 'mapped' => false,
                 'placeholder' => '-- Sélectionner --',
                 'attr' => [
