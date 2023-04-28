@@ -26,12 +26,19 @@
       <div class="row">
         <div class="col-xl-4">
 
-        
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+              <img src="{{asset('asset/img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
+              <h2> {{app.user.fullName}}</h2>
+              <h3>Agent Immobilier</h3>
+              
+            </div>
           </div>
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
               <h2>  
-            <a href = "{{ path('app.bien.new') }}" class = 'btn btn-primary'>Ajouter un bien</a>  
+            <a href = "{{ path('app.typebien.new') }}" class = 'btn btn-primary'>Ajouter type bien</a>  
                 
               </h2>
              </div>
@@ -39,11 +46,11 @@
 
         </div>
         
-        <div class="col-xl-12">
+        <div class="col-xl-8">
 
           <div class="card">
             <div class="card-body pt-3"> 
-              <h1>Administration des biens</h1>
+              <h1>Administration des types de biens</h1>
                {% for message in app.flashes('success') %}
                  <div class = 'alert alert-success mt-4'>
                   {{message}}
@@ -52,34 +59,21 @@
                 <table class="table table-hover m-4">
                       <thead>
                           <tr>
-                              <th scope="col">Titre</th>
-                              <th scope="col">Prix</th>
+                              <th scope="col">Type de bien</th>
                               <th scope="col">Date d'ajout</th>
-                              <th scope="col">Publier par</th>
+                              <th scope="col">Date du dernière modification</th>
                               <th scope="col">Edition</th>
-                              <th scope="col">Supression</th>
 
                           </tr>
                       </thead>
                       <tbody>
-                          {% for bien in biens %}
+                          {% for typebien in typebiens %}
                               <tr class="table-primary">
-                                  <th scope="row"><h6> {{bien.name}} </h6></th>
-                                  <th scope="row"><h6>{{bien.price}} $ </h6></th>
-                                  <th scope="row"><h6>{{bien.createdAt|date("d/m/Y à H:i:s")}} </h6></th>
-                                  <th scope="row"><h6> {{ bien.user.fullName}}</h6></th>
-
+                                  <th scope="row"><h6> {{typebien.type}}</h6></th>
+                                  <th scope="row"> <h6>{{typebien.createdAt|date("d/m/Y à H:i:s")}} </h6></th>
+                                  <th scope="row"> <h6>{{typebien.updatedAt|date("d/m/Y à H:i:s") }} </h6></th>
                                   <th scope="row">
-                                  <a href = "{{path('app.admin.edit', {id: bien.id } )}}" class="btn btn-info">Editer</a>
-                                  </th>
-                                  <th>
-                                  <a href = "{{path('app.admin.delete', {id: bien.id } )}}" class="btn btn-danger">Suprimer</a>
-
-                                  {# <form  method= "post" action="{{path('app.admin.delete', {id: bien.id } )}}" onsubmit="return confirm(''Etes vous vraiment sûr?)">
-                                  <input type="hidden" name="_method" value="DELETE" >
-                                  <input type="hidden" name="_token" value="{{csrf_token('delete' ~ bien.id)}}" >
-                                   <button class="btn btn-danger">Suprimer</button>
-                                   <form>#}
+                                  <a href = "{{path('app.typebien.edit', {id: typebien.id } )}}" class="btn btn-info">Editer</a>
                                   </th>
 
                               </tr>
@@ -87,7 +81,7 @@
                       </tbody>
                  </table>            
                 <div class="pagination page-item disabled">
-                 {{knp_pagination_render(biens) }}
+                 {{knp_pagination_render(typebiens) }}
                 </div>
             </div>
           </div>

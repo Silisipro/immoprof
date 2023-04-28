@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Bien;
+use App\Entity\BienRecherche;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -42,12 +43,26 @@ class BienRepository extends ServiceEntityRepository
    /**
     * @return Bien[] Returns an array of Bien objects
     */
-    public function findVisible(): array
+    public function findVisible(BienRecherche $recherche): array
     {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.sold = false')
-            ->getQuery()
-            ->getResult()
+        $query = $this->createQueryBuilder('b')
+            ->andWhere('b.sold = false');
+        if($recherche->getMaxPrice()){
+            $query=$query
+                   ->andWhere('b.price <= :maxprice')
+                   ->setParameter('maxprice', $recherche->getMaxPrice());
+                   
+        }
+        if($recherche->getMinSurface()){
+            $query=$query
+                   ->andWhere('b.surface >= :minsurface')
+                   ->setParameter('minsurface', $recherche->getMinSurface());
+                   
+        }
+
+
+         return $query->getQuery()
+                      ->getResult()
         ;
     }
     /**

@@ -33,7 +33,7 @@ class AdminController extends AbstractController
         $biens = $paginator->paginate(
             $bienRepository->findBy(['user'=> $this->getUser()]),
             $request->query->getInt('page', 1),
-            10
+            5
         );
 
         return $this->render('admin/bien/index.html.twig', [
@@ -173,11 +173,16 @@ class AdminController extends AbstractController
     
 
 
-    $manager->persist($typebien);
-    $manager->flush();
+            $manager->persist($typebien);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Le type de bien a été ajouté avec succès'
+            );
 
 
-            return $this->redirectToRoute('app.admin.bien');      
+            return $this->redirectToRoute('app.typebien.list');      
        };
 
 

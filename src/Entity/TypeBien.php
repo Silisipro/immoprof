@@ -112,4 +112,9 @@ class TypeBien
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->createdAt;
+        return $this->updatedAt;
+    }
 }

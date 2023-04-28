@@ -59,7 +59,7 @@
                     <td>{{contact.email}}</td>
                     <td>{{contact.objet}}</td>
                     <td>{{contact.message}}</td>
-                    <td>a revoir</td>
+                    <td>{{contact.createdAt|date("d/m/Y à H:i:s") }}</td>
                     <td>
                     <a href="mailto:{{contact.email}}" class="btn btn-primary">Repondre</a> </td>
                     <td>

@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+  ImmoPro | Biens disponibles
+{% endblock %}
+
+{% block body %}
+
+    <div
+        class="hero page-inner overlay"
+        style="background-image: url('{{asset('assets/images/hero_bg_3.jpg')}}')"
+      >
+        <div class="container">
+          <div class="row justify-content-center align-items-center">
+            <div class="col-lg-9 text-center mt-5">
+              <h1 class="heading" data-aos="fade-up">
+              RESULTATS DE VOTRE RECHERCHE
+              </h1>
+
+              <nav
+                aria-label="breadcrumb"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+                <ol class="breadcrumb text-center justify-content-center">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item">
+                    <a href="properties.html">BIENs</a>
+                  </li>
+                  <li
+                    class="breadcrumb-item active text-white-50"
+                    aria-current="page"
+                  >
+                    Chambres salon
+                  </li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container">
+           <div class="row">
+              <div class="col-lg-12 mb-4" data-aos="fade-up" data-aos-delay="200">     
+          {{ form_start(form) }}
+            <form action="#">
+              <div class="row">
+                <div class="col-4 mb-3">
+                 {{ form_row(form.minSurface) }}
+                 <div class="form-error">
+                    {{ form_errors(form.minSurface) }}
+                 </div>
+                </div>
+                <div class="col-4 mb-3">
+                 {{ form_row(form.maxPrice) }}
+                    <div class="form-error">
+                      {{ form_errors(form.maxPrice) }}
+                    </div>
+                </div>
+                
+                <div class="col-4">
+                 <button class="btn btn-primary">Rechercher</button>  
+                </div>
+              </div>
+            </form>
+            {{ form_end(form) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+   
+        <div class="row">
+          <div class="col-10">
+            <div class="property-slider-wrap">
+              <div class="property-slider">
+                <!-- .item -->
+                 {% for bien in biens %}
+
+                <div class="property-item">
+                  <a href="{{path('bien.show', {id: bien.id})}}" class="img">
+                    <img src="{{asset('assets/images/img_3.jpg')}}" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2"><span>Prix : {{bien.price}} $</span></div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50"
+                        >{{bien.name}} à {{bien.city}},{{bien.adress}}</span
+                      >
+                      <span class="city d-block mb-3">Caracteristiques</span>
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center">
+                            <span class="icon-bath me-2"></span>
+                            <span class="caption"> Surface : {{bien.surface}} m² </span>
+                          </span>
+                          <span class="d-block d-flex align-items-center">
+                            <span class="icon-bath me-2"></span>
+                            <span class="caption"> Etage : {{bien.floor}} </span>
+                          </span>                        
+                      </div>
+                      <div class="specs d-flex mb-4">
+                          <span class="d-block d-flex align-items-center me-3">
+                            <span class="icon-bed me-2"></span>
+                            <span class="caption">{{bien.rooms}} pièces </span>
+                          </span>
+                          <span class="d-block d-flex align-items-center">
+                            <span class="icon-bath me-2"></span>
+                            <span class="caption"> {{bien.bedrooms}} chambres </span>
+                          </span>
+                          
+                          <span class="d-block d-flex align-items-center">
+                            <span class="icon-bath me-2"></span>
+                            <span class="caption"> Type de chauffage : {{bien.heatType}}</span>
+                          </span>
+                      </div>
+
+                      <a
+                        href="{{path('bien.show', {id: bien.id})}}"
+                        class="btn btn-primary py-2 px-3"
+                        >Plus de details</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+           </div>    
+            {% endfor %}
+
+{% endblock %}
+
+
