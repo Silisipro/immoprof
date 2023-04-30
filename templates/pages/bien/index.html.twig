@@ -46,20 +46,26 @@
           {{ form_start(form) }}
             <form action="#">
               <div class="row">
-                <div class="col-4 mb-3">
+                <div class="col-3 mb-3">
                  {{ form_row(form.minSurface) }}
                  <div class="form-error">
                     {{ form_errors(form.minSurface) }}
                  </div>
                 </div>
                 <div class="col-4 mb-3">
+                 {{ form_row(form.typeBien) }}
+                 <div class="form-error">
+                    {{ form_errors(form.typeBien) }}
+                 </div>
+                </div>
+                <div class="col-3 mb-3">
                  {{ form_row(form.maxPrice) }}
                     <div class="form-error">
                       {{ form_errors(form.maxPrice) }}
                     </div>
                 </div>
                 
-                <div class="col-4">
+                <div class="col-2">
                  <button class="btn btn-primary">Rechercher</button>  
                 </div>
               </div>
@@ -69,7 +75,6 @@
         </div>
       </div>
     </div>
-
    
         <div class="row">
           <div class="col-10">

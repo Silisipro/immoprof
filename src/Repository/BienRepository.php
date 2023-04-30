@@ -56,14 +56,20 @@ class BienRepository extends ServiceEntityRepository
         if($recherche->getMinSurface()){
             $query=$query
                    ->andWhere('b.surface >= :minsurface')
-                   ->setParameter('minsurface', $recherche->getMinSurface());
-                   
+                   ->setParameter('minsurface', $recherche->getMinSurface());        
         }
-
-
          return $query->getQuery()
                       ->getResult()
         ;
+      if ($recherche->getTypeBien()->getId()) {
+        
+        $query = $query 
+                ->andWhere( ':typeBien MEMBER OF b.typeBien')
+                ->setParameter('tybebien', $recherche ->getTypeBien()->getId());        
+
+      }
+
+
     }
     /**
     * @return Bien[] Returns an array of Bien objects

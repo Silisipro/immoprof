@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\TypeBien;
 use App\Entity\BienRecherche;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -38,6 +40,18 @@ class BienRechercheType extends AbstractType
                     new Assert\Positive(),
                     new Assert\LessThan(40000)
                      ]
+            ])
+
+            ->add('typeBien', EntityType::class, [
+               'class' => TypeBien::class,
+               'required' =>false,
+               'label' => false,
+               'choice_label' => 'type',
+               'multiple' => false,
+               'placeholder' => '-- Sélectionner --',
+                'attr' => [
+                    'class' => 'form-control',
+                ]
             ])
         ;
     }

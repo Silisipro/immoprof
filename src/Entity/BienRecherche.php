@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -17,8 +16,7 @@ class BienRecherche {
     private ?int $minSurface = null;
 
 
-
-
+    private ?TypeBien $typeBien = null;
 
 
 
@@ -45,26 +43,32 @@ class BienRecherche {
         $this->minSurface = $minSurface;
 
         return $this;
+     }
+
+    /* public function getTypebien(): Collection
+    {
+        return $this->typeBien;
     }
 
+    public function setTypebien( Collection $typeBien ) : void
+    {
+        $this->typeBien = $typeBien;
+
+     }*/
+
+     public function getTypeBien(): ?TypeBien
+     {
+         return $this->typeBien;
+     }
+ 
+     public function setTypeBien(?TypeBien $typeBien): self
+     {
+         $this->typeBien = $typeBien;
+ 
+         return $this;
+     }
 
 
 
-
-
-
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
+ }
 
