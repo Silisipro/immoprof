@@ -44,12 +44,66 @@
       </div>
     </div>
 
+
+        <!-- Bloc Locataire et Propriétaire Debut -->
+        <div class="sm-mt-111">
+            <div style="background-color: #fff; max-width: 830px; margin: auto; padding: 4px 0; border-radius: 10px; position: relative; top: -50px; z-index: 8; border: 8px solid #f1f6fd;">
+                <ul class="nav justify-content-center" role="tablist">
+                    <li class="nav-item" role="presentation" style="width: 50%;">
+                        <a class="nav-link active text-center" style="font-size: 16px; font-weight: bold; color: #37708e;" href="#" id="loc-tab" data-bs-toggle="tab" data-bs-target="#loc" role="tab" aria-controls="loc" aria-selected="true">Locataire</a>
+                    </li>
+                    <li class="nav-item" role="presentation" style="width: 50%;">
+                        <a class="nav-link text-center" style="font-size: 16px; font-weight: bold; color: #37708e;" href="#" id="pro-tab" data-bs-toggle="tab" data-bs-target="#pro" role="tab" aria-controls="pro" aria-selected="false">Propriétaire</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="loc" role="tabpanel" aria-labelledby="loc-tab">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3 col-sm-12 text-center">
+                                <a href="#" data-bs-target=".laisser-demande-modal" data-bs-toggle="modal">
+                                    <div style="width: 460px; height: auto; border-radius: 25px; font-size: 15px; line-height: 36px; margin: 16px auto; color: white; background-color: #005555;">
+                                        Recherchez-vous un bien immobilier ?
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pro" role="tabpanel" aria-labelledby="pro-tab">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12 text-center sm-mt--6 sm-mb--6">
+                                <a href="#" data-bs-target=".estimer-loyer-modal" data-bs-toggle="modal">
+                                    <div style="width: 170px; height: auto; border-radius: 25px; font-size: 15px; line-height: 36px; margin: 16px auto; color: #005555; background-color: white; border: 1px solid #005555;">
+                                        Estimer mon loyer
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-sm-12 text-center sm-mt--6 sm-mb--6">
+                                <a href="#" data-bs-target=".confier-mon-bien-modal" data-bs-toggle="modal">
+                                    <div style="width: 270px; height: auto; border-radius: 25px; font-size: 15px; line-height: 36px; margin: 16px auto; color: white; background-color: #005555;">
+                                        Confier mon bien à Immoprof
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 col-sm-12 text-center sm-mt--6 sm-mb--6">
+                                <a href="#" data-bs-target=".mettre-mon-bien-modal" data-bs-toggle="modal">
+                                    <div style="width: 170px; height: auto; border-radius: 25px; font-size: 15px; line-height: 36px; margin: 16px auto; color: #005555; background-color: white; border: 1px solid #005555;">
+                                        Vendre mon bien
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bloc Locataire et Propriétaire Fin -->
+
     <div class="section">
       <div class="container">
         <div class="row mb-5 align-items-center">
           <div class="col-lg-6">
             <h2 class="font-weight-bold text-primary heading">
-              Popular Properties
+              Offres disponibles
             </h2>
           </div>
           <div class="col-lg-6 text-lg-end">
@@ -58,69 +112,64 @@
                 href="#"
                 target="_blank"
                 class="btn btn-primary text-white py-3 px-4"
-                >View all properties</a
+                >Voir plus d'offres</a
               >
             </p>
           </div>
         </div>
-
-      
         <div class="row">
           <div class="col-12">
             <div class="property-slider-wrap">
               <div class="property-slider">
                 <!-- .item -->
                  {% for bien in biens %}
+                  <div class="property-item">
+                    <a href="{{path('bien.show', {id: bien.id})}}" class="img">
+                      <img src="{{asset('assets/images/img_4.jpg')}}" alt="Image" class="img-fluid" />
+                    </a>
+                    <div class="property-content">
+                      <div class="price mb-2"><span>Prix : {{bien.price}} $</span></div>
+                        <div>
+                          <span class="d-block mb-2 text-black-50"
+                            >{{bien.name}} à {{bien.city}},{{bien.adress}}</span
+                          >
+                          <span class="city d-block mb-3">Caracteristiques</span>
 
-                <div class="property-item">
-                  <a href="{{path('bien.show', {id: bien.id})}}" class="img">
-                    <img src="{{asset('assets/images/img_4.jpg')}}" alt="Image" class="img-fluid" />
-                  </a>
-
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Prix : {{bien.price}} $</span></div>
-                    <div>
-                      <span class="d-block mb-2 text-black-50"
-                        >{{bien.name}} à {{bien.city}},{{bien.adress}}</span
-                      >
-                      <span class="city d-block mb-3">Caracteristiques</span>
-
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center">
-                            <span class="icon-bath me-2"></span>
-                            <span class="caption"> Surface : {{bien.surface}} m² </span>
-                          </span>
-                          <span class="d-block d-flex align-items-center">
-                            <span class="icon-bath me-2"></span>
-                            <span class="caption"> Etage : {{bien.floor}} </span>
-                          </span>                        
+                          <div class="specs d-flex mb-4">
+                            <span class="d-block d-flex align-items-center">
+                                <span class="icon-bath me-2"></span>
+                                <span class="caption"> Surface : {{bien.surface}} m² </span>
+                              </span>
+                              <span class="d-block d-flex align-items-center">
+                                <span class="icon-bath me-2"></span>
+                                <span class="caption"> Etage : {{bien.floor}} </span>
+                              </span>                        
+                          </div>
+                          <div class="specs d-flex mb-4">
+                              <span class="d-block d-flex align-items-center me-3">
+                                <span class="icon-bed me-2"></span>
+                                <span class="caption">{{bien.rooms}} pièces </span>
+                              </span>
+                              <span class="d-block d-flex align-items-center">
+                                <span class="icon-bath me-2"></span>
+                                <span class="caption"> {{bien.bedrooms}} chambres </span>
+                              </span>
+                              <span class="d-block d-flex align-items-center">
+                                <span class="icon-bath me-2"></span>
+                                <span class="caption"> Type de chauffage : {{bien.heatType}}</span>
+                              </span>
+                          </div>
+                          <a
+                            href="{{path('bien.show', {id: bien.id})}}"
+                            class="btn btn-primary py-2 px-3"
+                            >Plus de details</a
+                          >
                       </div>
-                      <div class="specs d-flex mb-4">
-                          <span class="d-block d-flex align-items-center me-3">
-                            <span class="icon-bed me-2"></span>
-                            <span class="caption">{{bien.rooms}} pièces </span>
-                          </span>
-                          <span class="d-block d-flex align-items-center">
-                            <span class="icon-bath me-2"></span>
-                            <span class="caption"> {{bien.bedrooms}} chambres </span>
-                          </span>
-                          
-                          <span class="d-block d-flex align-items-center">
-                            <span class="icon-bath me-2"></span>
-                            <span class="caption"> Type de chauffage : {{bien.heatType}}</span>
-                          </span>
-                      </div>
-
-                      <a
-                        href="{{path('bien.show', {id: bien.id})}}"
-                        class="btn btn-primary py-2 px-3"
-                        >Plus de details</a
-                      >
-                    </div>
                   </div>
                 </div>
+                  {% endfor %}
+
               </div>
-            {% endfor %}
 
               <div
                 id="property-nav"
@@ -133,14 +182,14 @@
                   data-controls="prev"
                   aria-controls="property"
                   tabindex="-1"
-                  >Prev</span
+                  >Precedent</span
                 >
                 <span
                   class="next"
                   data-controls="next"
                   aria-controls="property"
                   tabindex="-1"
-                  >Next</span
+                  >Suivant</span
                 >
               </div>
             </div>
@@ -200,6 +249,135 @@
       </div>
     </section>
 
+     <!-- Bloc Comment ça marche Debut -->
+        <div class="row" style="padding: 30px 0 0;">
+            <div class="col-12 text-center" style="font-size: 20px; padding: 0 0 20px; text-transform: uppercase;">
+                Comment ça marche ?
+            </div>
+        </div>
+        <ul class="nav justify-content-center" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active text-center" style="font-size: 16px; font-weight: bold; color: #37708e;" href="#" id="locataire-tab" data-bs-toggle="tab" data-bs-target="#locataire" role="tab" aria-controls="locataire" aria-selected="true">LOCATAIRE</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link text-center" style="font-size: 16px; font-weight: bold; color: #37708e;" href="#" id="proprietaire-tab" data-bs-toggle="tab" data-bs-target="#proprietaire" role="tab" aria-controls="proprietaire" aria-selected="false">PROPRIETAIRE</a>
+            </li>
+        </ul>
+        <div class="tab-content" style="min-height: 150px; padding: 15px 50px 30px;">
+            <div class="tab-pane fade show active" id="locataire" role="tabpanel" aria-labelledby="locataire-tab">
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                            1
+                        </div>
+                        <div style="font-size: 18px; margin-bottom: 15px;">
+                            Fiche locative
+                        </div>
+                        <div>
+                            Complétez une fiche qui décrit vos besoins et soumettez-nous.
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                            2
+                        </div>
+                        <div style="font-size: 18px; margin-bottom: 15px;">
+                            Programmation de visite
+                        </div>
+                        <div>
+                            Nous vous contacterons dans un court délai pour vous faire visiter votre nouveau logement.
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                            3
+                        </div>
+                        <div style="font-size: 18px; margin-bottom: 15px;">
+                            État des lieux
+                        </div>
+                        <div>
+                            Découvrez votre logement lors de l’état des lieux d’entrée.
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                            4
+                        </div>
+                        <div style="font-size: 18px; margin-bottom: 15px;">
+                            Signature du bail
+                        </div>
+                        <div>
+                            Signez votre contrat de bail.
+                        </div>
+                    </div>
+                    <div class="col-md-6 offset-md-3 text-center">
+                        <a href="#" data-bs-target=".laisser-demande-modal" data-bs-toggle="modal">
+                            <div style="width: 240px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; margin: 35px auto 0; color: white; background-color: #005555;" id="deposer-votre-demande-locative">
+                                Déposer votre demande locative
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="proprietaire" role="tabpanel" aria-labelledby="proprietaire-tab">
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                            1
+                        </div>
+                        <div style="font-size: 18px; margin-bottom: 15px;">
+                            Mise en valeur de votre bien
+                        </div>
+                        <div>
+                            Un reportage photo et vidéo complet de votre bien sera réalisé et diffusé sur nos plateformAskes.
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                            2
+                        </div>
+                        <div style="font-size: 18px; margin-bottom: 15px;">
+                            Sélection du locataire
+                        </div>
+                        <div>
+                            Nous analysons minutieusement les candidatures et validons les dossiers locatifs, rédigeons le bail et assurons l’état des lieux
+                            d’entrée.
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                            3
+                        </div>
+                        <div style="font-size: 18px; margin-bottom: 15px;">
+                            Gestion réactive et moderne
+                        </div>
+                        <div>
+                            Votre espace en ligne vous permet de suivre toutes les opérations et de contacter facilement votre conseiller.
+                        </div>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                            4
+                        </div>
+                        <div style="font-size: 18px; margin-bottom: 15px;">
+                            Loyer en moins de 5 jours
+                        </div>
+                        <div>
+                            Grâce à nos moyens de paiement, vous recevez vos fonds en moins de 5 jours après le paiement du locataire.
+                        </div>
+                    </div>
+                    <div class="col-md-6 offset-md-3 text-center">
+                        <a href="#" data-bs-target=".confier-mon-bien-modal" data-bs-toggle="modal">
+                            <div style="width: 240px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; margin: 35px auto 0; color: white; background-color: #005555;">
+                                Confier mon bien Immopro
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bloc Comment ça marche Fin -->
+
     <div class="section sec-testimonials">
       <div class="container">
         <div class="row mb-5 align-items-center">
@@ -210,9 +388,9 @@
           </div>
           <div class="col-md-6 text-md-end">
             <div id="testimonial-nav">
-              <span class="prev" data-controls="prev">Prev</span>
+              <span class="prev" data-controls="prev">Precedent</span>
 
-              <span class="next" data-controls="next">Next</span>
+              <span class="next" data-controls="next">Suivant</span>
             </div>
           </div>
         </div>
@@ -586,5 +764,378 @@
       </div>
     </div>
 
+
+  <!-- Modal Laisser vos demandes de chambre ici Start -->
+      <div class="modal fade laisser-demande-modal" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog ">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h3 class="modal-title" style="color: #005555;">Vos informations</h3>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      {% set message = app.session.get('message') %}
+                      {% if message == 'demande' %}
+                          <div class="alert alert-success alert-dismissible fade show mb-3 text-center" role="alert">
+                              <strong>Votre demande de logement est envoyée avec succès.</strong>
+                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                      {% endif %}
+                      {{ form_start(formAsk) }}
+                          <div class="form-group">
+                              <div class="row">
+                                  <div class="col-md-4 mb-15">
+                                      {{ form_label(formAsk.nomPrenom) }}
+                                      {{ form_widget(formAsk.nomPrenom) }}
+                                  </div>
+                                  <div class="col-md-4 mb-15">
+                                      {{ form_label(formAsk.telephone) }}
+                                      {{ form_widget(formAsk.telephone) }}
+                                  </div>
+                                  <div class="col-md-4 mb-15">
+                                      {{ form_label(formAsk.email) }}
+                                      {{ form_widget(formAsk.email) }}
+                                  </div>
+                                  <div class="col-md-6 mb-15">
+                                      {{ form_label(formAsk.zone) }}
+                                      {{ form_widget(formAsk.zone) }}
+                                  </div>
+                                  <div class="col-md-6 mb-15">
+                                      {{ form_label(formAsk.loyer) }}
+                                      {{ form_widget(formAsk.loyer) }}
+                                  </div>
+                                  <div class="col-md-6 mb-15">
+                                      {{ form_label(formAsk.typeBien) }}
+                                      {{ form_widget(formAsk.typeBien) }}
+                                  </div>
+                                  <div class="col-md-6 mb-15">
+                                      {{ form_label(formAsk.standing) }}
+                                      {{ form_widget(formAsk.standing) }}
+                                  </div>
+                                  <div class="col-md-12 mb-15">
+                                      {{ form_label(formAsk.detail) }}
+                                      {{ form_widget(formAsk.detail) }}
+                                  </div>
+                                  {{ form_widget(formAsk._token) }}
+                                  <div class="col-md-6">
+                                      <button type="submit" style="width: 100px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; color: white; background-color: #005555; border: none;">
+                                          Envoyer
+                                      </button>
+                                  </div>
+                              </div>
+                          </div>
+                      {{ form_end(formAsk) }}
+                  </div>
+              </div>
+          </div>
+        </div>
+          <!-- Modal Laisser vos demandes de chambre ici Fin -->
+
+        <!-- Modal Estimer mon loyer Start -->
+        <div class="modal fade estimer-loyer-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" style="color: #005555;">Vos informations</h3>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fermer">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% set message = app.session.get('message') %}
+                        {% if message == 'estimer_loyer' %}
+                            <div class="alert alert-success alert-dismissible fade show mb-3 text-center" role="alert">
+                                <strong>Votre demande de gestion locative est envoyée avec succès.</strong>
+                                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Fermer">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endif %}
+                        {{ form_start(formEsLoyer) }}
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 mb-15">
+                                        {{ form_label(formEsLoyer.nomPrenom) }}
+                                        {{ form_widget(formEsLoyer.nomPrenom) }}
+                                    </div>
+                                    <div class="col-md-4 mb-15">
+                                        {{ form_label(formEsLoyer.telephone) }}
+                                        {{ form_widget(formEsLoyer.telephone) }}
+                                    </div>
+                                    <div class="col-md-4 mb-15">
+                                        {{ form_label(formEsLoyer.email) }}
+                                        {{ form_widget(formEsLoyer.email) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formEsLoyer.lieu) }}
+                                        {{ form_widget(formEsLoyer.lieu) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formEsLoyer.typeLogement) }}
+                                        {{ form_widget(formEsLoyer.typeLogement) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formEsLoyer.standing) }}
+                                        {{ form_widget(formEsLoyer.standing) }}
+                                    </div>
+                                     <div class="col-md-6 mb-15">
+                                        {{ form_label(formEsLoyer.files) }}
+                                        {{ form_widget(formEsLoyer.files) }}
+                                    </div>
+                                    <div class="col-md-12 mb-15">
+                                        {{ form_label(formEsLoyer.detail) }}
+                                        {{ form_widget(formEsLoyer.detail) }}
+                                    </div>
+                                    {{ form_widget(formEsLoyer._token) }}
+                                    <div class="col-md-6">
+                                        <button type="submit" style="width: 100px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; color: white; background-color: #005555; border: none;">
+                                            Envoyer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        {{ form_end(formEsLoyer) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Estimer mon loyer End -->
+
+        <!-- Modal Confier mon bien à E-COYE Immo Start -->
+        <div class="modal fade confier-mon-bien-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" style="color: #005555;">Vos informations</h3>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fermer">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% set message = app.session.get('message') %}
+                        {% if message == 'confier_bien' %}
+                            <div class="alert alert-success alert-dismissible fade show mb-3 text-center" role="alert">
+                                <strong>Votre demande de mise à disposition de votre bien immobilier chez E-COYE IMMO est envoyée avec succès.</strong>
+                                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Fermer">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endif %}
+                        {{ form_start(formCfBien) }}
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 mb-15">
+                                        {{ form_label(formCfBien.nomPrenom) }}
+                                        {{ form_widget(formCfBien.nomPrenom) }}
+                                    </div>
+                                    <div class="col-md-4 mb-15">
+                                        {{ form_label(formCfBien.telephone) }}
+                                        {{ form_widget(formCfBien.telephone) }}
+                                    </div>
+                                    <div class="col-md-4 mb-15">
+                                        {{ form_label(formCfBien.email) }}
+                                        {{ form_widget(formCfBien.email) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formCfBien.zone) }}
+                                        {{ form_widget(formCfBien.zone) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formCfBien.typeLogement) }}
+                                        {{ form_widget(formCfBien.typeLogement) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formCfBien.standing) }}
+                                        {{ form_widget(formCfBien.standing) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formCfBien.files) }}
+                                        {{ form_widget(formCfBien.files) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formCfBien.dateHeureRdv) }}
+                                        {{ form_widget(formCfBien.dateHeureRdv) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formCfBien.typeRdv) }}
+                                        {{ form_widget(formCfBien.typeRdv) }}
+                                    </div>
+                                    <div class="col-md-12 mb-15">
+                                        {{ form_label(formCfBien.detail) }}
+                                        {{ form_widget(formCfBien.detail) }}
+                                    </div>
+                                    {{ form_widget(formCfBien._token) }}
+                                    <div class="col-md-6">
+                                        <button type="submit" style="width: 100px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; color: white; background-color: #005555; border: none;">
+                                            Envoyer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        {{ form_end(formCfBien) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Modal Confier mon bien à E-COYE Immo End -->
+
+        <!-- Modal Mettre mon bien en vente Start -->
+        <div class="modal fade mettre-mon-bien-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" style="color: #005555;">Vos informations</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% set message = app.session.get('message') %}
+                        {% if message == 'vendre_bien' %}
+                            <div class="alert alert-success alert-dismissible fade show mb-3 text-center" role="alert">
+                                <strong>Votre demande de mise en vente de votre bien immobilier est envoyée avec succès.</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endif %}
+                        {{ form_start(formVdBien) }}
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4 mb-15">
+                                        {{ form_label(formVdBien.nomPrenom) }}
+                                        {{ form_widget(formVdBien.nomPrenom) }}
+                                    </div>
+                                    <div class="col-md-4 mb-15">
+                                        {{ form_label(formVdBien.telephone) }}
+                                        {{ form_widget(formVdBien.telephone) }}
+                                    </div>
+                                    <div class="col-md-4 mb-15">
+                                        {{ form_label(formVdBien.email) }}
+                                        {{ form_widget(formVdBien.email) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formVdBien.zone) }}
+                                        {{ form_widget(formVdBien.zone) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formVdBien.typeBien) }}
+                                        {{ form_widget(formVdBien.typeBien) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formVdBien.standing) }}
+                                        {{ form_widget(formVdBien.standing) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formVdBien.estimation) }}
+                                        {{ form_widget(formVdBien.estimation) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formVdBien.dateHeureRdv) }}
+                                        {{ form_widget(formVdBien.dateHeureRdv) }}
+                                    </div>
+                                    <div class="col-md-6 mb-15">
+                                        {{ form_label(formVdBien.typeRdv) }}
+                                        {{ form_widget(formVdBien.typeRdv) }}
+                                    </div>
+                                    <div class="col-md-12 mb-15">
+                                        {{ form_label(formVdBien.files) }}
+                                        {{ form_widget(formVdBien.files) }}
+                                    </div>
+                                    <div class="col-md-12 mb-15">
+                                        {{ form_label(formVdBien.detail) }}
+                                        {{ form_widget(formVdBien.detail) }}
+                                    </div>
+                                    {{ form_widget(formVdBien._token) }}
+                                    <div class="col-md-6">
+                                        <button type="submit" style="width: 100px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; color: white; background-color: #005555; border: none;">
+                                            Envoyer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        {{ form_end(formVdBien) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Mettre mon bien en vente End -->
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            let btnLocataire = jQuery('#locataire-tab');
+            let btnProprietaire = jQuery('#proprietaire-tab');
+            let btnLoc = jQuery('#loc-tab');
+            let btnPro = jQuery('#pro-tab');
+            btnLocataire.css('border', '3px solid #005555').css('border-radius', '20px');
+            btnProprietaire.css('border', '3px solid transparent');
+            btnLoc.css('border-bottom', '3px solid #005555');
+            btnPro.css('border-bottom', '3px solid transparent');
+            btnLocataire.click(function () {
+                jQuery(this).css('border', '3px solid #005555').css('border-radius', '20px');
+                btnProprietaire.css('border', '3px solid transparent');
+            });
+            btnProprietaire.click(function () {
+                jQuery(this).css('border', '3px solid #005555').css('border-radius', '20px');
+                btnLocataire.css('border', '3px solid transparent');
+            });
+            btnLoc.click(function () {
+                jQuery(this).css('border-bottom', '3px solid #005555');
+                btnPro.css('border-bottom', '3px solid transparent');
+            });
+            btnPro.click(function () {
+                jQuery(this).css('border-bottom', '3px solid #005555');
+                btnLoc.css('border-bottom', '3px solid transparent');
+            });
+            let messageSucces = "{{ app.session.get('message') }}";
+            // Scroll vers le formulaire de contact
+            if (messageSucces === "contact") {
+                window.scroll(0, jQuery('#deposer-votre-demande-locative').offset().top);
+                console.log("{{ app.session.remove('message') }}");
+            }
+            // Affichage de chaque boite modale après soumission du formulaire
+            let laisserDemandeModal = jQuery('.laisser-demande-modal');
+            let estimerLoyerModal = jQuery('.estimer-loyer-modal');
+            let confierMonBienModal = jQuery('.confier-mon-bien-modal');
+            let mettreMonBienModal = jQuery('.mettre-mon-bien-modal');
+            if (messageSucces === "demande") {
+                laisserDemandeModal.modal('show').find('button.close').click(function() {
+                    laisserDemandeModal.modal('hide').find('div.alert').remove();
+                });
+                console.log("{{ app.session.remove('message') }}");
+            }
+            if (messageSucces === "estimer_loyer") {
+                estimerLoyerModal.modal('show').find('button.close').click(function() {
+                    estimerLoyerModal.modal('hide').find('div.alert').remove();
+                });
+                console.log("{{ app.session.remove('message') }}");
+            }
+            if (messageSucces === "confier_bien") {
+                confierMonBienModal.modal('show').find('button.close').click(function() {
+                    confierMonBienModal.modal('hide').find('div.alert').remove();
+                });
+                console.log("{{ app.session.remove('message') }}");
+            }
+            if (messageSucces === "vendre_bien") {
+                mettreMonBienModal.modal('show').find('button.close').click(function() {
+                    mettreMonBienModal.modal('hide').find('div.alert').remove();
+                });
+                console.log("{{ app.session.remove('message') }}");
+            }
+
+
+
+
+      });
+
+      // Fin ready
+      </script>
+
+            {% endblock %}
 

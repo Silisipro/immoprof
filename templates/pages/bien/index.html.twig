@@ -74,65 +74,88 @@
           </div>
         </div>
       </div>
-    </div>
+     </div>
    
-        <div class="row">
-          <div class="col-10">
+       <div class="row">
+          <div class="col-12">
             <div class="property-slider-wrap">
               <div class="property-slider">
                 <!-- .item -->
                  {% for bien in biens %}
+                  <div class="property-item">
+                    <a href="{{path('bien.show', {id: bien.id})}}" class="img">
+                      <img src="{{asset('assets/images/img_4.jpg')}}" alt="Image" class="img-fluid" />
+                    </a>
+                    <div class="property-content">
+                      <div class="price mb-2"><span>Prix : {{bien.price}} $</span></div>
+                        <div>
+                          <span class="d-block mb-2 text-black-50"
+                            >{{bien.name}} à {{bien.city}},{{bien.adress}}</span
+                          >
+                          <span class="city d-block mb-3">Caracteristiques</span>
 
-                <div class="property-item">
-                  <a href="{{path('bien.show', {id: bien.id})}}" class="img">
-                    <img src="{{asset('assets/images/img_3.jpg')}}" alt="Image" class="img-fluid" />
-                  </a>
-
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Prix : {{bien.price}} $</span></div>
-                    <div>
-                      <span class="d-block mb-2 text-black-50"
-                        >{{bien.name}} à {{bien.city}},{{bien.adress}}</span
-                      >
-                      <span class="city d-block mb-3">Caracteristiques</span>
-
-                      <div class="specs d-flex mb-4">
-                        <span class="d-block d-flex align-items-center">
-                            <span class="icon-bath me-2"></span>
-                            <span class="caption"> Surface : {{bien.surface}} m² </span>
-                          </span>
-                          <span class="d-block d-flex align-items-center">
-                            <span class="icon-bath me-2"></span>
-                            <span class="caption"> Etage : {{bien.floor}} </span>
-                          </span>                        
+                          <div class="specs d-flex mb-4">
+                            <span class="d-block d-flex align-items-center">
+                                <span class="icon-bath me-2"></span>
+                                <span class="caption"> Surface : {{bien.surface}} m² </span>
+                              </span>
+                              <span class="d-block d-flex align-items-center">
+                                <span class="icon-bath me-2"></span>
+                                <span class="caption"> Etage : {{bien.floor}} </span>
+                              </span>                        
+                          </div>
+                          <div class="specs d-flex mb-4">
+                              <span class="d-block d-flex align-items-center me-3">
+                                <span class="icon-bed me-2"></span>
+                                <span class="caption">{{bien.rooms}} pièces </span>
+                              </span>
+                              <span class="d-block d-flex align-items-center">
+                                <span class="icon-bath me-2"></span>
+                                <span class="caption"> {{bien.bedrooms}} chambres </span>
+                              </span>
+                              <span class="d-block d-flex align-items-center">
+                                <span class="icon-bath me-2"></span>
+                                <span class="caption"> Type de chauffage : {{bien.heatType}}</span>
+                              </span>
+                          </div>
+                          <a
+                            href="{{path('bien.show', {id: bien.id})}}"
+                            class="btn btn-primary py-2 px-3"
+                            >Plus de details</a
+                          >
                       </div>
-                      <div class="specs d-flex mb-4">
-                          <span class="d-block d-flex align-items-center me-3">
-                            <span class="icon-bed me-2"></span>
-                            <span class="caption">{{bien.rooms}} pièces </span>
-                          </span>
-                          <span class="d-block d-flex align-items-center">
-                            <span class="icon-bath me-2"></span>
-                            <span class="caption"> {{bien.bedrooms}} chambres </span>
-                          </span>
-                          
-                          <span class="d-block d-flex align-items-center">
-                            <span class="icon-bath me-2"></span>
-                            <span class="caption"> Type de chauffage : {{bien.heatType}}</span>
-                          </span>
-                      </div>
-
-                      <a
-                        href="{{path('bien.show', {id: bien.id})}}"
-                        class="btn btn-primary py-2 px-3"
-                        >Plus de details</a
-                      >
-                    </div>
                   </div>
                 </div>
+                  {% endfor %}
+
               </div>
-           </div>    
-            {% endfor %}
+
+              <div
+                id="property-nav"
+                class="controls"
+                tabindex="0"
+                aria-label="Carousel Navigation"
+              >
+                <span
+                  class="prev"
+                  data-controls="prev"
+                  aria-controls="property"
+                  tabindex="-1"
+                  >Prev</span
+                >
+                <span
+                  class="next"
+                  data-controls="next"
+                  aria-controls="property"
+                  tabindex="-1"
+                  >Next</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 {% endblock %}
 
