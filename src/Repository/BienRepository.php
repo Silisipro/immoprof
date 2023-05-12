@@ -46,7 +46,10 @@ class BienRepository extends ServiceEntityRepository
     public function findVisible(BienRecherche $recherche): array
     {
         $query = $this->createQueryBuilder('b')
-            ->andWhere('b.sold = false');
+            ->andWhere('b.sold = false')
+            ->addOrderBy('b.createdAt', 'DESC');
+
+
         if($recherche->getMaxPrice()){
             $query=$query
                    ->andWhere('b.price <= :maxprice')
@@ -58,19 +61,21 @@ class BienRepository extends ServiceEntityRepository
                    ->andWhere('b.surface >= :minsurface')
                    ->setParameter('minsurface', $recherche->getMinSurface());        
         }
-         return $query->getQuery()
-                      ->getResult()
-        ;
-      if ($recherche->getTypeBien()->getId()) {
+    
+        
+      if ($recherche->getTypeBien()) {
         
         $query = $query 
-                ->andWhere( ':typeBien MEMBER OF b.typeBien')
-                ->setParameter('tybebien', $recherche ->getTypeBien()->getId());        
+                 ->join('b.typeBien', 't')
+                ->andWhere( 't.id IN (:typeBien)')
+                ->setParameter('typeBien', $recherche ->getTypeBien());     
 
       }
+      return $query
+      ->getQuery()
+      ->getResult();
 
-
-    }
+    } 
     /**
     * @return Bien[] Returns an array of Bien objects
     */

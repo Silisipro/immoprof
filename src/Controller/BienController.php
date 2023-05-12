@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BienController extends AbstractController
 {
     
-    #[Route('/bien/disponible', name: 'bien.tout.index')]
+    #[Route('/bien/disponible', name: 'bien.tout.index', methods:['GET'])]
     public function index(BienRepository $bienRepository, Request $request, PaginatorInterface $paginator): Response
      {
 
@@ -27,8 +27,7 @@ class BienController extends AbstractController
 
        $biens= $paginator->paginate(
         $bienRepository->findVisible($recherche),
-        $request->query->getInt('page', 1),
-        5
+        $request->query->getInt('page', 1)
         );
 
         return $this->render('pages/bien/index.html.twig', [

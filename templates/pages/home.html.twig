@@ -1093,12 +1093,7 @@
                 jQuery(this).css('border-bottom', '3px solid #005555');
                 btnLoc.css('border-bottom', '3px solid transparent');
             });
-            let messageSucces = "{{ app.session.get('message') }}";
-            // Scroll vers le formulaire de contact
-            if (messageSucces === "contact") {
-                window.scroll(0, jQuery('#deposer-votre-demande-locative').offset().top);
-                console.log("{{ app.session.remove('message') }}");
-            }
+         
             // Affichage de chaque boite modale après soumission du formulaire
             let laisserDemandeModal = jQuery('.laisser-demande-modal');
             let estimerLoyerModal = jQuery('.estimer-loyer-modal');

@@ -59,25 +59,25 @@ class HomeController extends AbstractController
                 'detail' => $formEsLoyer->get('detail')->getData(),
                 'files' => $formEsLoyer->get('files')->getData(),
             ];
-           // $tabFichiers = [];
-           // foreach ($data['files'] as $file) {
-            //    if ($file instanceof UploadedFile) {
-                  //  $tabFichiers[] = $this->fileUploader->saveFile(
-                 //       $file,
-               //         false,
-          //              null,
-              //          null,
-             //           null,
-             //           false,
-              //          true
-               //     );
-              //  }
-           // }
+         /*   $tabFichiers = [];
+           foreach ($data['files'] as $file) {
+               if ($file instanceof UploadedFile) {
+                   $tabFichiers[] = $this->fileUploader->saveFile(
+                       $file,
+                       false,
+                       null,
+                       null,
+                       null,
+                       false,
+                        true
+                    );
+               }
+            }
            
             // Suppression des fichiers à envoyer par mail du dossier default
-           // foreach ($tabFichiers as $file) {
-           //     unlink($file);
-           // }
+            foreach ($tabFichiers as $file) {
+                unlink($file);
+            }*/
             $request->getSession()->set('message', "estimer_loyer");
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }

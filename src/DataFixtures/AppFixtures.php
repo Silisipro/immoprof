@@ -80,8 +80,7 @@ class AppFixtures extends Fixture
         foreach ( $biens as $bien){
             for ($k=0; $k < mt_rand(0, 10) ; $k++){
                 $standing = new Standing();
-                $standing ->setName($this->faker->word())
-                          ->setBien($bien);
+                $standing ->setName($this->faker->word());
 
                $manager->persist($standing);    
              }               
