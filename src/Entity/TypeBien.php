@@ -5,14 +5,19 @@ namespace App\Entity;
 use App\Repository\TypeBienRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Entity\Trait\EntityTimestampTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[UniqueEntity('type')]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: TypeBienRepository::class)]
 class TypeBien
 {
+
+    use EntityTimestampTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -20,14 +25,6 @@ class TypeBien
 
     #[ORM\Column(length: 255)]
     private ?string $type;
-
-    #[ORM\Column]
-    #[Assert\NotBlank()]
-    private ?\DateTimeImmutable $createdAt;
-
-    #[ORM\Column]
-    #[Assert\NotBlank()]
-    private ?\DateTimeImmutable $updatedAt;
 
     #[ORM\OneToMany(mappedBy: 'typeBien', targetEntity: Bien::class)]
     private Collection $biens;
@@ -37,7 +34,7 @@ class TypeBien
     public function __construct()
     {
         $this ->createdAt = new \DateTimeImmutable;
-        $this ->updatedAt= new \DateTimeImmutable;
+        $this ->updatedAt= new \DateTimeImmutable();
         $this->biens = new ArrayCollection();
     }
 
@@ -57,30 +54,7 @@ class TypeBien
 
         return $this;
     }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
+  
 
     /**
      * @return Collection<int, Bien>
@@ -112,9 +86,5 @@ class TypeBien
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->createdAt;
-        return $this->updatedAt;
-    }
+
 }

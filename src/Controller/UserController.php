@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,7 +22,15 @@ class UserController extends AbstractController
    public function index(UserRepository $userRepository ) : Response
    {
     return $this->render('admin/user/index.html.twig',[
-        'Users'=>$userRepository->findAll(),
+        'Users'=>$userRepository->findBy(
+            [
+                'deleted' => false,
+                'bloque' => false,
+            ],
+            [
+                'createdAt' => 'DESC'
+            ]
+        ),
             
     ]);
    } 
@@ -94,7 +103,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
                  
             if ($hasher->isPasswordValid($choosenUser, $form->getData()['PlainPassword'])){
-                $choosenUser->setUpdateAt( new \DateTimeImmutable());
+                $choosenUser->setUpdatedAt( new \DateTimeImmutable());
                 $choosenUser->setPlainPassword(
                     $form ->getData()['newPassword']
                 );
@@ -121,24 +130,92 @@ class UserController extends AbstractController
    }
 
    #[Route('/utilisateur/liste', name: 'app_user_index', methods: ['GET'])]
+   #[IsGranted('ROLE_ADMIN')]
     public function listuser (UserRepository $userRepository): Response
     {
         return $this->render('admin/user/show.html.twig', [
-            'users' => $userRepository->findAll()
+            'users' => $userRepository->findBy(
+                [
+                    'deleted' => false,
+                    'bloque' => false,
+                ],
+                [
+                    'createdAt' => 'DESC'
+                ]
+            )
                
         ]);
     }
+    #[Route('/bloque', name: 'app_user_index_bloque', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function userBloque(UserRepository $userRepository): Response
+    {
+        return $this->render('/admin/user/bloque.html.twig', [
+            'users' => $userRepository->findBy(
+                [
+                    'deleted' => false,
+                    'bloque' => true,
+                ],
+                [
+                    'createdAt' => 'DESC'
+                ]
+            ),
+        ]);
+    }
+
+
+    #[Route('/{id}/bloquer', name: 'app_user_bloquer', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function bloquer(User $user, UserRepository $userRepository): Response
+    {
+        $user->setBloque(true);
+        $userRepository->save($user, true);
+        return $this->redirectToRoute('app_user_index_bloque', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+
+    #[Route('/{id}/debloquer', name: 'app_user_debloquer', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function debloquer(User $user, UserRepository $userRepository): Response
+    {
+        $user->setDeleted(false);
+        $user->setBloque(false);
+        $userRepository->save($user, true);
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+
 
     #[Route('/{id}/supprimer', name: 'app_user_delete', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            //$user->setDeleted(true);
+            $user->setDeleted(true);
             $userRepository->remove($user, true);
         }
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    
-    
+    #[Route('/supprime', name: 'app_user_index_supprime', methods: ['GET'])]
+        #[IsGranted('ROLE_ADMIN')]
+        public function userSupprime(UserRepository $userRepository): Response
+        {
+            return $this->render('admin/user/suprime.html.twig', [
+                'users' => $userRepository->findBy(
+                    [
+                        'deleted' => true,
+                    ],
+                    [
+                        'createdAt' => 'DESC'
+                    ]
+                ),
+            ]);
+        }
+
+
+
 }
+    
+

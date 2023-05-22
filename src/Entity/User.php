@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Entity\Trait\EntityTimestampTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -14,10 +15,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[UniqueEntity('email')]
 #[ORM\EntityListeners(['App\EntityListener\UserListener'])]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
+    use EntityTimestampTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -41,6 +46,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
+    private ?bool $bloque = false;
+
+    #[ORM\Column]
     #[Assert\NotNull()]
     private array $roles = [];
 
@@ -57,13 +65,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank()]
     private ?string $password = "password";
 
-    #[ORM\Column]
-    #[Assert\NotNull()]
-    private ?\DateTimeImmutable $createdAt;
 
-    #[ORM\Column]
-    #[Assert\NotNull()]
-    private ?\DateTimeImmutable $updateAt;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Bien::class)]
     private Collection $biens;
@@ -71,7 +73,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
          $this -> createdAt = new \DateTimeImmutable;
-         $this -> updateAt = new \DateTimeImmutable;
+         $this->updatedAt = new \DateTimeImmutable();
+         $this->deleted = false;
          $this->biens = new ArrayCollection();
     }
 
@@ -124,6 +127,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+
+    public function isBloque(): ?bool
+    {
+        return $this->bloque;
+    }
+
+    public function setBloque(bool $bloque): self
+    {
+        $this->bloque = $bloque;
 
         return $this;
     }
@@ -205,29 +221,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdateAt(): ?\DateTimeImmutable
-    {
-        return $this->updateAt;
-    }
-
-    public function setUpdateAt(\DateTimeImmutable $updateAt): self
-    {
-        $this->updateAt = $updateAt;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Bien>

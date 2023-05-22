@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+
+use App\Entity\Trait\EntityTimestampTrait;
 use App\Repository\BienRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,14 +11,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: BienRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+
+
 class Bien
 {  
+
+    use EntityTimestampTrait;
+
     const HEAT = [
-        '0'=> 'Electricque',
-        '1'=> 'Solaire',
-        '2'=> 'Gaz',
-        '3'=> 'Forage',
-        '4'=> 'Soneb'
+        '0'=> '--Selectionner--',
+        '1'=> 'Compteur personnel',
+        '2'=> 'Decompteur',
+        '3'=> 'Panneaux solaire',
     ];
 
     #[ORM\Id]
@@ -33,9 +40,6 @@ class Bien
     #[Assert\LessThan(10000001)]
     private ?float $price;
 
-    #[ORM\Column]
-    #[Assert\NotBlank()]
-    private ?\DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
@@ -72,6 +76,9 @@ class Bien
     #[ORM\Column]
     private ?bool $sold = false;
 
+    #[ORM\Column(length: 255)]
+    private ?string $etat = null;
+
     #[ORM\ManyToOne(inversedBy: 'biens')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -90,7 +97,8 @@ class Bien
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable;
-       
+        $this->updatedAt = new \DateTimeImmutable();
+        $this->deleted = false;
     }
 
     public function getId(): ?int
@@ -127,17 +135,6 @@ class Bien
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -251,6 +248,19 @@ class Bien
 
         return $this;
     }
+
+    public function getEtat(): ?string
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(string $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
 
     public function getUser(): ?User
     {

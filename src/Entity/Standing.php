@@ -10,9 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[UniqueEntity('name')]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: StandingRepository::class)]
 class Standing
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

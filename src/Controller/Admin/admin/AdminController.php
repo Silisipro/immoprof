@@ -10,6 +10,8 @@ use App\Form\LogeType;
 use App\Form\StandingType;
 use App\Repository\BienRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\FileUploader;
+use App\Service\RandomStringGeneratorServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,7 +60,13 @@ class AdminController extends AbstractController
                        $bien = $form ->getData();
                        $bien->setUser($this->getUser());
 
-
+                       $bien->setUser($this->getUser());
+                       if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_USER')) {
+                           $bien->setEtat('en attente de publication');
+           //                $bien->setDatePublication(new \DateTime());
+                       } else {
+                           $bien->setEtat('en attente de publication');
+                       }
                    $manager->persist($bien);
                    $manager->flush();
                

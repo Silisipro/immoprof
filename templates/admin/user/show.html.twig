@@ -41,8 +41,7 @@
                     <th scope="col">Nom</th>
                     <th scope="col">Numéro de téléphone</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Rôles</th>
-                    <th scope="col">Mot de passe</th>
+                    <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -52,7 +51,22 @@
                     <td>{{user.fullName}}</td>
                     <td>{{user.telephone}}</td>
                     <td>{{user.email}}</td>
-                    <td>{{user.plainPassword}}</td>
+                    <td>
+                        <a href="{{ path('admin_index', {'id': user.id}) }}" title="Afficher" class="btn btn-info btn-sm">
+                          <i class="bi bi-eye text-white"></i>
+                        </a>
+                        <a href="{{path('app_user_bloquer', {'id': user.id})}}" title="Bloqué" class="btn btn-danger btn-sm">
+                        <i class="bi bi-pencil"></i>
+                        </a>
+                        </a>
+                         <a href="{{path('app_user_delete', {'id': user.id})}}" title="Supprimer" class="btn btn-primary btn-sm">
+                           <i class="bi bi-pencil"></i>
+                          </a>
+                    </td>
+                  </tr>
+                  {% else %}
+                  <tr>
+                      <td colspan="5" class="text-center">Aucun enregistrement</td>
                   </tr>
                   {% endfor %}
                 </tbody>
