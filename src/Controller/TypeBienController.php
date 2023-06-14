@@ -18,7 +18,8 @@ class TypeBienController extends AbstractController
 {
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/type/bien/liste', name: 'app.typebien.list', methods: ['GET', 'POST'])]
-    public function index(TypeBienRepository $Repository, PaginatorInterface $paginator, Request $request ): Response
+    public function index(TypeBienRepository $Repository,
+     PaginatorInterface $paginator, Request $request ): Response
     {
             
             $typebiens = $paginator->paginate (
@@ -31,16 +32,58 @@ class TypeBienController extends AbstractController
             'typebiens' => $typebiens,
         ]);
     }
+     
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/ajout/typebien', name: 'app.typebien.new', methods: ['GET', 'POST'])]
+    public function typebien(Request $request, EntityManagerInterface $manager, )
+    {
+         
+       $typebien = new TypeBien();
+       $form = $this ->createForm(LogeType::class, $typebien);
+       $form->handleRequest($request);
+       
+       if ($form->isSubmitted() && $form->isValid()) { 
+        $data = [
+            'chois' => $form->get('chois')->getData()];
+            foreach ($data as $d) 
+             $typebien = $form ->getData();
+             $typebien->setCategorie($d);
+
+            $manager->persist($typebien,);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Le type de bien a été ajouté avec succès'
+            );
+
+            return $this->redirectToRoute('app.typebien.list');      
+       };
+
+
+       return $this->render('admin/typebien/new.html.twig', [
+        'form'=>$form->createView()
+    ]);
+
+   }
+
+
     #[Security("is_granted('ROLE_ADMIN')")]
     #[Route('/edit/typebien/{id}', name: 'app.typebien.edit', methods: ['GET', 'POST'])]
-    public function edittypbien(TypeBien $typeBien, Request $request, EntityManagerInterface $manager): Response
+    public function edittypbien(TypeBien $typeBien, 
+    Request $request, EntityManagerInterface $manager): Response
     {
 
         $form = $this->createForm(LogeType::class, $typeBien);
         $form->handleRequest($request);
          
          if ($form->isSubmitted() && $form->isValid()) { 
-            $typeBien =$form->getData();
+            $data = [
+                'chois' => $form->get('chois')->getData()];
+                foreach ($data as $d) 
+                 $typebien = $form ->getData();
+                 $typebien->setCategorie($d);
 
             $manager->persist($typeBien);
             $manager->flush();
@@ -58,16 +101,6 @@ class TypeBienController extends AbstractController
             
         ]);
     }
-
-
-    
-
-
-
-
-
-
-
 
 
 

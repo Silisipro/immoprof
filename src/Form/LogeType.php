@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\TypeBien;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -27,7 +28,19 @@ class LogeType extends AbstractType
                     ]
         
                 ])
-            
+                ->add('chois', ChoiceType::class, [
+                    'choices' => [
+                        'A louer' => 'a_louer',
+                        'A vendre' => 'a_vendre',
+                    ],
+                    'label' => 'Choisir le type du bien',
+                    'expanded' => true,
+                    'multiple' => false,
+                    'mapped' => false,
+                    'label_attr' => [
+                    ],
+                    'placeholder' => false,
+                ])    
         ;
     }
 

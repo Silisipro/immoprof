@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Repository\ContactRepository;
+use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,13 +37,7 @@ class ContactController extends AbstractController
                     
                     //Email
 
-            $mailService->sendEmail(
-
-                $contact->getEmail(),
-                $contact->getObjet(),
-                'emails/contact.html.twig',
-                ['contact' => $contact]
-            );
+         
 
             $this->addFlash(
                 'success',

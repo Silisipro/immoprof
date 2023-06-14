@@ -3,15 +3,9 @@
 namespace App\Controller\Admin\admin;
 
 use App\Entity\Bien;
-use App\Entity\Standing;
-use App\Entity\TypeBien;
-use App\Form\BienType;
-use App\Form\LogeType;
-use App\Form\StandingType;
+use App\Form\Bien1Type;
 use App\Repository\BienRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Service\FileUploader;
-use App\Service\RandomStringGeneratorServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 
-
+#[Route('/admin')]
 class AdminController extends AbstractController
 {
 /**
@@ -29,41 +23,59 @@ class AdminController extends AbstractController
   * @return Response
   */
     #[IsGranted('ROLE_USER')]
-    #[Route('/admin/bien', name: 'app.admin.bien', methods: ['GET', 'POST'])]
+    #[Route('/bien', name: 'app.admin.bien', methods: ['GET', 'POST'])]
     public function index(BienRepository $bienRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $biens = $paginator->paginate(
-            $bienRepository->findBy(['user'=> $this->getUser()]),
-            $request->query->getInt('page', 1),
-            5
-        );
+        $biens = null;
+        
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $biens = $paginator->paginate(
+                $bienRepository->findBy(
+                [
+                    'deleted' => false,
+                ],
+                [
+                    'createdAt' => 'DESC',
+                ]
+                ),
+                $request->query->getInt('page', 1),
+                5
+            );
+        } else {
+            
+            $biens = $paginator->paginate(
+            $bienRepository->findBy(
+                [
+                    'deleted' => false,
+                    'user' => $this->getUser(),
+                ],
+                [
+                    'createdAt' => 'DESC',
+                ]
+                ),
+                $request->query->getInt('page', 1),
+                5
+            );
+        }
 
         return $this->render('admin/bien/index.html.twig', [
             'biens' => $biens,
         ]);
     }
  
-/**
-    * This controller create new bien
-    *@param EntityManagerInterface $manager
-    * @param Request $request
-    * @return Response
-    */
-    #[IsGranted('ROLE_USER')]
-    #[Route('/admin/creation/bien', name: 'app.bien.new', methods: ['GET', 'POST'])]
+    #[Route('/creation/bien', name: 'app.bien.new', methods: ['GET', 'POST'])]
    public function new (Request $request, EntityManagerInterface $manager ): Response
    {
                $bien = new Bien();
-               $form = $this->createForm(BienType::class, $bien);
+               $form = $this->createForm(Bien1Type::class, $bien);
                $form->handleRequest($request);
                    if ($form->isSubmitted() && $form->isValid()) {
                        $bien = $form ->getData();
                        $bien->setUser($this->getUser());
 
-                       $bien->setUser($this->getUser());
-                       if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_USER')) {
+                       if ($this->isGranted('ROLE_ADMIN')) {
                            $bien->setEtat('en attente de publication');
-           //                $bien->setDatePublication(new \DateTime());
+                           $bien->setDatePublication(new \DateTime());
                        } else {
                            $bien->setEtat('en attente de publication');
                        }
@@ -83,18 +95,22 @@ class AdminController extends AbstractController
            'form'=>$form->createView()
        ]);
    }
-
-    #[Security("is_granted('ROLE_USER') and user===bien.getUser()")]
-    #[Route('/admin/edit/bien/{id}', name: 'app.admin.edit', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_USER','ROLE_ADMIN') || user===bien.getUser()")]
+    #[Route('/edit/bien/{id}', name: 'app.admin.edit', methods: ['GET', 'POST'])]
     public function edit(Bien $bien, Request $request, EntityManagerInterface $manager): Response
     {
 
-        $form = $this->createForm(BienType::class, $bien);
+        $form = $this->createForm(Bien1Type::class, $bien);
         $form->handleRequest($request);
          
          if ($form->isSubmitted() && $form->isValid()) { 
             $bien =$form->getData();
-
+            if ($this->isGranted('ROLE_ADMIN')) {
+                $bien->setEtat('en attente de publication');
+                $bien->setDatePublication(new \DateTime());
+            } else {
+                $bien->setEtat('en attente de publication');
+            }
             $manager->persist($bien);
             $manager->flush();
 
@@ -112,98 +128,200 @@ class AdminController extends AbstractController
         ]);
     }
 
-     /**
-    * This controller delete bien
-    * @param bien  $bien
-    *@param EntityManagerInterface $manager
-    * @param Request $request
-    * @return Response
-    */
-    #[IsGranted('ROLE_USER')]
-    #[Route('/admin/supression/bien/{id}', name: 'app.admin.delete', methods:['GET'])]
-    public function delete(Bien  $bien, Request $request, EntityManagerInterface $manager ) : Response
-    { 
-        # if($this->isCsrfTokenValid('delete' . $bien->getId(), $request->get('_token'))) {
-        #    $manager->remove($bien);
-        #    $manager->flush();
-        # }
-        $manager->remove($bien);
-        $manager->flush();
-        $this->addFlash(
-            'success',
-            ' Votre ingrédient a été suprimé avec succès'
-        );
 
-
-        return $this->redirectToRoute('admin/bien/index.html.twig'); 
-    }  
-    
-    #[IsGranted('ROLE_ADMIN')]
-    #[Route('/admin/ajout/standing', name: 'app.standing.new', methods: ['GET', 'POST'])]
-    public function standing(Request $request, EntityManagerInterface $manager )
+    #[Route('/publier/{id}', name: 'app.publier.bien', methods: ['POST'])]
+    public function publierBien(Request $request, Bien $bien, BienRepository $bienRepository): Response
     {
-
-       $standing = new Standing();
-       $form = $this ->createForm(StandingType::class, $standing);
-       $form->handleRequest($request);
-       
-       if ($form->isSubmitted() && $form->isValid()) { 
-
-        $standing = $form ->getData();
-    
-
-    $manager->persist($standing);
-    $manager->flush();
-
-
-            return $this->redirectToRoute('app.bien.new');      
-       };
-
-       return $this->render('admin/standing/new.html.twig', [
-        'form'=>$form->createView()
-    ]);
-
-    }
-
-     
-    #[IsGranted('ROLE_ADMIN')]
-    #[Route('/admin/ajout/typebien', name: 'app.typebien.new', methods: ['GET', 'POST'])]
-    public function typebien(Request $request, EntityManagerInterface $manager )
-    {
-
-       $typebien = new TypeBien();
-       $form = $this ->createForm(LogeType::class, $typebien);
-       $form->handleRequest($request);
-       
-       if ($form->isSubmitted() && $form->isValid()) { 
-
-        $typebien = $form ->getData();
-    
-
-
-            $manager->persist($typebien);
-            $manager->flush();
+        if ($this->isCsrfTokenValid('publier'.$bien->getId(), $request->request->get('_token'))) {
+            $bien->setEtat('publie');
+            $bienRepository->save($bien, true);
 
             $this->addFlash(
                 'success',
-                'Le type de bien a été ajouté avec succès'
+                ' Votre bien a été publié avec succès'
             );
-
-
-            return $this->redirectToRoute('app.typebien.list');      
-       };
-
-
-
-       return $this->render('admin/typebien/new.html.twig', [
-        'form'=>$form->createView()
-    ]);
-
+        }
+        if (json_encode($bien->getUser()->getRoles()) == '["ROLE_ADMIN"]') {
+            return $this->redirectToRoute('publie.par.tout.user');
+        } else {
+            return $this->redirectToRoute('app.admin.bien');
+        }
     }
 
+
+    
+    #[Route('/supression/bien/{id}', name: 'app.admin.delete', methods: ['POST'])]
+    public function delete(Bien  $bien, Request $request, BienRepository $bienRepository ) : Response
+    { 
+        if($this->isCsrfTokenValid ('delete'.$bien->getId(), $request->request->get('token'))) {
+            $bien->setDeleted(true);
+            $bienRepository->remove($bien, true);
+        }
+        
+        $this->addFlash(
+            'success',
+            ' Votre bien a été suprimé avec succès'
+        );
+
+        return $this->redirectToRoute('app.admin.bien'); 
+    }  
+   
+    #[Route('/publie-par-moi-meme', name: 'publie.par.user.meme', methods: ['GET'])]
+    public function publieParuser(BienRepository $bienRepository): Response
+    {
+        $listeBiens = $bienRepository->findBy(
+            [
+                'deleted' => false,
+                'etat' => 'publie',
+                'user' => $this->getUser(),
+            ],
+            [
+                'datepublication' => 'DESC',
+            ]
+        );
+        return $this->render('admin/bien/publie_moi_meme.html.twig', [
+            'biens' => $listeBiens,
+        ]);
+    }
+  
+    #[Route('/en-attente-de-publication', name: 'en.attente.de.publication', methods: ['GET'])]
+    public function biensEnAttenteDePublication(BienRepository $bienRepository): Response
+    {
+        $listeBiens = null;
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $listeBiens = $bienRepository->findBy(
+                [
+                    'deleted' => false,
+                    'etat' => 'en attente de publication',
+                ],
+                [
+                    'createdAt' => 'DESC',
+                ]
+            );
+        } else {
+            //  rôle USER
+            $listeBiens = $bienRepository->findBy(
+                [
+                    'deleted' => false,
+                    'etat' => 'en attente de publication',
+                    'user' => $this->getUser(),
+                ],
+                [
+                    'createdAt' => 'DESC',
+                ]
+            );
+        }
+        return $this->render('admin/bien/bien_en_attente_publication.html.twig', [
+            'biens' => $listeBiens,
+        ]);
+    }
+
+    #[Route('/publie-par-tout-user', name: 'publie.par.tout.user', methods: ['GET'])]
+    public function publieParTout(BienRepository $bienRepository): Response
+    {
+        $listeBiens = null;
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $listeBiens = $bienRepository->biensPubliesParToutuser('publie');
+              
+        } else {
+            //  rôle USER
+            $listeBiens = $bienRepository->findBy(
+                [
+                    'deleted' => false,
+                    'etat' => 'publie',
+                    'user' => $this->getUser(),
+                ],
+                [
+                    'datePublication' => 'DESC',
+                ]
+            );
+        }
+        return $this->render('admin/bien/publie_par_tout_user.html.twig', [
+            'biens' => $listeBiens,
+        ]);
+    }
+   
+    #[Route('/republier/{id}', name: 'app.republier.bien', methods: ['POST'])]
+    public function republierBien(Request $request, Bien $bien, BienRepository $bienRepository): Response
+    {
+        if ($this->isCsrfTokenValid('republier'.$bien->getId(), $request->request->get('_token'))) {
+            $bien->setEtat('en attente de publication');
+            $bienRepository->save($bien, true);
+        }
+        return $this->redirectToRoute('en_attente_de_publication');
+    }
+ 
+    #[Route('/louer/{id}', name: 'app_louer_bien', methods: ['POST'])]
+    public function louerBien(Request $request, Bien $bien, BienRepository $bienRepository): Response
+    {
+        if ($this->isCsrfTokenValid('louer'.$bien->getId(), $request->request->get('_token'))) {
+            $bien->setEtat('loue');
+            $bien->setDateLocationVente(new \DateTime());
+            $bienRepository->save($bien, true);
+        }
+        if (is_null($bien->getUser())) {
+            return $this->redirectToRoute('loue_vendu_par_moi_meme');
+        }
+        if (json_encode($bien->getUser()->getRoles()) == '["ROLE_USER"]') {
+            return $this->redirectToRoute('loue_vendu_par_user');
+        } else {
+            return $this->redirectToRoute('loue_vendu_par_moi_meme');
+        }
+    }
+
+
+    #[Route('/vendre/{id}', name: 'app_vendre_bien', methods: ['POST'])]
+    public function vendreBien(Request $request, Bien $bien, BienRepository $bienRepository): Response
+    {
+        if ($this->isCsrfTokenValid('vendre'.$bien->getId(), $request->request->get('_token'))) {
+            $bien->setEtat('vendu');
+            $bien->setDateLocationVente(new \DateTime());
+            $bienRepository->save($bien, true);
+        }
+        if (is_null($bien->getUser())) {
+            return $this->redirectToRoute('loue_vendu_par_moi_meme');
+        }
+        if (json_encode($bien->getUser()->getRoles()) == '["ROLE_USER"]') {
+            return $this->redirectToRoute('loue_vendu_par_user');
+        } else {
+            return $this->redirectToRoute('loue_vendu_par_moi_meme');
+        }
+    }
+
+
+    #[Route('/loue-vendu-par-moi-meme', name: 'loue_vendu_par_moi_meme', methods: ['GET'])]
+    public function loueVenduParMoiMeme(BienRepository $bienRepository): Response
+    {
+        $listeBiens = null;
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $listeBiens = $bienRepository->biensLoueVendu('loue','vendu');
+        }
+        return $this->render('admin/bien/loue_vendu_moi_meme.html.twig', [
+            'biens' => $listeBiens,
+        ]);
+    }
+
+
+    #[Route('/loue-vendu-par-user', name: 'loue_vendu_par_user', methods: ['GET'])]
+    public function loueVenduPaUser(BienRepository $bienRepository): Response
+    {
+        $listeBiens = null;
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $listeBiens = $bienRepository->VendLoue('loue','vendu');
+        } else {
+           
+            $listeBiens = $bienRepository->VendLoueParUser('loue','vendu', $this->getUser());
+        }
+        return $this->render('admin/bien/loue_vendu_par_user.html.twig', [
+            'biens' => $listeBiens,
+        ]);
+    }
+
+
+
+
+
+
+
+
 }
-
-
-
-
-

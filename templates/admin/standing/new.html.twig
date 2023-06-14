@@ -1,77 +1,31 @@
-<html lang="fr">
+{% extends 'admin/bien/index.html.twig' %}
+{% block title %}
+   Administration des standings
+{% endblock %}
+{% block pageTitle %}
+    Administration des standings
+{% endblock %}
+{% block breadcrumb %}
+Ajout de standing
+{% endblock %}
+{% block bouton %}
+    <a href="{{ path('admin_index') }}" class="btn btn-primary btn-sm">Tableau de bord</a>
+{% endblock %}
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <title>{% block title %}Immopro | Ajout de standing {% endblock %}</title>
-
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-
-      {% block stylesheets  %}
-        {% include 'admin/partiel/stulo.html.twig' %}
-        
-      {% endblock %}
-  
-</head>
-
-<body>
-    {% block header %}
-        {% include 'admin/partiel/header.html.twig' %}
-        {% endblock %}
-
-      {% block body %}
-      {% include 'admin/partiel/body.html.twig' %}
-
-    <section class="section profile">
-      <div class="row">
-        <div class="col-xl-4">
-
-          <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-              <img src="{{asset('asset/img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
-                <h2> {{app.user.fullName}}</h2>
-                 <h3>Agent Immobilier</h3>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="col-xl-8">
-
-          <div class="card">
-            <div class="card-body pt-3"> 
-                <h1>Ajout de standing</h1>
+{% block body %}
+  <div class="col-xl-12">
+    <div class="card">
+       <div class="card-body pt-3"> 
                 {{ form_start(form) }}
                       <div class="row mb-3">
-                        <div class="col-md-8 col-lg-8"> {{ form_row(form.name) }}</div>
+                        <div class="col-md-12 col-lg-12"> {{ form_row(form.name) }}</div>
                       </div>
-
-
                   {{ form_widget(form) }}
-                    <button class=" col-md-4 col-lg-4 btn btn-primary mt-4">Enrégistrer</button>
-                     
-                 {{ form_end(form) }}
+                    <button class=" col-md-12 col-lg-12 btn btn-primary mt-4">Enrégistrer</button>                    
+                {{ form_end(form) }}
 
                <!-- End Bordered Tabs -->
-
-            </div>
-          </div>
-
         </div>
-
       </div>
-    </section>
-
-  </main><!-- End #main -->
- {% endblock %}
-
-    {% block footer %}
-    {% include 'admin/partiel/footer.html.twig' %}
-        
-    {% endblock %}
-</body>
-
-</html>
+  </div>
+{% endblock %}

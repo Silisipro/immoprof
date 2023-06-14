@@ -1,0 +1,70 @@
+{% extends 'admin/bien/index.html.twig' %}
+
+
+{% block title %}
+   Administration des standings
+{% endblock %}
+{% block pageTitle %}
+    Administration des standings
+{% endblock %}
+{% block breadcrumb %}
+    Agent Immobilier
+{% endblock %}
+{% block bouton %}
+    <a href="{{ path('admin_index') }}" class="btn btn-primary btn-sm">Tableau de bord</a>
+{% endblock %}
+
+{% block body %}
+    <div class="col-xl-12">
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+              <h2>  
+            <a href = "{{ path('app.standing.new') }}" class = "btn btn-outline-info btn-sm w-100 my-1">Ajouter un standing</a>   
+              </h2>
+             </div>
+          </div>
+
+      </div>
+        
+      <div class="col-xl-12">
+
+        <div class="card">
+            <div class="card-body pt-3"> 
+               {% for message in app.flashes('success') %}
+                 <div class = 'alert alert-success mt-4'>
+                  {{message}}
+                 </div> 
+               {% endfor %}
+                <table class="table table-hover">
+                      <thead>
+                          <tr>
+                              <th scope="col">Type de standing</th>
+                              <th scope="col">Date d'ajout</th>
+                              <th scope="col">Date du dernière modification</th>
+                              <th scope="col">Edition</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for standing in standings %}
+                              <tr class="table-primary">
+                                  <th scope="row"><h6> {{standing.name}}</h6></th>
+                                  <th scope="row"> <h6>{{standing.createdAt|date("d/m/Y à H:i:s")}} </h6></th>
+                                  <th scope="row"> <h6>{{standing.updateAt|date("d/m/Y à H:i:s") }} </h6></th>
+                                  <th scope="row">
+                                  <a href = "{{path('app.standing.edit', {id: standing.id } )}}" class="btn btn-info">Editer</a>
+                                  </th>
+                              </tr>
+                             {% else %}
+                                <tr>
+                                        <td colspan="4" class="text-center">Aucun enregistrement</td>
+                                </tr>
+                          {% endfor %}
+                      </tbody>
+                 </table>            
+                <div class="pagination page-item disabled">
+                 {{knp_pagination_render(standings) }}
+                </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

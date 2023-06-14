@@ -29,7 +29,10 @@ class TypeBien
     #[ORM\OneToMany(mappedBy: 'typeBien', targetEntity: Bien::class)]
     private Collection $biens;
 
+    #[ORM\Column(length: 255)]
     
+    private ?string $categorie;
+
 
     public function __construct()
     {
@@ -55,6 +58,17 @@ class TypeBien
         return $this;
     }
   
+    public function getCategorie(): ?string
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(string $categorie): self
+    {
+        $this-> categorie = $categorie;
+
+        return $this;
+    }
 
     /**
      * @return Collection<int, Bien>

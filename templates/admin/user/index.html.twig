@@ -1,46 +1,42 @@
-<html lang="fr">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <title>{% block title %}Immopro | Profil {% endblock %}</title>
+{% extends 'admin/bien/index.html.twig' %}
 
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+{% block title %}
+    Nouveau bien
+{% endblock %}
+{% block pageTitle %}
+    Nouveau bien
+{% endblock %}
+{% block breadcrumb %}
+    Agent Immobilier
+{% endblock %}
+{% block bouton %}
+    <a href="{{ path('admin_index') }}" class="btn btn-primary btn-sm">Tableau de bord</a>
+{% endblock %}
 
-
-      {% block stylesheets  %}
-        {% include 'admin/partiel/stulo.html.twig' %}
-        
-      {% endblock %}
-  
-</head>
-
-<body>
-    {% block header %}
-        {% include 'admin/partiel/header.html.twig' %}
-        {% endblock %}
-
-      {% block body %}
-      {% include 'admin/partiel/body.html.twig' %}
-
-<section class="section profile">
+{% block body %}
       <div class="row">
         <div class="col-xl-4">
-
-          <div class="card">
+          <div class = "card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
               <img src="{{asset('asset/img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
               <h2>{{ app.user.fullName }} </h2>
-              <h3>Agent immobilier</h3>
+              <h6 class="mt-2">
+                  <strong>Rôle :</strong>
+                  {% if app.user.roles is not empty %}
+                    {% if app.user.roles|json_encode == '["ROLE_USER","ROLE_ADMIN"]' %}
+                      Administrateur
+                    {% endif %}
+                    {% if app.user.roles|json_encode == '["ROLE_USER"]' %}
+                      Agent Immobilier           
+                    {% endif %}
+                  {% endif %}
+              </h6>
             </div>
           </div>
-
         </div>
 
         <div class="col-xl-8">
-
           <div class="card">
             <div class="card-body pt-3">
             {% for message in app.flashes('success') %}
@@ -64,70 +60,51 @@
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
                   <h5 class="card-title">A propos</h5>
-                  <p class="small fst-italic">Bienvenu sur votre interface d'administration. Appuyez sur Gerer pour publier et suivre votre bien.</p>
+                  <h6 class="small fst-italic">Bienvenu sur votre interface d'administration. Appuyez sur Gerer pour publier et suivre votre bien.</6>
 
                   <h5 class="card-title">Détails profil</h5>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Nom</div>
-                    <div class="col-lg-9 col-md-8">{{ app.user.fullName }}</div>
+                    <div class="col-lg-4 col-md-4 label ">Nom :</div>
+                    <div class="col-lg-4 col-md-4">{{ app.user.fullName }}</div>
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Numéro de téléphone</div>
-                    <div class="col-lg-9 col-md-8">{{ app.user.telephone }}</div>
+                    <div class="col-lg-4 col-md-4 label">Numéro de téléphone :</div>
+                    <div class="col-lg-4 col-md-4">{{ app.user.telephone }}</div>
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Lieu de residence</div>
-                    <div class="col-lg-9 col-md-8">
-                    {% if app.user.lieu %}
-                    {{ app.user.lieu }}
-                        {% else %}
-                       Lieu non renseigné
-                    {% endif %}
-                    </div>
+                    <div class="col-lg-4 col-md-4 label">Lieu de residence :</div>
+                       <div class="col-lg-4 col-md-4">
+                          {% if app.user.lieu %}
+                          {{ app.user.lieu }}
+                              {% else %}
+                            Lieu non renseigné
+                          {% endif %}
+                       </div>
                   </div>
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8">{{ app.user.email }} </div>
+                    <div class="col-lg-4 col-md-4 label">Email :</div>
+                    <div class="col-lg-4 col-md-4">{{ app.user.email }} </div>
                   </div>
-
                 </div>
-
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
                   <!-- Profile Edit Form -->
-                  <form>
-                    <div class="row mb-3">
-                      <div class="text-center">
-                    <a href = "{{ path('app_user_edit', {'id': app.user.id}) }}" class = 'btn btn-primary'>Modifier mes informations</a>
-
-                    </div>
-                    </div>
-                    
-                    <div class="text-center">
-                    <a href = "{{ path('app_user_edit_password', {'id': app.user.id}) }}" class = 'btn btn-primary'>Modifier mon mot de passe</a>
-                    </div>
-                  </form><!-- End Profile Edit Form -->
-
+                    <form>
+                      <div class="row mb-3">
+                        <div class="text-center">
+                           <a href = "{{ path('app_user_edit', {'id': app.user.id}) }}" class = 'btn btn-primary'>Modifier mes informations</a>
+                        </div>
+                      </div>
+                        <div class="text-center">
+                          <a href = "{{ path('app_user_edit_password', {'id': app.user.id}) }}" class = 'btn btn-primary'>Modifier mon mot de passe</a>
+                        </div>
+                    </form><!-- End Profile Edit Form -->
                 </div>
-
               </div><!-- End Bordered Tabs -->
-
             </div>
           </div>
-
         </div>
       </div>
-    </section>
-    </main><!-- End #main -->
- {% endblock %}
-
-    {% block footer %}
-    {% include 'admin/partiel/footer.html.twig' %}
-        
-    {% endblock %}
-</body>
-
-</html>
+  {% endblock %}

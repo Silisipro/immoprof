@@ -187,7 +187,7 @@ class UserController extends AbstractController
     }
 
 
-    #[Route('/{id}/supprimer', name: 'app_user_delete', methods: ['GET', 'POST'])]
+    #[Route('/{id}/supprimer', name: 'app_user_delete', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function delete(Request $request, User $user, UserRepository $userRepository): Response
     {
@@ -199,8 +199,8 @@ class UserController extends AbstractController
     }
 
     #[Route('/supprime', name: 'app_user_index_supprime', methods: ['GET'])]
-        #[IsGranted('ROLE_ADMIN')]
-        public function userSupprime(UserRepository $userRepository): Response
+    #[IsGranted('ROLE_ADMIN')]
+    public function userSupprime(UserRepository $userRepository): Response
         {
             return $this->render('admin/user/suprime.html.twig', [
                 'users' => $userRepository->findBy(

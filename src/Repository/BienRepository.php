@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Bien;
 use App\Entity\BienRecherche;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -46,7 +47,7 @@ class BienRepository extends ServiceEntityRepository
     public function findVisible(BienRecherche $recherche): array
     {
         $query = $this->createQueryBuilder('b')
-            ->andWhere('b.sold = false')
+            ->andWhere('b.sold = true')
             ->addOrderBy('b.createdAt', 'DESC');
 
 
@@ -83,13 +84,98 @@ class BienRepository extends ServiceEntityRepository
     public function findLast(): array
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.sold = false')
+            ->andWhere('b.sold = true')
            ->setMaxResults(4)
             ->getQuery()
             ->getResult()
         ;
     }
+    
+    public function BiensLoueVendu(string $etat,)
+    {
+      $entityManager=$this->getEntityManager();
+      $qb= $entityManager->createQuery(
+          '
+           SELECT b
+           FROM App\Entity\Bien b
+           WHERE b.etat = :etat 
+           AND b.deleted = 0
+           ORDER BY b.createdAt DESC
+          '
+       )
+        ->setParameter('etat', $etat);
 
+       
+            return $qb->getResult();
+    }
+    
+ /**
+    * @return Bien[] Returns an array of Bien objects
+    */
+
+    public function biensPubliesParToutuser(string $publie) : array
+
+    {
+        return $this->createQueryBuilder('b')
+         ->andWhere('b.etat = :publie')        
+        ->addOrderBy('b.createdAt', 'DESC')
+        ->setParameter('publie', $publie)
+        ->getQuery()
+        ->getResult()
+
+      ;
+     }
+
+
+   // public function biensLoueVenduParUser(string $etat, User $user)
+
+    //{
+    //   $entityManager=$this->getEntityManager();
+    //    $qb= $entityManager->createQuery(
+    //        '
+    //            SELECT b
+    //            FROM App\Entity\Bien b
+    //            WHERE b.etat = :etat 
+    //            AND b.deleted = 0
+    //            AND b.user = :user
+    //            ORDER BY b.createdAt DESC
+    //            '
+    //   )
+    //    ->setParameter('etat', $etat)
+    //    ->setParameter('user',$user);
+
+    //   
+    //       return $qb->getResult();
+    //}
+
+
+    public function vendLoue(string $etat, string $etat2): array
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.etat = :etat1')
+            ->orWhere('b.etat = :etat2')
+            ->addOrderBy('b.createdAt', 'DESC')
+            ->setParameter('etat1',$etat)        
+            ->setParameter('etat2',$etat2)        
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function vendLoueParUser(string $etat, string $etat2, User $user): array
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.etat = :etat')
+            ->orWhere('b.etat = :etat2')
+            ->andWhere('b.user = :user')
+            ->addOrderBy('b.createdAt', 'DESC')
+            ->setParameter('etat',$etat)        
+            ->setParameter('etat2',$etat2)        
+            ->setParameter('user',$user)        
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 //    public function findOneBySomeField($value): ?Bien
 //    {
 //        return $this->createQueryBuilder('b')

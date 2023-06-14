@@ -1,32 +1,38 @@
-
 {% extends 'admin/bien/index.html.twig' %}
+
+{% block title %}Nouveau bien{% endblock %}
 {% block title %}
-   Administration des types de bien
+    Nouveau bien
 {% endblock %}
 {% block pageTitle %}
-    Administration des types de bien
+    Nouveau bien
 {% endblock %}
 {% block breadcrumb %}
-Edition de type de bien
+    Agent Immobilier
 {% endblock %}
 {% block bouton %}
     <a href="{{ path('admin_index') }}" class="btn btn-primary btn-sm">Tableau de bord</a>
 {% endblock %}
 
 {% block body %}
-  <div class="col-xl-12">
-    <div class="card">
-       <div class="card-body pt-3"> 
+  <div class="col-xl-8">
+
+          <div class="card">
+            <div class="card-body pt-3"> 
                 {{ form_start(form) }}
                       <div class="row mb-3">
-                        <div class="col-md-12 col-lg-12"> {{ form_row(form.type) }}</div>
+                        <div class="col-md-8 col-lg-8"> {{ form_row(form.name) }}</div>
                       </div>
+
                   {{ form_widget(form) }}
-                    <button class=" col-md-12 col-lg-12 btn btn-primary mt-4">Enrégistrer</button>                    
-                {{ form_end(form) }}
+                    <button class=" col-md-4 col-lg-4 btn btn-primary mt-4">Enrégistrer</button>
+                     
+                 {{ form_end(form) }}
 
                <!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
         </div>
-      </div>
-  </div>
-{% endblock %}
+ {% endblock %}

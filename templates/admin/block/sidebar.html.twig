@@ -1,0 +1,148 @@
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+            <a class="nav-link " href="{{ path('admin_index') }}">
+                <i class="bi bi-grid"></i>
+                <span>Tableau de bord</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+        {% if is_granted('ROLE_USER') %}
+           <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#dictionnaires-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>Gerer</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="dictionnaires-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="{{ path('app.bien.new') }}">
+                            <i class="bi bi-circle"></i><span>Ajouté un bien</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app.admin.bien') }}">
+                            <i class="bi bi-circle"></i><span>Liste des biens</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('publie.par.user.meme') }}">
+                            <i class="bi bi-circle"></i><span>Biens Publiés</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{path('loue_vendu_par_user')}}">
+                            <i class="bi bi-circle"></i><span>Loués / Vendus </span>
+                            </a>
+                        </li> 
+                   {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_CHEF_PROJET') %}
+                        <li>
+                            <a href="{{path('app.admin.bien')}}">
+                            <i class="bi bi-circle"></i><span>Liste des biens</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{path('publie.par.user.meme')}}">
+                            <i class="bi bi-circle"></i><span>Publiés par moi même</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{path('loue_vendu_par_moi_meme')}}">
+                            <i class="bi bi-circle"></i><span>Louer / Vendus par moi même</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{path('en.attente.de.publication')}}">
+                            <i class="bi bi-circle"></i><span>En attente de publication</span>
+                            </a>
+                        </li>
+                        <li>
+                        <li>
+                            <a href="{{path('publie.par.tout.user')}}">
+                            <i class="bi bi-circle"></i><span>Publiés</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{path('loue_vendu_par_user')}}">
+                            <i class="bi bi-circle"></i><span>Loués / vendus</span>
+                            </a>
+                        </li>
+                        <li>
+                            <li>
+                            <a href="{{path('app.typebien.list')}}">
+                            <i class="bi bi-circle"></i><span>Liste des types de biens</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{path('app.standing.liste')}}">
+                            <i class="bi bi-circle"></i><span>Liste des standing</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{path('app_user_index')}}">
+                            <i class="bi bi-circle"></i><span>Liste des utilisateurs</span>
+                            </a>
+                        </li> 
+                        <li>
+                            <a href="#">
+                            <i class="bi bi-circle"></i><span>Ajouter un utilisateur</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{path('app_user_index_supprime')}}">
+                            <i class="bi bi-circle"></i><span>Utilisateurs suprimés</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{path('app_user_index_bloque')}}">
+                            <i class="bi bi-circle"></i><span>Utilisateurs bloqués</span>
+                            </a>
+                        </li>  
+                    {% endif %}            
+                </ul>
+            </li><!-- End Nav -->
+        {% endif %}    
+        {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" title="Envoi des offres d'emploi par mail aux candidats">
+                    <i class="bi bi-envelope"></i>
+                    <span>Envoi de mail</span>
+                </a>
+            </li><!-- End Nav -->
+        {% endif %}
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#">
+                    <i class="bi bi-chat-left-text"></i>
+                    <span>Envoi de message</span>
+                </a>
+            </li><!-- End Nav -->
+        
+            <li class="nav-heading">Paramètres</li>
+        {% if is_granted('ROLE_USER') %}
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#">
+                    <i class="bi bi-person"></i>
+                    <span>Mon Profil</span>
+                </a>
+            </li><!-- End Profile Page Nav -->
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ path('app_home') }}#single-faq-bg-area" target="_blank">
+                <i class="bi bi-question-circle"></i>
+                <span>F.A.Q</span>
+            </a>
+        </li><!-- End F.A.Q Page Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{path('app_contact_index')}}" target="_blank">
+                <i class="bi bi-telephone"></i>
+                <span>Contact</span>
+            </a>
+        </li><!-- End Contact Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ path('app_security_logout') }}">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Déconnexion</span>
+            </a>
+        </li><!-- End Logout Page Nav -->
+    </ul>
+</aside><!-- End Sidebar-->

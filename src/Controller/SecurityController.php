@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -23,45 +24,45 @@ class SecurityController extends AbstractController
         ]);
     }
 
-     /**
-     * @Route("/logout",name="logout")
-     */
-    #[Route("/deconnexion",name:"app_security_logout")]
-    public function logout()
-    {
-        //rien
-    } 
-    /**
-    * This controller allow registration
-    *@param EntityManagerInterface $manager
-    * @param Request $request
-    * @return Response
-    */
     #[Route('/inscription', name: 'app_security_registration', methods:['GET','POST'])] 
-    public function inscription(Request $request, EntityManagerInterface $manager) : Response
+    public function inscription(Request $request,
+    UserPasswordHasherInterface $passwordHasher,
+     EntityManagerInterface $manager) : Response
     {
         $user = new User();
-        $user->setRoles(['ROLE_USER']);
         $form = $this->createForm(InscriptionType::class, $user);
-
         $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form ->getData();
+                $hashedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $user->getPlainPassword()
+                );
+                $user = $form ->getData();
+                $user->setRoles(["ROLE_USER"]);
+                $user->getPlainPassword($hashedPassword);
 
-                    $manager->persist($user);
-                    $manager->flush();
+                $manager->persist($user);
+                $manager->flush();
                 
                     $this->addFlash(
                         'success',
-                        ' Votre inscription  a été effectuée avec succès'
+                        ' Votre inscription a été effectuée avec succès'
                     );
                     return $this->redirectToRoute('app_security_login');   
                 };
+                
         return $this->render('pages/security/inscription.html.twig',[
             'form'=>$form->createView()
             
         ]);
     }
+   
+    #[Route("/deconnexion", name:"app_security_logout")]
+    public function logout()
+    {
+        //rien
+    }
+
 
 
 

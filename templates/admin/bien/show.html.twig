@@ -1,0 +1,92 @@
+{% extends 'admin/bien/index.html.twig' %}
+
+
+{% block title %}
+    {{ bien.name }}
+{% endblock %}
+{% block pageTitle %}
+    {{ bien.name }}
+{% endblock %}
+{% block breadcrumb %}
+    Agent Immobilier
+{% endblock %}
+{% block bouton %}
+    <a href="{{ path('admin_index') }}" class="btn btn-primary btn-sm">Tableau de bord</a>
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-body pt-3">
+          <h1>Bien</h1>
+
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ bien.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Price</th>
+                        <td>{{ bien.price }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ bien.description }}</td>
+                    </tr>
+                    <tr>
+                        <th>Surface</th>
+                        <td>{{ bien.surface }}</td>
+                    </tr>
+                    <tr>
+                        <th>Rooms</th>
+                        <td>{{ bien.rooms }}</td>
+                    </tr>
+                    <tr>
+                        <th>Bedrooms</th>
+                        <td>{{ bien.bedrooms }}</td>
+                    </tr>
+                    <tr>
+                        <th>Floor</th>
+                        <td>{{ bien.floor }}</td>
+                    </tr>
+                    <tr>
+                        <th>Heat</th>
+                        <td>{{ bien.heat }}</td>
+                    </tr>
+                    <tr>
+                        <th>City</th>
+                        <td>{{ bien.city }}</td>
+                    </tr>
+                    <tr>
+                        <th>Adress</th>
+                        <td>{{ bien.adress }}</td>
+                    </tr>
+                    <tr>
+                        <th>Sold</th>
+                        <td>{{ bien.sold ? 'Yes' : 'No' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Etat</th>
+                        <td>{{ bien.etat }}</td>
+                    </tr>
+                    <tr>
+                        <th>CreatedAt</th>
+                        <td>{{ bien.createdAt ? bien.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>UpdatedAt</th>
+                        <td>{{ bien.updatedAt ? bien.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+
+            <a href="{{ path('app_bien_index') }}">back to list</a>
+
+            <a href="{{ path('app_bien_edit', {'id': bien.id}) }}">edit</a>
+
+            {{ include('bien/_delete_form.html.twig') }}
+       </div>
+    </div>
+
+{% endblock %}

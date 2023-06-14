@@ -23,7 +23,8 @@ class MailService
         string $htmlTemplate,
         array $context,
         string $to = 'admin@sylove.com'
-    ): void {
+    ): void 
+    {
         $email = (new TemplatedEmail())
             ->from($from)
             ->to($to)

@@ -1,42 +1,13 @@
+{% extends 'admin/partiel/stulo.html.twig' %}
+{% block title %}
+Immopro | Inscription
+{% endblock %}
 
-<!DOCTYPE html>
-<html lang="fr">
+{% block body %}
+  <div class="card mb-3">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-        <title>{% block title %} Immopro | Inscription {% endblock %}</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-    {% block stylesheets  %}
-        {% include 'admin/partiel/stulo.html.twig' %}
-        
-    {% endblock %}
-</head>
-
-<body>
-
-  <main>
-    <div class="container">
-
-      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-
-              <div class="d-flex justify-content-center py-4">
-                <a href="#" class="logo d-flex align-items-center w-auto">
-                  <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">Immopro</span>
-                </a>
-              </div><!-- End Logo -->
-
-              <div class="card mb-3">
-
-                <div class="card-body">
-                {{ form_start(form) }}
+    <div class="card-body">
+        {{ form_start(form) }}
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Ajouter un utilisateur</h5>
@@ -72,42 +43,8 @@
                             </div>
                             
                         </form>
-                           {{ form_end(form) }}
+          {{ form_end(form) }}
 
-                </div>
-              </div>
-
-              <div class="credits">
-                
-                
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-      </section>
-
-    </div>
-  </main><!-- End #main -->
-
-{% block javascripts %}
-
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="{{asset('asset/vendor/apexcharts/apexcharts.min.js')}}"></script>
-  <script src="{{asset('asset/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <script src="{{asset('asset/vendor/chart.js/chart.umd.js')}}"></script>
-  <script src="{{asset('asset/vendor/echarts/echarts.min.js')}}"></script>
-  <script src="{{asset('asset/vendor/quill/quill.min.js')}}"></script>
-  <script src="{{asset('asset/vendor/simple-datatables/simple-datatables.js')}}"></script>
-  <script src="{{asset('asset/vendor/tinymce/tinymce.min.js')}}"></script>
-  <script src="{{asset('asset/vendor/php-email-form/validate.js')}}"></script>
-
-  <!-- Template Main JS File -->
-  <script src="{{asset('asset/js/main.js')}}"></script>
-   {% endblock %}
-</body>
-
-</html>
+       </div>
+  </div>
+{% endblock %}

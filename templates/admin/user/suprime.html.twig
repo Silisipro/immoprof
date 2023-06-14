@@ -1,44 +1,24 @@
-<html lang="fr">
+{% extends 'admin/bien/index.html.twig' %}
+{% block title %}
+   Liste des utilisateurs supprimés
+{% endblock %}
+{% block pageTitle %}
+   Liste des utilisateurs supprimés
+{% endblock %}
+{% block breadcrumb %}
+Utilisateur
+{% endblock %}
+{% block bouton %}
+    <a href="{{ path('admin_index') }}" class="btn btn-primary btn-sm">Tableau de bord</a>
+{% endblock %}
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-        <title> {% block title %}
-           Liste des utilisateurs suprimés
-        {% endblock %}</title>
-   <meta content="" name="description">
-   <meta content="" name="keywords">
-
-    {% block stylesheets  %}
-    {% include 'admin/partiel/stulo.html.twig' %}
-    {% endblock %}
-
-
-</head>
-
-<body>
-
-    {% block header %}
-        {% include 'admin/partiel/header.html.twig' %}
-    {% endblock %}
-
-
-    {% block body %}
-        {% include 'admin/partiel/body.html.twig' %}
-    
-        <section class="section">
-            <div class="row">
-                <div class="col-lg-12">
-
-                    <div class="card">
-                        <div class="card-body py-2">
-                            <h1 class="card-title">Liste des utilisateurs supprimés</h1>
-
-                            <!-- Table with stripped rows -->
-                            <table class="table table-striped">
-                                <thead>
-
+{% block body %} 
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body py-2">
+                  <!-- Table with stripped rows -->
+                    <table class="table table-striped">
+                        <thead>
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Nom</th>
@@ -59,7 +39,7 @@
                                             </a>
                                             <a href="{{path('app_user_debloquer', {'id': user.id})}}" title="Débloqué" class="btn btn-primary btn-sm">
                                                 <i class="bi bi-pencil"></i>
-                                            
+                                            </a>
                                         </td>
                                     </tr>
                                 {% else %}
@@ -67,21 +47,10 @@
                                         <td colspan="5" class="text-center">Aucun enregistrement</td>
                                     </tr>
                                 {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-               </div>
-            </div>    
-       </section>
+                        </tbody>
+                   </table>
+            </div>
+        </div>
+    </div>
+ {% endblock %}
 
-        </main><!-- End #main -->
-        {% endblock %}
-
-            {% block footer %}
-            {% include 'admin/partiel/footer.html.twig' %}
-                
-            {% endblock %}
-   </body>
-
-</html>

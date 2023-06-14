@@ -1,82 +1,63 @@
-<html lang="fr">
+{% extends 'admin/bien/index.html.twig' %}
+{% block title %}
+   Administration des types de biens
+{% endblock %}
+{% block pageTitle %}
+   Administration des types de biens
+{% endblock %}
+{% block breadcrumb %}
+Liste des types de biens
+{% endblock %}
+{% block bouton %}
+    <a href="{{ path('admin_index') }}" class="btn btn-primary btn-sm">Tableau de bord</a>
+{% endblock %}
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <title>{% block title %}Immopro | Administration{% endblock %}</title>
+{% block body %}
+  <div class="col-xl-12">
+    <div class="card">
+      <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+        <h2>  
+          <a href = "{{ path('app.typebien.new') }}" class ="btn btn-outline-info btn-sm w-100 my-1">Ajouter type bien</a>   
+        </h2>
+      </div>
+    </div>
 
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-      {% block stylesheets  %}
-        {% include 'admin/partiel/stulo.html.twig' %}        
-      {% endblock %}
-  
-</head>
-
-<body>
-    {% block header %}
-        {% include 'admin/partiel/header.html.twig' %}
-        {% endblock %}
-
-      {% block body %}
-      {% include 'admin/partiel/body.html.twig' %}
-
-    <section class="section profile">
-      <div class="row">
-        <div class="col-xl-4">
-
-          <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-              <img src="{{asset('asset/img/profile-img.jpg')}}" alt="Profile" class="rounded-circle">
-              <h2> {{app.user.fullName}}</h2>
-              <h3>Agent Immobilier</h3>
-              
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-              <h2>  
-            <a href = "{{ path('app.typebien.new') }}" class = 'btn btn-primary'>Ajouter type bien</a>  
-                
-              </h2>
-             </div>
-          </div>
-
-        </div>
+  </div>
         
-        <div class="col-xl-8">
-
+  <div class="col-xl-12">
           <div class="card">
             <div class="card-body pt-3"> 
-              <h1>Administration des types de biens</h1>
                {% for message in app.flashes('success') %}
                  <div class = 'alert alert-success mt-4'>
                   {{message}}
                  </div> 
                {% endfor %}
-                <table class="table table-hover m-4">
+                <table class="table table-hover">
                       <thead>
                           <tr>
                               <th scope="col">Type de bien</th>
                               <th scope="col">Date d'ajout</th>
                               <th scope="col">Date du dernière modification</th>
-                              <th scope="col">Edition</th>
 
                           </tr>
                       </thead>
                       <tbody>
                           {% for typebien in typebiens %}
                               <tr class="table-primary">
-                                  <th scope="row"><h6> {{typebien.type}}</h6></th>
+                                  <th scope="row"><h6>{{typebien.type}} | 
+                                  {% if typebien.categorie == 'a_louer' %}  A louer {% else %} A vendre {% endif %}
+                                 </h6></th>
                                   <th scope="row"> <h6>{{typebien.createdAt|date("d/m/Y à H:i:s")}} </h6></th>
                                   <th scope="row"> <h6>{{typebien.updatedAt|date("d/m/Y à H:i:s") }} </h6></th>
+
                                   <th scope="row">
                                   <a href = "{{path('app.typebien.edit', {id: typebien.id } )}}" class="btn btn-info">Editer</a>
                                   </th>
-
                               </tr>
+                          {% else %}
+                              <tr>
+                                <td colspan="4" class="text-center">Aucun enregistrement</td>
+                             </tr>
                           {% endfor %}
                       </tbody>
                  </table>            
@@ -85,19 +66,7 @@
                 </div>
             </div>
           </div>
-
         </div>
+{% endblock %}
 
-      </div>
-    </section>
-
-  </main><!-- End #main -->
-   {% endblock %}
-
-       {% block footer %}
-        {% include 'admin/partiel/footer.html.twig' %}
-        
-        {% endblock %}
-</body>
-
-</html>
+  

@@ -79,6 +79,15 @@ class Bien
     #[ORM\Column(length: 255)]
     private ?string $etat = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $CodeFichier = null;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private \DateTime $datepublication;
+
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private \DateTime $datelocationvente;
+
     #[ORM\ManyToOne(inversedBy: 'biens')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -260,7 +269,39 @@ class Bien
 
         return $this;
     }
+    public function getCodeFichier(): ?string
+    {
+        return $this->CodeFichier;
+    }
+    public function setCodeFichier(?string $CodeFichier): self
+    {
+        $this->CodeFichier = $CodeFichier;
+        return $this;
+    }
 
+    public function getDatePublication(): \DateTime
+    {
+        return $this->datepublication;
+    }
+
+    public function setDatePublication(\DateTime $datepublication): self
+    {
+        $this->datepublication = $datepublication;
+
+        return $this;
+    }
+
+    public function getDateLocationVente(): \DateTime
+    {
+        return $this->datepublication;
+    }
+
+    public function setDateLocationVente(\DateTime $datelocationvente): self
+    {
+        $this->datelocationvente = $datelocationvente;
+
+        return $this;
+    }
 
     public function getUser(): ?User
     {
