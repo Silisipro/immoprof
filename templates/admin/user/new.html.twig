@@ -5,46 +5,42 @@ Immopro | Inscription
 
 {% block body %}
   <div class="card mb-3">
-
     <div class="card-body">
         {{ form_start(form) }}
-
-                  <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Ajouter un utilisateur</h5>
-                    <p class="text-center small">Entrer les informations pour créer votre compte</p>
-                  </div>
-
-                        <form class="row g-3 needs-validation" novalidate>
-                            <div class="col-12">
-                                    {{ form_row(form.fullName) }}
-                               <div class="form-error"> {{ form_errors(form.fullName) }} </div>
-                            </div>
-
-                            <div class="col-12">
-                                    {{ form_row(form.telephone) }}
-                               <div class="form-error"> {{ form_errors(form.telephone) }} </div>
-                            </div>
-                            <div class="col-12">
-                                    {{ form_row(form.lieu) }}
-                              <div class="form-error"> {{ form_errors(form.lieu) }} </div>
-                            </div>
-                            <div class="col-12">
-                                    {{ form_row(form.email) }}
-                               <div class="form-error"> {{ form_errors(form.email) }} </div>
-                            </div>
-
-                            <div class="col-12">
-                                    {{ form_row(form.plainPassword) }}
-                               <div class="form-error"> {{ form_errors(form.plainPassword) }} </div>
-                            </div>
-                            
-                            <div class="col-12 mt-4">
-                              <button class="btn btn-primary w-100" type="submit">Ajouter</button>
-                            </div>
-                            
-                        </form>
-          {{ form_end(form) }}
-
-       </div>
+      <div class="pt-4 pb-2">
+        <h5 class="card-title text-center pb-0 fs-4">Ajout d'utilisateur</h5>
+        <p class="text-center small">Entrer les informations pour créer votre compte</p>
+      </div>
+      <form class="row g-3 needs-validation" novalidate>
+          <div class="col-12">
+                  {{ form_row(form.fullName) }}
+              <div class="form-error"> {{ form_errors(form.fullName) }} </div>
+          </div>
+          <div class="col-12">
+                  {{ form_row(form.sexe) }}
+              <div class="form-error"> {{ form_errors(form.sexe) }} </div>
+          </div>
+          <div class="col-12">
+                  {{ form_row(form.telephone) }}
+              <div class="form-error"> {{ form_errors(form.telephone) }} </div>
+          </div>
+          <div class="col-12">
+                  {{ form_row(form.lieu) }}
+            <div class="form-error"> {{ form_errors(form.lieu) }} </div>
+          </div>
+          <div class="col-12">
+                  {{ form_row(form.email) }}
+              <div class="form-error"> {{ form_errors(form.email) }} </div>
+          </div>
+          <div class="col-12">
+                  {{ form_row(form.plainPassword) }}
+              <div class="form-error"> {{ form_errors(form.plainPassword) }} </div>
+          </div>
+          <div class="col-12 mt-4">
+            <button class="btn btn-primary w-100" type="submit">Ajouter</button>
+          </div>          
+       </form>
+       {{ form_end(form) }}
+    </div>
   </div>
 {% endblock %}

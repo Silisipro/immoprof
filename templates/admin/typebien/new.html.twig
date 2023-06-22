@@ -16,21 +16,22 @@ Ajout de type de bien
 {% block body %}
   <div class="col-xl-12">
     <div class="card">
-       <div class="card-body pt-3"> 
-                {{ form_start(form) }}
-                      <div class="row mb-3">
-                        <div class="col-md-12 col-lg-12"> {{ form_row(form.type) }}</div>
-                      </div>
-                       <div class="row mb-3">
-                        <div class="col-md-12 col-lg-12"> {{ form_row(form.chois) }}</div>
-                      </div>
-                  {{ form_widget(form) }}
-                    <button class=" col-md-12 col-lg-12 btn btn-primary mt-4">Enrégistrer</button>                    
-                {{ form_end(form) }}
-
-               <!-- End Bordered Tabs -->
-        </div>
+      <div class="card-body pt-3"> 
+        {{ form_start(form) }}
+              <div class="row mb-3">
+                <div class="col-md-6 col-lg-12"> {{ form_row(form.type) }}</div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6 col-lg-12"> {{ form_row(form.favori) }}</div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-12 col-lg-12"> {{ form_row(form.chois) }}</div>
+              </div>
+          {{ form_widget(form) }}
+            <button class=" col-md-12 col-lg-12 btn btn-primary mt-4">Enrégistrer</button>                    
+        {{ form_end(form) }}
       </div>
+    </div>
   </div>
 {% endblock %}
     

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,7 +26,7 @@ class InscriptionType extends AbstractType
                      'minlength' =>'2',
                      'maxlength' =>'50'
                       ],
-                'label'=> 'Nom/Prenom',
+                'label'=> 'Nom/Prenom (*)',
                 'label_attr'=>[
                         'class' =>'form-label'
                             ],
@@ -34,12 +35,28 @@ class InscriptionType extends AbstractType
                     new Assert\NotBlank()
                     ]  
                 ])
-
+                ->add('sexe', ChoiceType::class, [
+                    'attr'=> [
+                        'class'=>'form-control'
+                         ],
+                    'choices'=>[
+                        'Masculin'=> 'm',
+                        'Feminin'=> 'f',
+                    ],
+                   'label'=> 'Sexe (*)',
+                   'label_attr'=>[
+                        'class' =>'form-label mt-4'
+                    ],
+                    'placeholder' => '-- Sélectionner --',
+                   'constraints'=> [
+                       new Assert\NotNull(),
+                   ]
+                ])
             ->add('telephone', TelType::class, [
                 'attr'=> [
                     'class'=>'form-control'
                      ],
-               'label'=> 'Numéro de téléphone',
+               'label'=> 'Numéro de téléphone (*)',
                'label_attr'=>[
                        'class' =>'form-label mt-4'
                            ],
@@ -69,7 +86,7 @@ class InscriptionType extends AbstractType
                      'minlength' =>'2',
                      'maxlength' =>'180'
                       ],
-                'label'=> 'Adresse Email',
+                'label'=> 'Adresse Email (*)',
                 'label_attr'=>[
                         'class' =>'form-label mt-4'
                             ],
@@ -101,6 +118,27 @@ class InscriptionType extends AbstractType
                 ],
 
                 'invalid_message'=> 'Les mots de passe ne correspondent pas'        
+            ])
+            ->add('role', ChoiceType::class, [
+                'attr'=> [
+                    'class'=>'form-control'
+                 ],
+                'mapped' => false,
+                'choices' =>[
+                    'Agent immobilier' => 'ROLE_AGENT',
+                    'Particulier' => 'ROLE_AGENT',
+                    'Propriétaire' => 'ROLE_AGENT',
+                    'Autre' => 'ROLE_AGENT',
+                ],
+                'label' => "Vous êtes ? (*)",
+                'required' => true,
+                'expanded' => false,
+                'multiple' => false,
+                'placeholder' => '-- Sélectionner --',
+                'label_attr'=>[
+                    'class' =>'form-label mt-4'
+                ]
+                
             ])
             
         ;

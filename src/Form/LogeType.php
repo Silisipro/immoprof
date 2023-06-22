@@ -40,7 +40,18 @@ class LogeType extends AbstractType
                     'label_attr' => [
                     ],
                     'placeholder' => false,
-                ])    
+                ]) 
+                ->add('favori', ChoiceType::class, [
+                    'choices' => [
+                        'Oui' => true,
+                        'Non' => false,
+                    ],
+                    'label' => "Voulez-vous que ce type de bien soit favori ?",
+                    'required' => false,
+                    'expanded' => true,
+                    'multiple' => false,
+                    'placeholder' => false,
+                ])       
         ;
     }
 

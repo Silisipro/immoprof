@@ -4,59 +4,64 @@ Immopro | Inscription
 {% endblock %}
 {% block body %}
   <div class="card mb-3">
+    <div class="card-body">
+      {{ form_start(form) }}
+      <div class="pt-4 pb-2">
+        <h5 class="card-title text-center pb-0 fs-4">Création de compte</h5>
+        <p class="text-center small">Entrer vos informations pour créer votre compte</p>
+      </div>                 
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div> 
+    {% endfor %}
+      <form class="row g-3 needs-validation" novalidate>
+          <div class="col-12">
+                  {{ form_row(form.fullName) }}
+              <div class="form-error"> {{ form_errors(form.fullName) }} </div>
+          </div>
+          <div class="col-12"> 
+                  {{ form_row(form.sexe) }}
+              <div class="form-error"> {{ form_errors(form.sexe) }} </div>
+          </div>
+          <div class="col-12">
+                  {{ form_row(form.telephone) }}
+              <div class="form-error"> {{ form_errors(form.telephone) }} </div>
+          </div>
+          <div class="col-12">
+                  {{ form_row(form.lieu) }}
+            <div class="form-error"> {{ form_errors(form.lieu) }} </div>
+          </div>
+          <div class="col-12">
+                  {{ form_row(form.email) }}
+              <div class="form-error"> {{ form_errors(form.email) }} </div>
+          </div>
+          <div class="col-12">
+                  {{ form_row(form.role) }}
+              <div class="form-error"> {{ form_errors(form.role) }} </div>
+          </div>
 
-     <div class="card-body">
-                {{ form_start(form) }}
+          <div class="col-12">
+                  {{ form_row(form.plainPassword) }}
+              <div class="form-error"> {{ form_errors(form.plainPassword) }} </div>
+          </div>
+          <div class="col-12 mt-2">
+              <div class="form-check">
+                  <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
+                  <label class="form-check-label" for="acceptTerms">J'agree et accepte les <a href="#">terms et conditions</a></label>
+                  <div class="invalid-feedback">You must agree before submitting.</div>
+              </div>
+          </div>
+          <div class="col-12 mt-4">
+            <button class="btn btn-primary w-100" type="submit">Créer mon compte</button>
+          </div>
+          <div class="col-12">
+            <p class="small mb-0">Avez vous déjà un compte ? <a href="{{path('app_security_login')}}">Connecter</a></p>
+          </div>
+      </form>
+        {{ form_end(form) }}
 
-                  <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Céer un compte</h5>
-                    <p class="text-center small">Entrer vos informations pour créer votre compte</p>
-                  </div>
-                  
-                      {% for message in app.flashes('success') %}
-                          <div class = 'alert alert-success mt-4 text-center'>
-                           {{message}}
-                          </div> 
-                  {% endfor %}
-                        <form class="row g-3 needs-validation" novalidate>
-                            <div class="col-12">
-                                    {{ form_row(form.fullName) }}
-                               <div class="form-error"> {{ form_errors(form.fullName) }} </div>
-                            </div>
-
-                            <div class="col-12">
-                                    {{ form_row(form.telephone) }}
-                               <div class="form-error"> {{ form_errors(form.telephone) }} </div>
-                            </div>
-                            <div class="col-12">
-                                    {{ form_row(form.lieu) }}
-                              <div class="form-error"> {{ form_errors(form.lieu) }} </div>
-                            </div>
-                            <div class="col-12">
-                                    {{ form_row(form.email) }}
-                               <div class="form-error"> {{ form_errors(form.email) }} </div>
-                            </div>
-
-                            <div class="col-12">
-                                    {{ form_row(form.plainPassword) }}
-                               <div class="form-error"> {{ form_errors(form.plainPassword) }} </div>
-                            </div>
-                            <div class="col-12 mt-2">
-                               <div class="form-check">
-                                    <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
-                                    <label class="form-check-label" for="acceptTerms">J'agree et accepte les <a href="#">terms et conditions</a></label>
-                                    <div class="invalid-feedback">You must agree before submitting.</div>
-                                </div>
-                            </div>
-                            <div class="col-12 mt-4">
-                              <button class="btn btn-primary w-100" type="submit">Créer mon compte</button>
-                            </div>
-                            <div class="col-12">
-                              <p class="small mb-0">Avez vous déjà un compte ? <a href="{{path('app_security_login')}}">Connecter</a></p>
-                            </div>
-                        </form>
-             {{ form_end(form) }}
-
-        </div>
+    </div>
   </div>
 {% endblock %}           

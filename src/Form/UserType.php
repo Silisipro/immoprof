@@ -84,9 +84,34 @@ class UserType extends AbstractType
                     'label'=> 'Mot de passe',
                     'label_attr'=>[
                             'class' =>'form-label mt-4'
-                        ]
-                    
-                    ])
+                        ]         
+                ])
+                ->add('role', ChoiceType::class, [
+                    'mapped' => false,
+                    'choices' => $options['a_role_admin'] == true ? [
+                        'Agent immobilier' => 'ROLE_AGENT_IMMO',
+                        'Particulier' => 'ROLE_AGENT_IMMO',
+                        'Propriétaire' => 'ROLE_AGENT_IMMO',
+                        'Chef projet' => 'ROLE_CHEF_PROJET',
+                        'Administrateur' => 'ROLE_ADMIN',
+                        'Autre' => 'ROLE_AGENT_IMMO',
+                    ] : [
+                        'Agent immobilier' => 'ROLE_AGENT_IMMO',
+                        'Particulier' => 'ROLE_AGENT_IMMO',
+                        'Propriétaire' => 'ROLE_AGENT_IMMO',
+                        'Autre' => 'ROLE_AGENT_IMMO',
+                    ],
+                    'label' => "Rôle (*)",
+                    'required' => true,
+                    'expanded' => false,
+                    'multiple' => false,
+                    'placeholder' => '-- Sélectionner --',
+                    'attr' => [
+                        'class' => 'select2'
+                    ]
+                ])
+            
+
             
             ;
     }
@@ -95,6 +120,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'a_role_admin' => false,
         ]);
     }
 }

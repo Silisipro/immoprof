@@ -15,58 +15,5 @@
 {% endblock %}
 
 {% block body %}
-    <div class="card">
-                        <div class="card-body py-2">
-                            <!-- Table with stripped rows -->
-                            <table class="table table-hover">
-                      <thead>
-                          <tr>
-                              <th scope="col">Titre</th>
-                              <th scope="col">Prix</th>
-                              <th scope="col">Date d'ajout</th>
-                              <th scope="col">Publier par</th>
-                              <th scope="col">Favori</th>
-                              <th scope="col">Etat</th>
-                              <th scope="col">Type de bien</th>
-
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {% for bien in biens %}
-                              <tr class="table-primary">
-                                  <th scope="row"><h6> {{bien.name}} </h6></th>
-                                  <th scope="row"><h6>{{bien.price}} $ </h6></th>
-                                  <th scope="row"><h6>{{bien.createdAt|date("d/m/Y à H:i:s")}} </h6></th>
-                                  <th scope="row"><h6> {{ bien.user.fullName}}</h6></th>
-                                  <th scope="row">
-                                  <h6 class="btn btn-info btn-sm"> 
-                                    {% if bien.sold == true %} Oui  {% else %} Non {% endif %}
-                                  </h6>
-                                  </th>
-                                  <th scope="row"><h6 class="btn btn-info btn-sm"> {{ bien.etat}}</h6></th>
-                                  <th scope="row"><h6> {{ bien.typeBien.type}} | {{ bien.standing.name}} </h6></th>
-                                  <th scope="row">
-                                     <a href = "{{path('app.admin.edit', {id: bien.id } )}}" class="btn btn-info">Editer</a>
-                                  </th>
-                                  <th>
-                                    {{ include('admin/bien/_delete_form.html.twig') }}
-                                 </th>
-                                 <th>
-                                 <form method="post" action="{{path('app.republier.bien', {'id': bien.id } )}}" onsubmit="return confirm('Etes vous vraiment sûr de vouloir republier le bien?');">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('republier' ~ bien.id) }}">
-                                  <input type="hidden" name="_method" value="REPUBLIER" >
-                                    <button class="btn btn-outline-info btn-sm w-100 my-1">Republier</button>
-                                 </form>
-                                 </th>
-                                </tr>
-
-                                {% else %}
-                                    <tr>
-                                        <td colspan="6" class="text-center">Aucun enregistrement</td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+{% include 'admin/bien/_vendu.html.twig' %}
 {% endblock %}

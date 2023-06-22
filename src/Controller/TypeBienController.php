@@ -102,6 +102,45 @@ class TypeBienController extends AbstractController
         ]);
     }
 
+    #[ROUTE ('/favori/louer', name:'app_favori_louer')]
+    public function louer(TypeBienRepository $typeBienRepository) : Response
+
+    {
+        $favoris = $typeBienRepository->findBy(
+            [
+                'categorie'=>'a_louer',
+                'deleted'=> false,
+                'favori'=> true,
+            ],
+            [
+                'type'=> 'ASC'
+            ]
+        );
+
+        return $this->render('type_bien_favori/louer.html.twig',[
+            'favoris'=> $favoris
+        ]);
+    }
+
+    #[ROUTE ('/favori/vendre', name:'app_favori_vendre')]
+    public function vendre(TypeBienRepository $typeBienRepository) : Response
+
+    {
+        $favoris = $typeBienRepository->findBy(
+            [
+                'categorie'=>'a_vendre',
+                'deleted'=> false,
+                'favori'=> true,
+            ],
+            [
+                'type'=> 'ASC'
+            ]
+        );
+
+        return $this->render('type_bien_favori/vendre.html.twig',[
+            'favoris'=> $favoris
+        ]);
+    }
 
 
 }

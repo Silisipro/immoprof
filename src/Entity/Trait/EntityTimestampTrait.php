@@ -16,7 +16,6 @@ trait EntityTimestampTrait
     #[Assert\NotBlank()]
     private ?\DateTimeImmutable $updatedAt;
 
-
     #[ORM\Column]
     private ?bool $deleted = false;
 
@@ -52,7 +51,7 @@ trait EntityTimestampTrait
 
     public function setDeleted(bool $deleted): self
     {
-        $this->sold = $deleted;
+        $this->deleted = $deleted;
 
         return $this;
     }

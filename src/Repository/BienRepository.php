@@ -34,7 +34,7 @@ class BienRepository extends ServiceEntityRepository
 
     public function remove(Bien $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->persist($entity);
 
         if ($flush) {
             $this->getEntityManager()->flush();
@@ -185,4 +185,25 @@ class BienRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function recupererBiensParCategorie(string $categorie): array
+{
+    $entityManager=$this->getEntityManager();
+      $qb= $entityManager->createQuery(
+          '
+           SELECT b,t
+           FROM App\Entity\Bien b
+           JOIN b.typeBien t
+           WHERE t.categorie = :categorie
+           AND b.deleted = 0
+           ORDER BY b.createdAt DESC
+
+          '
+       )
+        ->setParameter('categorie', $categorie);
+
+            return $qb->getResult();
+}
+
+
+
 }

@@ -3,12 +3,14 @@
 namespace App\Controller\Admin\admin;
 
 use App\Entity\Bien;
-use App\Form\Bien1Type;
+use App\Form\BienType;
 use App\Repository\BienRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Service\EmailSmsServices;
+use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,6 +19,10 @@ use Knp\Component\Pager\PaginatorInterface;
 #[Route('/admin')]
 class AdminController extends AbstractController
 {
+
+    public function __construct(private FileUploader $fileUploader)
+    {
+    }
 /**
   * This controller display all bien
   * @param BienRepository $bienRepository
@@ -28,7 +34,7 @@ class AdminController extends AbstractController
     {
         $biens = null;
         
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_CHEF_PROJET')) {
             $biens = $paginator->paginate(
                 $bienRepository->findBy(
                 [
@@ -64,32 +70,49 @@ class AdminController extends AbstractController
     }
  
     #[Route('/creation/bien', name: 'app.bien.new', methods: ['GET', 'POST'])]
-   public function new (Request $request, EntityManagerInterface $manager ): Response
-   {
-               $bien = new Bien();
-               $form = $this->createForm(Bien1Type::class, $bien);
-               $form->handleRequest($request);
-                   if ($form->isSubmitted() && $form->isValid()) {
-                       $bien = $form ->getData();
-                       $bien->setUser($this->getUser());
+   public function new (Request $request, 
+   EntityManagerInterface $manager,
+   FileUploader $fileUploader ): Response
+{
+        $bien = new Bien();
+        $form = $this->createForm(BienType::class, $bien);
+        $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+           // $fileFile = $form->get('files')->getData();
+           // dd($fileFile);
+            //if ($fileFile) {
+            //    $codeFichier = $fileUploader->upload($fileFile);
+             //   $bien->setCodeFichier($codeFichier);
+           // };
+                $bien = $form ->getData();
 
-                       if ($this->isGranted('ROLE_ADMIN')) {
-                           $bien->setEtat('en attente de publication');
-                           $bien->setDatePublication(new \DateTime());
-                       } else {
-                           $bien->setEtat('en attente de publication');
-                       }
-                   $manager->persist($bien);
-                   $manager->flush();
-               
-                   $this->addFlash(
-                    'success',
-                    ' Votre bien a été ajouté avec succès'
-                );
+                $bien->setUser($this->getUser());
+                $typeBienLouer = $form->get('typeBienLouer')->getData();
+                $typeBienVendre = $form->get('typeBienVendre')->getData();
+                if ($typeBienLouer !== null) {
+                    $bien->setTypeBien($typeBienLouer);
+                }
+                if ($typeBienVendre !== null) {
+                    $bien->setTypeBien($typeBienVendre);
+                }
+
+                if ($this->isGranted('ROLE_ADMIN')) {
+                    $bien->setEtat('en attente de publication');
+                    $bien->setDatePublication(new \DateTime());
+                } else {
+                    $bien->setEtat('en attente de publication');
+                }
+            $manager->persist($bien);
+            $manager->flush();
+        
+            $this->addFlash(
+            'success',
+            ' Votre bien a été ajouté avec succès'
+        );
 
 
-                   return $this->redirectToRoute('app.admin.bien');  
-               };
+            return $this->redirectToRoute('app.admin.bien');  
+        };
 
        return $this->render('admin/bien/new.html.twig', [
            'form'=>$form->createView()
@@ -100,12 +123,12 @@ class AdminController extends AbstractController
     public function edit(Bien $bien, Request $request, EntityManagerInterface $manager): Response
     {
 
-        $form = $this->createForm(Bien1Type::class, $bien);
+        $form = $this->createForm(BienType::class, $bien);
         $form->handleRequest($request);
          
          if ($form->isSubmitted() && $form->isValid()) { 
             $bien =$form->getData();
-            if ($this->isGranted('ROLE_ADMIN')) {
+            if ($this->isGranted('ROLE_ADMIN')  || $this->isGranted('ROLE_CHEF_PROJET')) {
                 $bien->setEtat('en attente de publication');
                 $bien->setDatePublication(new \DateTime());
             } else {
@@ -128,7 +151,6 @@ class AdminController extends AbstractController
         ]);
     }
 
-
     #[Route('/publier/{id}', name: 'app.publier.bien', methods: ['POST'])]
     public function publierBien(Request $request, Bien $bien, BienRepository $bienRepository): Response
     {
@@ -141,19 +163,17 @@ class AdminController extends AbstractController
                 ' Votre bien a été publié avec succès'
             );
         }
-        if (json_encode($bien->getUser()->getRoles()) == '["ROLE_ADMIN"]') {
+        if (json_encode($bien->getUser()->getRoles()) == '["ROLE_CHEF_PROJET"]') {
             return $this->redirectToRoute('publie.par.tout.user');
         } else {
             return $this->redirectToRoute('app.admin.bien');
         }
     }
 
-
-    
     #[Route('/supression/bien/{id}', name: 'app.admin.delete', methods: ['POST'])]
     public function delete(Bien  $bien, Request $request, BienRepository $bienRepository ) : Response
     { 
-        if($this->isCsrfTokenValid ('delete'.$bien->getId(), $request->request->get('token'))) {
+        if($this->isCsrfTokenValid ('delete'.$bien->getId(), $request->request->get('_token'))) {
             $bien->setDeleted(true);
             $bienRepository->remove($bien, true);
         }
@@ -188,7 +208,7 @@ class AdminController extends AbstractController
     public function biensEnAttenteDePublication(BienRepository $bienRepository): Response
     {
         $listeBiens = null;
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_CHEF_PROJET')) {
             $listeBiens = $bienRepository->findBy(
                 [
                     'deleted' => false,
@@ -220,7 +240,7 @@ class AdminController extends AbstractController
     public function publieParTout(BienRepository $bienRepository): Response
     {
         $listeBiens = null;
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_CHEF_PROJET')) {
             $listeBiens = $bienRepository->biensPubliesParToutuser('publie');
               
         } else {
@@ -248,7 +268,7 @@ class AdminController extends AbstractController
             $bien->setEtat('en attente de publication');
             $bienRepository->save($bien, true);
         }
-        return $this->redirectToRoute('en_attente_de_publication');
+        return $this->redirectToRoute('en.attente.de.publication');
     }
  
     #[Route('/louer/{id}', name: 'app_louer_bien', methods: ['POST'])]
@@ -293,7 +313,7 @@ class AdminController extends AbstractController
     public function loueVenduParMoiMeme(BienRepository $bienRepository): Response
     {
         $listeBiens = null;
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_CHEF_PROJET')) {
             $listeBiens = $bienRepository->biensLoueVendu('loue','vendu');
         }
         return $this->render('admin/bien/loue_vendu_moi_meme.html.twig', [
@@ -306,7 +326,7 @@ class AdminController extends AbstractController
     public function loueVenduPaUser(BienRepository $bienRepository): Response
     {
         $listeBiens = null;
-        if ($this->isGranted('ROLE_ADMIN')) {
+        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_CHEF_PROJET')) {
             $listeBiens = $bienRepository->VendLoue('loue','vendu');
         } else {
            

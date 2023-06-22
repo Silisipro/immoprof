@@ -1,0 +1,9 @@
+<ul class="dropdown">
+    {% for f in favoris %}
+        {% if not loop.last %}
+            <li><a href="{{ path('bien.tout.index', {'id': f.id}) }}">{{ f.type }}</a></li>
+        {% else %}
+            <li class="last-item"><a href="{{ path('bien.tout.index', {'id': f.id}) }}">{{ f.type }}</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>

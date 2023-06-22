@@ -1,0 +1,88 @@
+<div class="card">
+        <div class="card-body py-2">
+            <!-- Table with stripped rows -->
+            <table class="table table-bordered table-striped datatable">
+                <thead>
+                    <tr>
+                        <th scope="col">Titre</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col">Date d'ajout</th>
+                        <th scope="col">Publier par</th>
+                        <th scope="col">Favori</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col">Type de bien</th>
+                        <th scope="col">Lieu</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bien in biens %}
+                        <tr>
+                            <td > {{bien.name ? bien.name : '' }}</td>
+                            <td >{{bien.price|number_format(0, ',', ' ') }} $</td>
+                            <td scope="row">{{ bien.createdAt ? bien.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td scope="row"> {{ bien.user.fullName ? bien.user.fullName : '' }}</td>
+                            <td >
+                                <span class="{{ bien.sold ? 'badge bg-success' : '' }}">
+                                    {{ bien.sold ? 'Oui' : 'Non' }}
+                                </span>
+                            </td>
+                            <td >
+                                {% if bien.etat == 'publie' %}
+                                    <span class="badge bg-success">
+                                        Publié
+                                    </span>
+                               {% elseif bien.etat == 'en attente de publication' %}
+                                    <span class="badge bg-primary">
+                                        En attente de publication
+                                    </span>
+                                {% elseif bien.etat == 'loue' %}
+                                    <span class="badge bg-danger">
+                                        Déjà loué
+                                    </span>
+                                {% elseif bien.etat == 'vendu' %}
+                                    <span class="badge bg-danger">
+                                        Déjà vendu
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td >
+                                {% if bien.typeBien.categorie == 'a_louer' %}
+                                    {{ bien.typeBien.type ~ (bien.standing ? ' | ' ~ bien.standing.name ~ ' ' : ' ') ~ '| A louer' }}
+                                {% else %}
+                                    {{ bien.typeBien.type ~ (bien.standing ? ' | ' ~ bien.standing.name ~ ' ' : ' ') ~ '| A vendre' }}
+                                {% endif %}
+                            </td>
+                            <td>  {{bien.city}}</td>
+                            <th scope="row">
+                                <a href = "{{path('app.admin.edit', {id: bien.id } )}}" class="btn btn-info">Editer</a>
+                            </th>
+                            <th>
+                                {{ include('admin/bien/_delete_form.html.twig') }}
+                            </th>
+                            {% if bien.typeBien.categorie == 'a_louer' %}
+                            <th>
+                                <form  method= "post" action="{{path('app_louer_bien', {'id': bien.id } )}}" onsubmit="return confirm('Etes vous vraiment sûr que le bien est déja loué ?')">
+                                <input type="hidden" name="_token" value="{{csrf_token('louer' ~ bien.id)}}" >
+                                <button class="btn btn-outline-danger btn-sm w-100 my-1">Déjà louer ?</button>
+                                </form>
+                            </th>
+                            {% else %}
+                            <th>
+                                <form method="post" action="{{path('app_vendre_bien', {'id': bien.id } )}}" onsubmit="return confirm('Etes vous vraiment sûr que le bien est déja vendu ?')">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('vendre' ~ bien.id) }}">
+                                    <button class="btn btn-outline-info btn-sm w-100 my-1">Déjà vendu ?</button>
+                                </form>
+                            </th>
+                            {% endif %}  
+                        </tr>
+
+                    {% else %}
+                            <tr>
+                                <td colspan="9" class="text-center">Aucun enregistrement</td>
+                            </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div> 

@@ -11,7 +11,7 @@
       >
         <div class="container">
           <div class="row justify-content-center align-items-center">
-            <div class="col-lg-9 text-center mt-5">
+            <div class="col-md-9 col-lg-9 text-center mt-5">
               <h1 class="heading" data-aos="fade-up">
               RESULTATS DE VOTRE RECHERCHE
               </h1>
@@ -42,30 +42,30 @@
       <div class="section">
         <div class="container">
            <div class="row">
-              <div class="col-lg-12 mb-4" data-aos="fade-up" data-aos-delay="200">     
+              <div class="col-md-12 col-lg-12 mb-4" data-aos="fade-up" data-aos-delay="200">     
           {{ form_start(form) }}
             <form action="#">
               <div class="row">
-                <div class="col-3 mb-3">
+                <div class="col-md-3 mb-3">
                  {{ form_row(form.minSurface) }}
                  <div class="form-error">
                     {{ form_errors(form.minSurface) }}
                  </div>
                 </div>
-                <div class="col-4 mb-3">
+                <div class="col-md-4 mb-3">
                  {{ form_row(form.typeBien) }}
                  <div class="form-error">
                     {{ form_errors(form.typeBien) }}
                  </div>
                 </div>
-                <div class="col-3 mb-3">
+                <div class="col-md-3 mb-3">
                  {{ form_row(form.maxPrice) }}
                     <div class="form-error">
                       {{ form_errors(form.maxPrice) }}
                     </div>
                 </div>
                 
-                <div class="col-2">
+                <div class="col-md-2">
                  <button class="btn btn-primary">Rechercher</button>  
                 </div>
               </div>
@@ -77,7 +77,7 @@
      </div>
    
        <div class="row">
-          <div class="col-12">
+          <div class="col-md-12">
             <div class="property-slider-wrap">
               <div class="property-slider">
                 <!-- .item -->
@@ -115,7 +115,7 @@
                               </span>
                               <span class="d-block d-flex align-items-center">
                                 <span class="icon-bath me-2"></span>
-                                <span class="caption"> Type de chauffage : {{bien.heatType}}</span>
+                                <span class="caption"> Type de compteur : {{bien.heatType}}</span>
                               </span>
                           </div>
                           <a
@@ -156,6 +156,44 @@
         </div>
       </div>
     </div>
+
+
+
+    <!-- .item -->
+
+  <div class="property-item">
+    <a href="property-single.html" class="img">
+      <img src="images/img_3.jpg" alt="Image" class="img-fluid" />
+    </a>
+
+    <div class="property-content">
+      <div class="price mb-2"><span>$1,291,000</span></div>
+      <div>
+        <span class="d-block mb-2 text-black-50"
+          >5232 California Fake, Ave. 21BC</span
+        >
+        <span class="city d-block mb-3">California, USA</span>
+
+        <div class="specs d-flex mb-4">
+          <span class="d-block d-flex align-items-center me-3">
+            <span class="icon-bed me-2"></span>
+            <span class="caption">2 beds</span>
+          </span>
+          <span class="d-block d-flex align-items-center">
+            <span class="icon-bath me-2"></span>
+            <span class="caption">2 baths</span>
+          </span>
+        </div>
+
+        <a
+          href="property-single.html"
+          class="btn btn-primary py-2 px-3"
+          >See details</a
+        >
+      </div>
+    </div>
+  </div>
+  <!-- .item -->
 
 {% endblock %}
 

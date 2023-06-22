@@ -26,8 +26,13 @@
             <link href="{{ asset('asset/vendor/quill/quill.snow.css') }}" rel="stylesheet">
             <link href="{{ asset('asset/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
             <link href="{{ asset('asset/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
-            <link href="asset/vendor/simple-datatables/style.css" rel="stylesheet">
-            
+            <!--<link href="asset/vendor/simple-datatables/style.css" rel="stylesheet">-->
+            <!-- select2 css -->
+            <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/select2.min.css') }}">
+            <!-- flatpicker css -->
+            <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/flatpickr.min.css') }}">
+            <!-- datatables css -->
+            <link rel="stylesheet" type="text/css" href="{{ asset('asset/DataTables/datatables.min.css') }}" />
             <!-- Template Main CSS File -->
             <link href="{{ asset('asset/css/style.css') }}" rel="stylesheet">
         {% endblock %}
@@ -110,11 +115,12 @@
                                     <div class="card-body pt-3"> 
                                         <h4>Administration des biens</h4>
                                         {% for message in app.flashes('success') %}
-                                            <div class = 'alert alert-success mt-4'>
-                                            {{message}}
-                                            </div> 
+                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                {{message}}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
                                         {% endfor %}
-                                        <table class="table table-hover">
+                                        <table class="table table-bordered table-striped table datatable">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Titre</th>
@@ -125,35 +131,54 @@
                                                     <th scope="col">Favori</th>
                                                     <th scope="col">Etat</th>
                                                     <th scope="col">Type de bien</th>
-                                                    <th scope="col">Categorie</th>   
-                                                    <th scope="col"></th>
-
+                                                    <th scope="col">Lieu</th>                                
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {% for bien in biens %}
-                                                    <tr class="table-primary">
-                                                        <th scope="row"><h6> {{bien.name}} </h6></th>
-                                                        <th scope="row"><h6>{{bien.price}} $ </h6></th>
-                                                        <th scope="row"><h6>{{ bien.createdAt ? bien.createdAt|date('Y-m-d H:i:s') : '' }} </h6></th>
-                                                        <td scope="row"><h6>{{ bien.updatedAt ? bien.updatedAt|date('Y-m-d H:i:s') : '' }}</h6></td>
-                                                        <th scope="row"><h6> {{ bien.user.fullName}}</h6></th>
+                                                    <tr>
+                                                        <td > {{bien.name ? bien.name : '' }}</td>
+                                                        <td >{{bien.price|number_format(0, ',', ' ') }} $</td>
+                                                        <td scope="row">{{ bien.createdAt ? bien.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                                        <td scope="row">{{ bien.updatedAt ? bien.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                                        <td scope="row"> {{ bien.user.fullName ? bien.user.fullName : '' }}</td>
+                                                        <td scope="row">
+                                                            <span class="{{ bien.sold ? 'badge bg-success' : '' }}">
+                                                                {{ bien.sold ? 'Oui' : 'Non' }}
+                                                            </span>
+                                                        </td>
+                                                        <td scope="row">
+                                                        {% if bien.etat == 'publie' %}
+                                                                <span class="badge bg-success">
+                                                                    Publié
+                                                                </span>
+                                                            {% elseif bien.etat == 'en attente de publication' %}
+                                                                <span class="badge bg-primary">
+                                                                    En attente de publication
+                                                                </span>
+                                                            {% elseif bien.etat == 'loue' %}
+                                                                <span class="badge bg-danger">
+                                                                    Déjà loué
+                                                                </span>
+                                                            {% elseif bien.etat == 'vendu' %}
+                                                                <span class="badge bg-danger">
+                                                                    Déjà vendu
+                                                                </span>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td >
+                                                            {% if bien.typeBien.categorie == 'a_louer' %}
+                                                                {{ bien.typeBien.type ~ (bien.standing ? ' | ' ~ bien.standing.name ~ ' ' : ' ') ~ '| A louer' }}
+                                                            {% else %}
+                                                                    {{ bien.typeBien.type ~ (bien.standing ? ' | ' ~ bien.standing.name ~ ' ' : ' ') ~ '| A vendre' }}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>  {{bien.city}}</td>
                                                         <th scope="row">
-                                                        <h6 class="btn btn-info btn-sm"> 
-                                                            {% if bien.sold == true %} Oui  {% else %} Non {% endif %}
-                                                        </h6>
-                                                        </th>
-                                                        <th scope="row"><h6> {{ bien.etat}}</h6></th>
-                                                        <th scope="row"><h6> {{ bien.typeBien.type}} | {{ bien.standing.name}} </h6></th>
-                                                        <th scope="row"><h6>
-                                                        {% if bien.typeBien.categorie == 'a_louer' %}  A louer {% else %} A vendre {% endif %}                                 
-                                                        </h6></th>
-                                                        <th scope="row">
-                                                        <a href = "{{path('app.admin.edit', {id: bien.id } )}}" class="btn btn-info">Editer</a>
+                                                        <a href = "{{path('app.admin.edit', {id: bien.id } )}}" class="btn btn-outline-info btn-sm w-100 my-1">Editer</a>
                                                         </th>
                                                         <th>
                                                         {{ include('admin/bien/_delete_form.html.twig') }}
-                                                        
                                                         </th>
                                                     </tr>
                                                     {% else %}
@@ -163,8 +188,8 @@
                                                 {% endfor %}
                                             </tbody>
                                         </table>            
-                                        <div class="pagination page-item disabled">
-                                        {{knp_pagination_render(biens) }}
+                                        <div class="pagination justify-content-center">
+                                              {{knp_pagination_render(biens) }}
                                         </div>
                                     </div>
                             </div>
@@ -181,18 +206,122 @@
         </footer><!-- End Footer -->
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
         {% block javascripts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" 
+         integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" 
+         crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
             <!-- Vendor JS Files -->
             <script src="{{ asset('asset/vendor/apexcharts/apexcharts.min.js') }}"></script>
             <script src="{{ asset('asset/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
             <script src="{{ asset('asset/vendor/chart.js/chart.umd.js') }}"></script>
             <script src="{{ asset('asset/vendor/echarts/echarts.min.js') }}"></script>
             <script src="{{ asset('asset/vendor/quill/quill.min.js') }}"></script>
-            <script src="{{asset('asset/vendor/simple-datatables/simple-datatables.js')}}"></script>
             <script src="{{asset('asset/vendor/tinymce/tinymce.min.js')}}"></script>
             <script src="{{asset('asset/vendor/php-email-form/validate.js')}}"></script>
+            <!-- flatpicker js -->
+            <script src="{{ asset('asset/js/flatpickr.min.js') }}"></script>
+            <!-- flatpicker in french js -->
+            <script src="{{ asset('asset/js/flatpickr.fr.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('asset/DataTables/datatables.min.js') }}"></script>
+{#            <script src="{{ asset('assets_admin/vendor/simple-datatables/simple-datatables.js') }}"></script>#}
             
             <!-- Template Main JS File -->
             <script src="{{ asset('asset/js/main.js') }}"></script>
+            <script type="text/javascript">
+                jQuery(document).ready(function () {
+                    jQuery('.select2').select2();
+                    jQuery('.flatpicker').flatpickr({
+                        locale: 'fr',
+                        enableTime: false,6+-
+                        altInput: true,
+                        altFormat: "j F Y",
+                        dateFormat: "Y-m-d H:i",
+                    });
+                    jQuery('.flatpickerAndTime').flatpickr({
+                        locale: 'fr',
+                        enableTime: true,
+                        altInput: true,
+                        altFormat: "j F Y à H:i",
+                        dateFormat: "Y-m-d H:i",
+                    });
+                    jQuery('.datatable').DataTable({
+                        dom: 'Bflrtip',
+                        buttons: [
+                            // {
+                            //     extend: 'excel',
+                            //     createEmptyCells: true,
+                            //     extension: '.xlsx',
+                            //     filename: 'Liste des données - Site E-COYE EXPRESS',
+                            //     footer: true,
+                            //     header: true,
+                            //     sheetName: 'Feuille1',
+                            //     text: 'Exporter vers Excel',
+                            //     title: 'Liste des données - Site E-COYE EXPRESS'
+                            // },
+                            // {
+                            //     extend: 'pdf',
+                            //     extension: '.pdf',
+                            //     filename: 'Liste des données - Site E-COYE EXPRESS',
+                            //     footer: true,
+                            //     header: true,
+                            //     messageTop: "<br/>",
+                            //     orientation: "portrait",
+                            //     pageSize: "A4",
+                            //     text: 'Exporter vers PDF',
+                            //     title: 'Liste des données - Site E-COYE EXPRESS'
+                            // },
+                            // {
+                            //     extend: 'print',
+                            //     autoPrint: true,
+                            //     footer: true,
+                            //     header: true,
+                            //     message: "",
+                            //     text: 'Imprimer',
+                            //     title: 'Liste des données - Site E-COYE EXPRESS',
+                            //     customize: function (win) {
+                            //         jQuery(win.document.body).find('h1').css({
+                            //             fontSize: '22px',
+                            //             marginTop: '30px',
+                            //             marginBottom: '20px',
+                            //             textAlign: 'center'
+                            //         });
+                            //
+                            //         jQuery(win.document.body).find('table').css({
+                            //             fontSize: '14px',
+                            //             width: '100%',
+                            //             backgroundColor: 'white'
+                            //         });
+                            //     }
+                            // }
+                        ],
+                        language: {
+                            "decimal": "",
+                            "emptyTable": "Aucune donnée disponible",
+                            "info": "Page _PAGE_ sur _PAGES_",
+                            "infoEmpty": "Aucun enregistrement disponible",
+                            "infoFiltered": "(Filtré sur un total de _MAX_ enregistrements)",
+                            "infoPostFix": "",
+                            "thousands": " ",
+                            "lengthMenu": "Afficher _MENU_ enregistrements par page",
+                            "loadingRecords": "Chargement...",
+                            "processing": "En traitement...",
+                            "search": "Rechercher:",
+                            "zeroRecords": "Aucun résultat correspondant à la recherche",
+                            "paginate": {
+                                "first": "Premier",
+                                "last":  "Dernier",
+                                "next":   "Suivant",
+                                "previous": "Précédent"
+                            },
+                            "aria": {
+                                "sortAscending":  ": Activer pour trier la colonne en ordre croissant",
+                                "sortDescending": ": Activer pour trier la colonne en ordre décroissant"
+                            }
+                        }
+                    }); // Fin DataTable
+                }); // Fin ready
+            </script>
+
         {% endblock %}
     </body>
 </html>

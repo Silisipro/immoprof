@@ -1,0 +1,30 @@
+{#<div class="footer-post sm-mb-25">
+    {% for f in favoris %}
+        <div class="post-wrap mb-10 sm-mb--10">
+            <div class="post-img">
+                {% if getFilesByFileCode(f.codeFichier, '1') == f.codeFichier  %}
+                    {% if f.typeBien.categorie == 'a_louer' %}
+                        <a href="{{ path('site_detail_bien', {'id': f.id}) }}">
+                            <img src="{{ asset('assets/images/autre/image_defaut_a_louer.png') }}" alt="Photo du bien" loading="lazy">
+                        </a>
+                    {% else%}
+                        <a href="{{ path('site_detail_bien', {'id': f.id}) }}">
+                            <img src="{{ asset('assets/images/autre/image_defaut_a_vendre.png') }}" alt="Photo du bien" loading="lazy">
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ path('site_detail_bien', {'id': f.id}) }}">
+                        <img src="{{ sitelink ~ getFilesByFileCode(f.codeFichier, '1') }}" alt="Photo du bien" loading="lazy">
+                    </a>
+                {% endif %}
+            </div>
+            <div class="post-desc">
+                <a href="{{ path('site_detail_bien', {'id': f.id}) }}">{{ f.libelle|capitalize }}</a>
+                <div class="date-post">
+                    <i class="fa fa-calendar"></i>
+                    {{ f.dateAjout ? f.dateAjout|date('d/m/Y') : '' }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

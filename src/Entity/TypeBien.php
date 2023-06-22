@@ -33,6 +33,9 @@ class TypeBien
     
     private ?string $categorie;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $favori = null;
+
 
     public function __construct()
     {
@@ -100,5 +103,28 @@ class TypeBien
         return $this;
     }
 
+    public function __toString(): string
+    {
+        if ($this->getCategorie() == 'a_louer') {
+            return $this->getType(). ' - A louer';
+        } else {
+            return $this->getType(). ' - A vendre';
+        }
+    }
+
+    public function isFavori(): ?bool
+    {
+        return $this->favori;
+    }
+
+    public function setFavori(?bool $favori): self
+    {
+        $this->favori = $favori;
+
+        return $this;
+    }
+
+
+    
 
 }

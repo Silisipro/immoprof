@@ -1,45 +1,29 @@
-<html lang="fr">
+{% extends 'admin/bien/index.html.twig' %}
+{% block title %}
+  Immopro | Demande de contact 
+{% endblock %}
+{% block pageTitle %}
+   Immopro | Demande de contact 
+{% endblock %}
+{% block breadcrumb %}
+Liste des contacts
+{% endblock %}
+{% block bouton %}
+    <a href="{{ path('admin_index') }}" class="btn btn-primary btn-sm">Tableau de bord</a>
+{% endblock %}
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <title>{% block title %}Immopro | Demande de contact {% endblock %}</title>
-
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-
-      {% block stylesheets  %}
-        {% include 'admin/partiel/stulo.html.twig' %}
-        
-      {% endblock %}
-  
-</head>
-
-<body>
-    {% block header %}
-        {% include 'admin/partiel/header.html.twig' %}
-        {% endblock %}
-
-      {% block body %}
-      {% include 'admin/partiel/body.html.twig' %}
-
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
-
-          <div class="card">
-            <div class="card-body">
-              <h1 class="card-title">Liste des demandes de contacts</h1>
-                   {% for message in app.flashes('success') %}
-                 <div class = 'alert alert-success mt-4'>
-                  {{message}}
-                 </div> 
+{% block body %}
+  <div class="card">
+      <div class="card-body">
+               {% for message in app.flashes('success') %}
+                 <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{message}}
+                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                     </div>
                {% endfor %}
               <!-- Table with stripped rows -->
               <table class="table table-striped">
                 <thead>
-
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Nom</th>
@@ -70,27 +54,6 @@
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->
-            </div>
-          </div>
-                
-
-               <!-- End Bordered Tabs -->
-
-            </div>
-          </div>
-
-        </div>
-
       </div>
-    </section>
+  </div>
 
-  </main><!-- End #main -->
- {% endblock %}
-
-    {% block footer %}
-    {% include 'admin/partiel/footer.html.twig' %}
-        
-    {% endblock %}
-</body>
-
-</html>

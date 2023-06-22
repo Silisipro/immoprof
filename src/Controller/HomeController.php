@@ -42,7 +42,6 @@ class HomeController extends AbstractController
                 'detail' => $formAsk->get('detail')->getData(),
             ];
          
-            $request->getSession()->set('message', "demande");
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -78,7 +77,6 @@ class HomeController extends AbstractController
             foreach ($tabFichiers as $file) {
                 unlink($file);
             }*/
-            $request->getSession()->set('message', "estimer_loyer");
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -125,7 +123,6 @@ class HomeController extends AbstractController
             foreach ($tabFichiers as $file) {
                 unlink($file);
             }*/
-            $request->getSession()->set('message', "confier_bien");
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -172,7 +169,6 @@ class HomeController extends AbstractController
             foreach ($tabFichiers as $file) {
                 unlink($file);
             }*/
-            $request->getSession()->set('message', "vendre_bien");
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -185,13 +181,22 @@ class HomeController extends AbstractController
 
         ]);
 
-
-
-
-
-
-
-
-
     }
+
+    #[Route('/gestion_locative', name: 'app_gestion_locative', methods:['GET','POST'])]
+    public function gestionLocative(): Response
+    {
+
+
+        return $this->render('pages/gestion_locative/index.html.twig',[
+            
+        ]);
+    }
+
+
+
+
+
+
+
 }

@@ -11,14 +11,13 @@
     </div>
   
     <nav class="site-nav">
-      <div class="container">
+      
         <div class="menu-bg-wrap">
           <div class="site-navigation">
             <a href="{{path('app_home')}}" class="logo m-0 float-start">ImmoPro</a>
 
             <ul
-              class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
-            >
+              class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
               <li class="active"><a href="{{path('app_home')}}">Aceuil</a></li>
 
               <li class="has-children">
@@ -26,49 +25,39 @@
                 <ul class="dropdown">
                   <li class="has-children">
                     <a href="#">A Louer</a>
-                    <ul class="dropdown">
-                      <li><a href="{{path('bien.tout.index')}}">Chambres</a></li>
-                      <li><a href="#">Maisons</a></li>
-                      <li><a href="#">Terrains</a></li>
-                      <li><a href="#">Villas</a></li>
-                      <li><a href="#">Guests housse</a></li>
-                      <li><a href="#">Hotêls</a></li>
-                    </ul>
+                   {{ render(controller('App\\Controller\\TypeBienController::louer')) }}
+                    
                   </li>
                   <li class="has-children">
                     <a href="#">A vendre</a>
-                    <ul class="dropdown">
-                      <li><a href="{{path('bien.tout.index')}}">Maisons</a></li>
-                      <li><a href="#">Terrains</a></li>
-                      <li><a href="#">Villas</a></li>
-                      <li><a href="#">Guests housses</a></li>
-                      <li><a href="#">Hotêls</a></li>
-                    </ul>
+                     {{ render(controller('App\\Controller\\TypeBienController::vendre')) }}                  
                   </li>
                 </ul>
               </li>
-              <li><a href="#">Gestion Locative</a></li>
+              <li><a href="{{path('app_gestion_locative')}}">Gestion Locative</a></li>
               <li><a href="{{ path('app.about') }}">A propos</a></li>
               <li><a href="{{ path('app_contact') }}">Contact</a></li>
-                 {% if app.user %}
-
-              <li class="has-children">
-                <a href="{{ path('admin_index', {'id': app.user.id}) }}">
-                  <i class="fa fa-user-o"></i> &nbsp;{{ app.user.fullName }}
-                </a>
-                <ul class="dropdown">
-                  <li><a href="{{ path('admin_index') }}">
-                    <i class="fa fa-dashboard"></i> &nbsp;Mon tableau de bord
-                  </a></li>
-                  <li> <a href="{{ path('app_security_logout') }}">
-                    <i class="fa fa-sign-out"></i> &nbsp;Déconnexion
-                      </a></li>
-                 </ul>
-                   {% else %}
-              <li><a href="{{path('app_security_registration')}}">Inscription</a></li>
-              <li><a href="{{path('app_security_login')}}">Connexion</a></li>
+                {% if app.user %}
+                <li class="has-children">
+                    <a href="{{ path('admin_index', {'id': app.user.id}) }}">
+                      <i class="fa fa-user"></i> &nbsp;{{ app.user.fullName }}
+                    </a>
+                  <ul class="dropdown">
+                    <li>
+                      <a href="{{ path('admin_index') }}">
+                        <i class="fa fa-dashboard"></i> &nbsp;Mon tableau de bord
+                      </a>
+                    </li>
+                    <li> <a href="{{ path('app_security_logout') }}">
+                      <i class="fa fa-sign-out"></i> &nbsp;Déconnexion
+                        </a></li>
+                  </ul>
+                    {% else %}
+                    <li><a href="{{path('app_security_registration')}}">Inscription</a></li>
+                    <li><a href="{{path('app_security_login')}}">Connexion</a></li>
+                </li>
+                {% endif %}
             </ul>
-                   {% endif %}
             <a
               href="#"
               class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
@@ -78,7 +67,7 @@
               <span></span>
             </a>
           </div>
-        </div>
-      </div>
+          
+        </div> 
     </nav>
  {% endblock %}

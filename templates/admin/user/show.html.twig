@@ -37,7 +37,7 @@ Utilisateurs
                     <td>{{user.email}}</td>
                     <td>
                       {% if user.roles is not empty %}
-                        {% if user.roles|json_encode == '["ROLE_USER","ROLE_ADMIN"]' %}
+                        {% if user.roles|json_encode == '["ROLE_ADMIN"]' %}
                           Administrateur
                         {% endif %}
                         {% if user.roles|json_encode == '["ROLE_USER"]' %}

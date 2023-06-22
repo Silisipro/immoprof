@@ -1,7 +1,7 @@
 <li class="nav-item dropdown pe-3">
     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
         
-            <img src="{{ asset('assets_admin/img/user.png') }}" alt="Profil" class="rounded-circle">
+            <img src="{{ asset('asset/img/profil-img.jpg') }}" alt="Profil" class="rounded-circle">
        
         <span class="d-none d-md-block dropdown-toggle ps-2">{{ app.user.fullName }}</span>
     </a><!-- End Profile Iamge Icon -->
@@ -10,13 +10,13 @@
             <h6>{{ app.user.fullName }}</h6>
             <span class="badge bg-primary badge-pill mt-1">
                 {% if app.user.roles is not empty %}
-                    {% if app.user.roles|json_encode == '["ROLE_USER"]' %}
+                    {% if app.user.roles|json_encode == '["ROLE_AGENT"]' %}
                         Agent Immobilier
                     {% endif %}
                     {% if app.user.roles|json_encode == '["ROLE_CHEF_PROJET"]' %}
                         Chef Projet
                     {% endif %}
-                    {% if app.user.roles|json_encode == '["ROLE_SUPERVISEUR"]' %}
+                    {% if app.user.roles|json_encode == '["ROLE_ADMIN"]' %}
                         Administrateur
                     {% endif %}
                 {% endif %}

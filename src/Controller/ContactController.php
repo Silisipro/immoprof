@@ -5,39 +5,29 @@ namespace App\Controller;
 use App\Entity\Contact;
 use App\Form\ContactType;
 use App\Repository\ContactRepository;
-use App\Service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ContactController extends AbstractController
 {
-    #[Route('/contact', name: 'app_contact')]
-    public function index(Request $request, EntityManagerInterface $manager, MailerInterface $mailService): Response
+
+    #[Route('/contact', name: 'app_contact', methods:['GET','POST'])]
+    public function index(Request $request,
+     EntityManagerInterface $manager): Response
     {
         $contact = new Contact();
 
-       //if($this->getUser()){
-      //  $contact->setFullName($this->getUser()->getFullName())
-      //  ->setEmail($this->getUser()->getEmail());
-      // }
-
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
               $contact = $form ->getData();
 
                 $manager->persist($contact);
                 $manager->flush();
-                    
-                    //Email
-
-         
 
             $this->addFlash(
                 'success',
@@ -45,20 +35,13 @@ class ContactController extends AbstractController
             );
 
             return $this->redirectToRoute('app_contact');
-        } else {
-            $this->addFlash(
-                'danger',
-                $form->getErrors()
-            );
-        }
-
         
-
+        };
         return $this->render('pages/contact/index.html.twig', [
             'form' => $form->createView()
         ]);
     }
-     
+   
     #[Route('/contact/liste', name: 'app_contact_index', methods: ['GET'])]
     public function listuser (ContactRepository $contact): Response
     {
@@ -67,23 +50,16 @@ class ContactController extends AbstractController
                
         ]);
     }
-
-    #[IsGranted('ROLE_USER')]
+   
     #[Route('/contact/supression/{id}', name: 'app_contact_delete', methods:['GET','POST'])]
     public function delete(Contact  $contact, Request $request, EntityManagerInterface $manager ) : Response
-    { 
-        # if($this->isCsrfTokenValid('delete' . $bien->getId(), $request->get('_token'))) {
-        #    $manager->remove($bien);
-        #    $manager->flush();
-        # }
+    {    
         $manager->remove($contact);
         $manager->flush();
         $this->addFlash(
             'success',
             'Contact suprimé avec succès'
         );
-
-
         return $this->redirectToRoute('app_contact_index');   
     }  
 

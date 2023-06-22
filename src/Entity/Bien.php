@@ -13,15 +13,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: BienRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 
-
 class Bien
 {  
 
     use EntityTimestampTrait;
 
-    const HEAT = [
-        '0'=> '--Selectionner--',
-        '1'=> 'Compteur personnel',
+    public const HEAT = [
+        '0'=> 'Compteur personnel',
+        '1'=> 'Compteur à carte',
         '2'=> 'Decompteur',
         '3'=> 'Panneaux solaire',
     ];
@@ -44,27 +43,27 @@ class Bien
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column]
+    #[ORM\Column( nullable: true)]
     #[Assert\Positive()]
     #[Assert\LessThan(4000)]
     private ?int $surface;
 
-    #[ORM\Column]
+    #[ORM\Column ( nullable: true)]
     #[Assert\Positive()]
     #[Assert\LessThan(50)]
     private ?int $rooms = null;
 
-    #[ORM\Column]
+    #[ORM\Column( nullable: true)]
     #[Assert\Positive()]
     #[Assert\LessThan(50)]
     private ?int $bedrooms = null;
 
-    #[ORM\Column]
+    #[ORM\Column( nullable: true)]
     #[Assert\Positive()]
     #[Assert\LessThan(10)]
     private ?int $floor = null;
 
-    #[ORM\Column]
+    #[ORM\Column( nullable: true)]
     private ?int $heat = null;
 
     #[ORM\Column(length: 255)]
@@ -101,6 +100,15 @@ class Bien
     #[ORM\ManyToOne(inversedBy: 'biens')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Standing $standing = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $note = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $reference = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $paiementLouer = null;
 
 
     public function __construct()
@@ -337,6 +345,42 @@ class Bien
     public function setStanding(?Standing $standing): self
     {
         $this->standing = $standing;
+
+        return $this;
+    }
+
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    public function setNote(?string $note): self
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(?string $reference): self
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
+
+    public function getPaiementLouer(): ?string
+    {
+        return $this->paiementLouer;
+    }
+
+    public function setPaiementLouer(?string $paiementLouer): self
+    {
+        $this->paiementLouer = $paiementLouer;
 
         return $this;
     }

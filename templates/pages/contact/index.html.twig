@@ -1,16 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block title %}
   ImmoPro | Contact
-{% endblock %}
-    
-    {% block body %}
+{% endblock %}   
+{% block body %}
     <div
       class="hero page-inner overlay"
-      style="background-image: url('{{asset('assets/images/hero_bg_1.jpg')}}')"
-    >
+      style="background-image: url('{{asset('assets/images/hero_bg_1.jpg')}}')">
       <div class="container">
         <div class="row justify-content-center align-items-center">
-          <div class="col-lg-9 text-center mt-5">
+          <div class="col-mdlg-9 text-center mt-5">
             <h1 class="heading" data-aos="fade-up">Contact-Nous</h1>
 
             <nav
@@ -19,7 +17,7 @@
               data-aos-delay="200"
             >
               <ol class="breadcrumb text-center justify-content-center">
-                <li class="breadcrumb-item"><a href="index.html">Aceuil</a></li>
+                <li class="breadcrumb-item"><a href="#">Aceuil</a></li>
                 <li
                   class="breadcrumb-item active text-white-50"
                   aria-current="page"
@@ -37,10 +35,10 @@
       <div class="container">
         <div class="row">
           <div
-            class="col-lg-4 mb-5 mb-lg-0"
+            class="col-md-4 col-lg-4 mb-2 mb-lg-0"
             data-aos="fade-up"
             data-aos-delay="100"
-          >
+           >
             <div class="contact-info">
               <div class="address mt-2">
                 <i class="icon-room"></i>
@@ -74,43 +72,43 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-md-9 col-lg-8" data-aos="fade-up" data-aos-delay="200">
               {% for message in app.flashes('success') %}
-                <div class = 'alert alert-success mt-4'>
-                {{message}}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{message}}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div> 
               {% endfor %}
 
-          {{ form_start(form) }}
+              {{ form_start(form) }}
             <form action="#">
               <div class="row">
-                <div class="col-6 mb-3">
+                <div class="col-md-6 mb-2 mt-2">
                  {{ form_row(form.name) }}
                  <div class="form-error">
                     {{ form_errors(form.name) }}
                  </div>
                 </div>
-                <div class="col-6 mb-3">
+                <div class="col-md-6 mb-2 mt-2">
                  {{ form_row(form.email) }}
                     <div class="form-error">
                       {{ form_errors(form.email) }}
                     </div>
                 </div>
-                <div class="col-12 mb-3">
+                <div class="col-md-12 mb-2 mt-2">
                   {{ form_row(form.objet) }}
                     <div class="form-error">
                       {{ form_errors(form.objet) }}
                    </div>
                 </div>
-                <div class="col-12 mb-3">
+                <div class="col-md-12 mb-2 mt-2">
                   {{ form_row(form.message) }}
                    <div class="form-error">
                       {{ form_errors(form.message) }}
                    </div>
                 </div>
-                <div class="col-12">
-                {{ form_row(form.submit) }}
-                 
+                <div class="col-md-12 mt-2">
+                {{ form_row(form.submit) }}  
                 </div>
               </div>
             </form>
@@ -119,6 +117,4 @@
         </div>
       </div>
     </div>
-
-    
-    {% endblock %}
+{% endblock %}

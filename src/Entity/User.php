@@ -63,12 +63,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\NotBlank()]
-    private ?string $password = "password";
+    private ?string $password = 'password';
 
 
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Bien::class)]
     private Collection $biens;
+
+    #[ORM\Column(length: 2, nullable: true)]
+    private ?string $sexe = null;
 
     public function __construct()
     {
@@ -248,6 +251,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $bien->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSexe(): ?string
+    {
+        return $this->sexe;
+    }
+
+    public function setSexe(?string $sexe): self
+    {
+        $this->sexe = $sexe;
 
         return $this;
     }

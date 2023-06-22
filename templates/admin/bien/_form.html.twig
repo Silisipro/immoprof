@@ -1,38 +1,39 @@
+{{ form_start(form) }}  
+  <div class="row mb-3">
+    <div class="col-md-4 col-lg-4 d-block" > {{ form_row(form.categorie) }}</div>
+    <div class="col-md-4 col-lg-4"> {{ form_row(form.sold) }} </div>
 
-                {{ form_start(form) }}
-                    <div class="row mb-3">
-                    <div class="row mb-3">
-                      <div class="col-md-4 col-lg-4"> {{ form_row(form.name) }}</div>
-                      <div class="col-md-4 col-lg-4"> {{ form_row(form.surface) }} </div>
-                      <div class="col-md-4 col-lg-4"> {{ form_row(form.price) }}</div>
-                    </div>
-                    <div class="row mb-3">
-                      <div class="col-md-2 col-lg-4"> {{ form_row(form.rooms) }} </div>
-                      <div class="col-md-2 col-lg-4"> {{ form_row(form.bedrooms) }} </div>
-                      <div class="col-md-2 col-lg-4"> {{ form_row(form.heat) }}</div>
-                    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-4 col-lg-4"> {{ form_row(form.name) }}</div>
+    <div class="col-md-4 col-lg-4"> {{ form_row(form.surface) }} </div>
+    <div class="col-md-4 col-lg-4"> {{ form_row(form.price) }}</div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-2 col-lg-4" id="bien-rooms"> {{ form_row(form.rooms) }} </div>
+    <div class="col-md-2 col-lg-4 " id="bien-bedrooms"> {{ form_row(form.bedrooms) }}</div>
+    <div class="col-md-2 col-lg-4" id="bien-heat"> {{ form_row(form.heat) }}</div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-2 col-lg-4" id="bien-floor" > {{ form_row(form.floor) }} </div>
+    <div class="col-md-2 col-lg-4"> {{ form_row(form.city) }} </div>
+    <div class="col-md-4 col-lg-4"> {{ form_row(form.adress) }}</div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-4 col-lg-4" id="type-bien-louer"> {{ form_row(form.typeBienLouer) }}
+    {# {% if form.typeBien == 'a_louer' %}  A louer {% else %} A vendre {% endif %}#}
+    </div>
+    <div class="col-md-4 col-lg-4" id="type-bien-vendre"> {{ form_row(form.typeBienVendre) }}</div>
+    <div class="col-md-4 col-lg-4"> {{ form_row(form.standing) }}</div>
+    <div class="col-md-4 col-lg-4"> {{ form_row(form.paiementLouer) }}</div>
 
-                     <div class="row mb-3">
-                      <div class="col-md-2 col-lg-4"> {{ form_row(form.floor) }} </div>
-                      <div class="col-md-2 col-lg-4"> {{ form_row(form.city) }} </div>
-                      <div class="col-md-4 col-lg-4"> {{ form_row(form.adress) }}</div>
-
-                    </div>
-                    <div class="row mb-3">
-                      <div class="col-md-4 col-lg-4"> {{ form_row(form.typeBien) }}
-                      {% if form.typeBien == 'a_louer' %}  A louer {% else %} A vendre {% endif %}
-                      </div>
-                      <div class="col-md-2 col-lg-4"> {{ form_row(form.sold) }} </div>
-                      <div class="col-md-4 col-lg-4"> {{ form_row(form.standing) }}</div>
-
-                    </div>
-                    <div class="row mb-3">
-                      <div class="form-group"> {{ form_row(form.description) }} </div>
-                    </div>
-                    
-                    {{ form_widget(form) }}
-                     <button class=" col-md-4 col-lg-4 btn btn-primary">{{ button_label|default('Enrégistrer') }}</button>
-                     
-            {{ form_end(form) }}
+  <div class="row mb-3">
+    <div class="form-group"> {{ form_row(form.description) }} </div>
+  </div>
+  
+  {{ form_widget(form) }}
+    <button class=" col-md-12 col-lg-12 btn btn-primary" id ="bouton-submit">{{ button_label|default('Enrégistrer') }}</button>
+          
+{{ form_end(form) }}
 
 

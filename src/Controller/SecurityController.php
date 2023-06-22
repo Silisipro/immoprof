@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\InscriptionType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,23 +26,24 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/inscription', name: 'app_security_registration', methods:['GET','POST'])] 
-    public function inscription(Request $request,
-    UserPasswordHasherInterface $passwordHasher,
+    public function inscription(Request $request, UserRepository $userRepository,
      EntityManagerInterface $manager) : Response
     {
         $user = new User();
+        
         $form = $this->createForm(InscriptionType::class, $user);
-        $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                $hashedPassword = $passwordHasher->hashPassword(
-                    $user,
-                    $user->getPlainPassword()
-                );
-                $user = $form ->getData();
-                $user->setRoles(["ROLE_USER"]);
-                $user->getPlainPassword($hashedPassword);
+        $form->handleRequest($request);     
+            if ($form->isSubmitted()) { 
+                $data = [
+                    'role' => $form->get('role')->getData()];
 
-                $manager->persist($user);
+                    foreach ($data as $r)
+                $user = $form->getData();
+                $user->setRoles([$r]); 
+              
+                 
+                $userRepository->save($user, true);
+
                 $manager->flush();
                 
                     $this->addFlash(
@@ -52,13 +54,12 @@ class SecurityController extends AbstractController
                 };
                 
         return $this->render('pages/security/inscription.html.twig',[
-            'form'=>$form->createView()
-            
+            'form'=>$form->createView()          
         ]);
     }
    
     #[Route("/deconnexion", name:"app_security_logout")]
-    public function logout()
+    public function logout(): void
     {
         //rien
     }

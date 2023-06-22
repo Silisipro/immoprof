@@ -29,12 +29,58 @@
             <div class="card">
                 <div class="card-body pt-3"> 
                 {{ include('admin/bien/_form.html.twig') }}
-
-                <!-- End Bordered Tabs -->
                 </div>
             </div>
-
         </div>
-
     </div>
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            let categorieLouer = jQuery('#bien_categorie_0');
+            let categorieVendre = jQuery('#bien_categorie_1');
+            let typeBienLouer = jQuery('#type-bien-louer');
+            let typeBienVendre = jQuery('#type-bien-vendre');
+            let bienSuperficie = jQuery('#bien-surface');
+            let bienNbpiece = jQuery('#bien-rooms');
+            let bienNbChambre = jQuery('#bien-bedrooms');
+            let bienCompteur = jQuery('#bien-heat');
+            let bienNiveau = jQuery('#bien-floor');
+           // let childrenFrequencePaiement = jQuery('#bien_intervalle').parent().children();
+            let labelMontantBien = jQuery('label[for="bien_price"]');
+            categorieLouer.attr('checked', 'checked');
+            categorieLouer.click(function () {
+                typeBienLouer.show();
+                typeBienVendre.hide();
+                bienNbpiece.show();
+                bienNbChambre.show();
+                bienCompteur.show();
+                bienNiveau.show();
+               // childrenFrequencePaiement.show();
+                labelMontantBien.text("Montant du loyer (*)");
+            });
+            categorieVendre.click(function () {
+                typeBienLouer.hide();
+                typeBienVendre.show();
+                bienNbpiece.hide();
+                bienNbChambre.hide();
+                bienCompteur.hide();
+                bienNiveau.hide();
+                //childrenFrequencePaiement.hide();
+                labelMontantBien.text("Prix de vente (*)");
+            });
+            // Traitement avant la soumission du formulaire
+            let selectTypeBienLouer = jQuery('#bien_typeBienLouer');
+            let selectTypeBienVendre = jQuery('#bien_typeBienVendre');
+            jQuery('#bouton-submit').click(function () {
+                if (selectTypeBienLouer.val().trim() === '') {
+                    typeBienLouer.remove();
+                }
+                if (selectTypeBienVendre.val().trim() === '') {
+                    typeBienVendre.remove();
+                }
+            });
+        }); // Fin ready
+    </script>
+    {% endblock %}

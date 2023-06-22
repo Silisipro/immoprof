@@ -21,17 +21,41 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-class Bien1Type extends AbstractType
+class BienType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('categorie', ChoiceType::class, [
+                'choices' => [
+                    'A louer' => 'a_louer',
+                    'A vendre' => 'a_vendre',
+                ],
+                'label' => 'Catégorie (*)',
+                'required' => true,
+                'expanded' => true,
+                'multiple' => false,
+                'mapped' => false,
+            ])
+
+            ->add('sold', ChoiceType::class, [
+                'choices' => [
+                    'Oui' => true,
+                    'Non' => false,
+                ],
+                'label' => "Voulez-vous afficher ce bien sur la page d'accueil du site ?",
+                'required' => false,
+                'expanded' => true,
+                'multiple' => false,
+                'placeholder' => false,
+            ])
             ->add('name',  TextType::class, [ 
                 'attr'=> [
                     'class' =>'form-control',
                      'minlength' =>'2',
                      'maxlength' =>'50'
                       ],
+                'required' => true,
                 'label'=> 'Titre',
                 'constraints'=> [
                     new Assert\Length(['min'=>2, 'max'=>255]),
@@ -81,7 +105,7 @@ class Bien1Type extends AbstractType
                      'max' =>'50'
                       ],
                 'label'=> 'Nombre de pièces',
-                'required' => true,
+                'required' => false,
                 'constraints'=>[ 
                    new Assert\Positive(),
                    new Assert\LessThan(50)
@@ -94,49 +118,95 @@ class Bien1Type extends AbstractType
                      'max' =>'50'
                       ],
                 'label'=> 'Nombre de chambres ',
-                'required' =>true,
+                'required' =>false,
                 'constraints'=>[ 
                    new Assert\Positive(),
                    new Assert\LessThan(50)
                     ] 
             ])
-            ->add('typeBien', EntityType::class, [
+
+            ->add('paiementLouer', ChoiceType::class, [
+                'choices' => [
+                    'Mensuel' => 'Mois',
+                    'Journalier' => 'Jour',
+                    'Semestiel' => 'Semaine',
+                    'Non' => '',
+                ],
+                'label' => "Fréquence de paiement du loyer",
+                'required' => false,
+                'expanded' => false,
+                'multiple' => false,
+                'placeholder' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('typeBienLouer', EntityType::class, [
                 'class' => TypeBien::class,
                 'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('s')
-                        ->orderBy('s.type', 'ASC');
+                    return $er->createQueryBuilder('t')
+                        ->andWhere('t.categorie = :categorie')
+                        ->setParameter('categorie', 'a_louer')
+                        ->addOrderBy('t.type', 'ASC')
+                        ;
                 },
                 'choice_label' => function ($typeBien) {
-                    $value = $typeBien->getType().' - '.$typeBien->getCategorie();
-                    return $value;
+                    return $typeBien->getType(). ' - A louer';
                 },
                 'expanded' => false,
                 'multiple' => false,
-                'label' => 'Type de logement',
+                'label' => 'Type du bien immobilier (*)',
                 'required' => true,
                 'placeholder' => '-- Sélectionner --',
                 'attr' => [
                     'class' => 'form-control',
-                ]
-            ])
+                ],
+                'mapped' => false,
+
+            ]) 
             ->add('floor', IntegerType::class,[ 
                 'attr'=> [
                     'class' =>'form-control',
                      'min' =>'1',
                      'max' =>'10'
                       ],
-                'label'=> 'Nombre de niveau',
-                'required' => true,
+                'label'=> 'Nombre de niveau (1 pour rez)',
+                'required' => false,
                 'constraints'=>[ 
                    new Assert\Positive(),
                    new Assert\LessThan(10)
-                    ] 
+                ]
+            ])
+
+            ->add('typeBienVendre', EntityType::class, [
+                'class' => TypeBien::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->andWhere('t.categorie = :categorie')
+                        ->setParameter('categorie', 'a_vendre')
+                        ->addOrderBy('t.type', 'ASC')
+                        ;
+                },
+                'choice_label' => function ($typeBien) {
+                    return $typeBien->getType(). ' - A vendre';
+                },
+                'expanded' => false,
+                'multiple' => false,
+                'label' => 'Type du bien immobilier (*)',
+                'required' => false,
+                'placeholder' => '-- Sélectionner --',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'mapped' => false,
             ])
             ->add('heat', ChoiceType::class , [
                 'attr'=> [
                     'class' =>'form-control'],
                 'choices' => $this->getChoices(),
-                'label'=>'Type de chauffage'
+                'label'=>'Type de compteur',
+                'required' => false,
+                'placeholder' => '-- Sélectionner --',
             ])
             ->add('city', TextType::class, [ 
                 'attr'=> [
@@ -161,7 +231,7 @@ class Bien1Type extends AbstractType
                     'expanded' => false,
                     'multiple' => false,
                     'label' => 'Standing',
-                    'required' => true,
+                    'required' => false,
                     'placeholder' => '-- Sélectionner --',
                     'attr' => [
                         'class' => 'form-control',
@@ -180,13 +250,19 @@ class Bien1Type extends AbstractType
                     ]
         
                 ])
-            ->add('sold',  CheckboxType::class,  [
-                'label'=> 'Mettre en favori ?',
-                'required' =>false,
-                'constraints'=>[ 
-                    new Assert\NotNull(), 
-                    ]    
-            ])
+            ->add('files', FileType::class, [
+                'label' => "Sélectionner vos images",
+                'mapped' => false,
+                'required' => false,
+                'multiple' => true,
+                'attr' => [
+                    'onchange' => 'previewUpload();',
+                    'accept' => 'image/*',
+                    'class' => 'form-control',
+                ],
+                'help' => "La taille maximale de chaque image sélectionnée doit être de 5 Mo sinon l'image ne sera pas envoyée sur le serveur.",
+            ])    
+            
         ;
     }
 
@@ -197,8 +273,6 @@ class Bien1Type extends AbstractType
         ]);
     }
 
-
-
     private function getChoices()
     {
         $choices = Bien::HEAT;
@@ -207,6 +281,12 @@ class Bien1Type extends AbstractType
             $output[$v]=$k;
         }
         return $output;
+    }
+
+
+    public function getBlockPrefix()
+    {
+        return 'bien';
     }
 
 }
