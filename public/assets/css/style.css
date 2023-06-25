@@ -9657,7 +9657,7 @@ textarea {
   position: relative;
   float: left;
   width: 100%;
-  border-radius: 7px;
+  /*border-radius: 7px;*/
   -webkit-box-shadow: 0 15px 30px -15px rgba(0, 0, 0, 0.1);
   box-shadow: 0 15px 30px -15px rgba(0, 0, 0, 0.1); }
 
@@ -9683,7 +9683,7 @@ textarea {
     min-height: 600px; }
   .hero.page-inner, .hero.page-inner > .container > .row {
     height: 30vh;
-    min-height: 145px; }
+    min-height: 200px; }
   .hero > .container {
     position: relative;
     z-index: 2; }
@@ -10374,3 +10374,17 @@ nav[aria-label="breadcrumb"] li:before {
       .site-footer .social li a:hover {
         background: #00204a;
         color: #fff; }
+
+
+.avt{
+  color: #005555;
+}        
+
+.mode {
+
+  border-style: solid;
+  background-color: #005555;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+}

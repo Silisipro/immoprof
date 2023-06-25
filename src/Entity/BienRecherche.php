@@ -15,8 +15,10 @@ class BienRecherche {
     #[Assert\LessThan(40000)]
     private ?int $minSurface = null;
 
+    private ?string $lieu = null;
 
     private ?TypeBien $typeBien = null;
+    private ?Standing $standing = null;
 
 
 
@@ -45,6 +47,17 @@ class BienRecherche {
         return $this;
      }
 
+     public function getLieu(): ?string
+     {
+         return $this->lieu;
+     }
+ 
+     public function setLieu( string $lieu ) : BienRecherche
+     {
+         $this->lieu = $lieu;
+ 
+         return $this;
+      }
     /* public function getTypebien(): Collection
     {
         return $this->typeBien;
@@ -68,7 +81,17 @@ class BienRecherche {
          return $this;
      }
 
+ public function getStanding(): ?Standing
+    {
+        return $this->standing;
+    }
 
+    public function setStanding(?Standing $standing): self
+    {
+        $this->standing = $standing;
+
+        return $this;
+    }
 
  }
 

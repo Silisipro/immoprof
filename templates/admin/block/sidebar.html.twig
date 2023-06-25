@@ -124,7 +124,7 @@
             <li class="nav-heading">Paramètres</li>
         {% if is_granted('ROLE_USER') %}
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
+                <a class="nav-link collapsed" href="{{path('admin_profil')}}">
                     <i class="bi bi-person"></i>
                     <span>Mon Profil</span>
                 </a>

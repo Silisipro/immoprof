@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
 
-  #[Route("/profil",name:"admin_index", methods:['GET']) ]
+  #[Route("/profil",name:"admin_profil", methods:['GET']) ]
    public function index(UserRepository $userRepository ) : Response
    {
     return $this->render('admin/user/index.html.twig',[
@@ -34,7 +34,6 @@ class UserController extends AbstractController
             
     ]);
    } 
-
 
     /**
     * This controller edit user information
@@ -65,9 +64,7 @@ class UserController extends AbstractController
                  
             if ($hasher->isPasswordValid($choosenUser , $form->getData()->getPlainPassword())){
                 $user = $form ->getData();
-
-                
-            
+          
                 $this->addFlash(
                     'success',
                     'Les information de votre compte ont été modifiées avec succès'
@@ -117,12 +114,8 @@ class UserController extends AbstractController
                 $manager->flush();
 
                 return $this->redirectToRoute('admin_index');
-
-            }
-
-           
+            }           
         } 
-
         return $this->render('admin/user/edit_password.html.twig', [
             'form' =>$form->createView()
         ]);
@@ -146,6 +139,7 @@ class UserController extends AbstractController
                
         ]);
     }
+
     #[Route('/bloque', name: 'app_user_index_bloque', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN')]
     public function userBloque(UserRepository $userRepository): Response
@@ -163,7 +157,6 @@ class UserController extends AbstractController
         ]);
     }
 
-
     #[Route('/{id}/bloquer', name: 'app_user_bloquer', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function bloquer(User $user, UserRepository $userRepository): Response
@@ -172,9 +165,6 @@ class UserController extends AbstractController
         $userRepository->save($user, true);
         return $this->redirectToRoute('app_user_index_bloque', [], Response::HTTP_SEE_OTHER);
     }
-
-
-
 
     #[Route('/{id}/debloquer', name: 'app_user_debloquer', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
@@ -185,7 +175,6 @@ class UserController extends AbstractController
         $userRepository->save($user, true);
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
-
 
     #[Route('/{id}/supprimer', name: 'app_user_delete', methods: ['POST'])]
     #[IsGranted('ROLE_ADMIN')]

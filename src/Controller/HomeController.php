@@ -183,15 +183,59 @@ class HomeController extends AbstractController
 
     }
 
-    #[Route('/gestion_locative', name: 'app_gestion_locative', methods:['GET','POST'])]
-    public function gestionLocative(): Response
+    #[ROUTE ('/marque', name:'app_favori_marque')]
+    public function favorieMarque(BienRepository $bienRepository) : Response
+
     {
+        $favavisMarq = $bienRepository->findBy(
+            [
+                'sold'=>true,
+                'deleted'=> false,               
+            ],
+            [
+                'createdAt'=> 'ASC'
+            ]
+        );
 
-
-        return $this->render('pages/gestion_locative/index.html.twig',[
-            
+        return $this->render('bien_favori\favori_marquee.html.twig',[
+            'favorisMarq'=> $favavisMarq
         ]);
     }
+
+
+
+
+    #[Route('/gestion_locative', name: 'app_gestion_locative', methods:['GET','POST'])]
+    public function gestionLocative(Request $request ): Response
+    {
+        $formCfLoge = $this->createForm(CfLogeType::class);
+        $formCfLoge->handleRequest($request);
+        
+        if ($formCfLoge->isSubmitted() && $formCfLoge->isValid()) { 
+            $data =[
+                'nomPrenom' => $formCfLoge->get('nomPrenom')->getData(),
+                'telephone' => $formCfLoge->get('telephone')->getData(),
+                'emailForm' => $formCfLoge->get('email')->getData(),
+                'zone' => $formCfLoge->get('zone')->getData(),
+                'typeLogement' => $formCfLoge->get('typeLogement')->getData(),
+                'standing' => $formCfLoge->get('standing')->getData(),
+                'detail' => $formCfLoge->get('detail')->getData(),
+                'files' => $formCfLoge->get('files')->getData(),
+                'dateHeureRdv' => $formCfLoge->get('dateHeureRdv')->getData(),
+                'typeRdv' => $formCfLoge->get('typeRdv')->getData(),
+            ];
+        
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+        };
+
+        return $this->render('pages/gestion_locative/index.html.twig',[ 
+            'formCfLoge' => $formCfLoge->createView()
+
+        ]);
+    }
+  
+
+
 
 
 

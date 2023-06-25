@@ -24,56 +24,56 @@ Liste des types de biens
 
   </div>
         
-  <div class="col-xl-12">
-          <div class="card">
-            <div class="card-body pt-3"> 
-               {% for message in app.flashes('success') %}
-                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{message}}
-                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div> 
-               {% endfor %}
-                <table class="table table-bordered table-striped table datatable">
-                      <thead>
-                          <tr>
-                              <th scope="col">Type de bien</th>
-                              <th scope="col">Favoris</th>
-                              <th scope="col">Date d'ajout</th>
-                              <th scope="col">Date du dernière modification</th>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body pt-3"> 
+          {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div> 
+          {% endfor %}
+          <table class="table table-bordered table-striped table datatable">
+                <thead>
+                    <tr>
+                        <th scope="col">Type de bien</th>
+                        <th scope="col">Favoris</th>
+                        <th scope="col">Date d'ajout</th>
+                        <th scope="col">Date du dernière modification</th>
 
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {% for typebien in typebiens %}
-                              <tr>
-                                  <th scope="row"><h6>{{typebien.type}} | 
-                                  {% if typebien.categorie == 'a_louer' %}  A louer {% else %} A vendre {% endif %}
-                                 </h6></th>
-                                 <th scope="row">
-                                 <span class="{{ typebien.favori ? 'badge bg-success' : '' }}">
-                                      {{ typebien.favori ? 'Oui' : 'Non' }}
-                                  </span>
-                                 </th>
-                                  <th scope="row"> <h6>{{typebien.createdAt ? typebien.createdAt|date("d/m/Y à H:i:s"):'' }} </h6></th>
-                                  <th scope="row"> <h6>{{typebien.updatedAt ? typebien.updatedAt|date("d/m/Y à H:i:s"):'' }} </h6></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for typebien in typebiens %}
+                        <tr>
+                            <th scope="row"><h6>{{typebien.type}} | 
+                            {% if typebien.categorie == 'a_louer' %}  A louer {% else %} A vendre {% endif %}
+                            </h6></th>
+                            <th scope="row">
+                            <span class="{{ typebien.favori ? 'badge bg-success' : '' }}">
+                                {{ typebien.favori ? 'Oui' : 'Non' }}
+                            </span>
+                            </th>
+                            <th scope="row"> <h6>{{typebien.createdAt ? typebien.createdAt|date("d/m/Y à H:i:s"):'' }} </h6></th>
+                            <th scope="row"> <h6>{{typebien.updatedAt ? typebien.updatedAt|date("d/m/Y à H:i:s"):'' }} </h6></th>
 
-                                  <th scope="row">
-                                  <a href = "{{path('app.typebien.edit', {id: typebien.id } )}}" class="btn btn-info">Editer</a>
-                                  </th>
-                              </tr>
-                          {% else %}
-                              <tr>
-                                <td colspan="5" class="text-center">Aucun enregistrement</td>
-                             </tr>
-                          {% endfor %}
-                      </tbody>
-                 </table>            
-                <div class="pagination page-item disabled">
-                 {{knp_pagination_render(typebiens) }}
-                </div>
-            </div>
-          </div>
+                            <th scope="row">
+                            <a href = "{{path('app.typebien.edit', {id: typebien.id } )}}" class="btn btn-info">Editer</a>
+                            </th>
+                        </tr>
+                    {% else %}
+                        <tr>
+                          <td colspan="5" class="text-center">Aucun enregistrement</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table> 
+         </div>
+       <div class="pagination page-item disabled">
+            {{knp_pagination_render(typebiens) }}
         </div>
+    </div>
+  </div>
 {% endblock %}
 
   

@@ -127,16 +127,16 @@ class BienType extends AbstractType
 
             ->add('paiementLouer', ChoiceType::class, [
                 'choices' => [
-                    'Mensuel' => 'Mois',
                     'Journalier' => 'Jour',
                     'Semestiel' => 'Semaine',
-                    'Non' => '',
+                    'Mensuel' => 'Mois',
+                    'Annuel' => 'Annuel',
                 ],
                 'label' => "Fréquence de paiement du loyer",
                 'required' => false,
                 'expanded' => false,
                 'multiple' => false,
-                'placeholder' => false,
+                'placeholder' => '-- Sélectionner --',
                 'attr' => [
                     'class' => 'form-control'
                 ]
@@ -260,7 +260,7 @@ class BienType extends AbstractType
                     'accept' => 'image/*',
                     'class' => 'form-control',
                 ],
-                'help' => "La taille maximale de chaque image sélectionnée doit être de 5 Mo sinon l'image ne sera pas envoyée sur le serveur.",
+  //              'help' => "La taille maximale de chaque image sélectionnée doit être de 5 Mo sinon l'image ne sera pas envoyée sur le serveur.",
             ])    
             
         ;

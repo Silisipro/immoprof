@@ -1,6 +1,6 @@
 <marquee behavior="scroll" onmouseover="this.stop();" onmouseout="this.start();" scrolldelay="20">
-    {% for f in favoris %}
-        <a href="{{ path('bien.show', {'id': f.id}) }}" style="color: white;">
+    {% for f in favorisMarq %}
+        <a href="{{ path('bien.show', {'id': f.id}) }}" style="color: black;">
             {{ f.name|capitalize }} &nbsp; | &nbsp;
         </a>
     {% endfor %}

@@ -2,27 +2,26 @@
 {% block title %}
   ImmoPro | gestion locative
 {% endblock %}
-
-    {% block body %}
-    <div
+{% block body %}
+   <div
       class="hero page-inner overlay"
       style="background-image: url('{{asset('assets/images/hero_bg_1.jpg')}}')"
     >
       <div class="container">
         <div class="row justify-content-center align-items-center">
-          <div class="col-md-9 col-lg-9 text-center mt-5">
+          <div class="col-md-9 col-lg-9 text-center mt-10">
             <h1 class="heading" data-aos="fade-up">Gestion locative</h1>
-        <!-- Breadcrumbs Section Start -->
+        
             <div class="rs-breadcrumbs bg-2">
                 <div class="container">
                     <div class="content-part text-center">
-                        <h1 class="breadcrumbs-title white-color mb-0">
+                        <h1 class="breadcrumbs-title white-color mb-0" style="color: #005555;font-size: 25px;">
                             <marquee behavior="" direction="">Nous choisir, c'est recevoir son loyer à bonne date et régulièrement</marquee>
                         </h1>
                     </div>
                 </div>
             </div>
-                <!-- Breadcrumbs Section End -->
+             
             <nav
               aria-label="breadcrumb"
               data-aos="fade-up"
@@ -41,6 +40,250 @@
           </div>
         </div>
       </div>
+    </div>
+      
+    <div class="section">
+        <div class="container">
+            <div class="wraping pt-58 pb-56 md-pt-58 sm-pb-56 sm-mb--185">
+                <div class="row y-middle">
+                    <div class="col-lg-5 pr-20 lg-pr-15 md-mb-30">
+                        <div class="sec-title mb-22 md-mb-22 sm-mb-22">
+                            <div class="sub-title font-weight-bold" style="color: #31d2f2;">Gestion locative</div>
+                            <h2 class="title mb-18">Mettre en gestion votre bien immobilier chez ImmoPro</h2>
+                            <div class="mes" style="text-align: justify;">
+                                Il est très capital de jouir de son investissement, mais parfois le manque de temps, la situation géographique ou
+                                d'autres contraintes ne nous permettent pas de gérer entièrement et convenablement nos biens
+                                immobiliers. E-COYE Immo vous résout ce problème et vous permet la rentabilité de votre investissement.
+                                Nous vous aidons à :
+                            </div>
+                        </div>
+                        <div class="counter-wrap contenu-principal-page">
+                            <div class="content-part">
+                                <div class="counter-part">
+                                    <h4 class="title mb-0 mt-5">Propriétaires</h4>
+                                </div>
+                                <div class="mes-text">
+                                    <div class="mes" style="text-align: justify;">
+                                        <ul style="list-style: circle;">
+                                            <li>Estimer le coût du loyer en fonction du standing de la construction</li>
+                                            <li>Trouver des locataires</li>
+                                            <li>S'occuper à 100% du recouvrement des loyers</li>
+                                            <li>S'occuper de la gestion administrative, technique et juridique de vos biens</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 pl-32 lg-pl-15">
+                        <div class="img-about dots" style="margin-right: 60px;">
+                            <img src="{{ asset('assets/images/autr/gestion_locative_1.jpg') }}" alt="image" class="img-fluid" style="transform: scale(0.6); border-radius: 100px;" loading="lazy">
+                            <div class="morphin"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div id="locative" class="rs-about style1 gray-bg pt-0 pb-35 md-pt-0 md-pb-35 contenu-principal-page sm-pt-0 sm-pb-35 service-gestion-locative">
+        <div class="container">
+            <div class="row y-middle">
+                <div class="col-lg-6 md-mb-25 sm-mt-25">
+                    <img src="{{ asset('assets/images/autr/gestion_locative_2.jpg') }}" alt="image" class="img-fluid" style="border-radius: 80px; transform: scale(0.75);" class="gest-loc-img-serv" loading="lazy">
+                </div>
+                <div class="col-lg-6 pl-40 pr-60">
+                    <div class="sec-title">
+                        <div class="sub-title primary right-line font-weight-bold " style="color: #31d2f2;">Services</div>
+                        <p class="desc mb-36 sm-mb-20 sm-mt-10" style="text-align: justify;">
+                            Vous pouvez bénéficier de nos services suite à la signature du mandat de gestion locative entre le propriétaire et l'agence.
+                            En nous confiant la gestion locative de vos biens immobiliers, vous finissez avec le retard dans le recouvrement des loyers, vous
+                            réduisez les risques de mauvaise gestion, vous vous déchargez de toute tracasserie et prise de bec avec les locataires et vous
+                            disposez de votre temps pour vaquer à d'autres occupations.
+                        </p>
+                        <div style="text-align: center;">
+                            <a class="mode" href="#" data-bs-target=".confier-mon-bien-modal" data-bs-toggle="modal">
+                                Confier mon bien à ImmoPro
+                            </a>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        
+    <div id="locativepres" class="style10 gray-bg5 pt-28 pb-10 md-pt-28 md-pb-10 sm-pt-20 sm-pb-0 sm-mt--43 contenu-principal-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 pr-70 md-pr-15 md-mb-50">
+                    <div class="sec-title4 mb-20">
+                        <span class="sub-title new pb-10 font-weight-bold " style="color: #31d2f2;">Coût de la prestation</span>
+                        <p class="margin-0" style="text-align: justify;">
+                            La prestation est facturée par commission conformément aux dispositions de la loi n°2021-02 du 07 janvier 2021 modifiant et complétant
+                            la loi 112018-12 du 02 juillet 2018 portant régime juridique du bail à usage d'habitation
+                            domestique en République du Bénin. <br>
+                            Pour plus de renseignements, contactez-nous.
+                        </p>
+                    </div>
+                    <div id="accordion" class="accordion" style=" margin-bottom: 15px;">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: #31d2f2;">A LOUER</button>
+                            </h2>
+                            <div id="collapseOne" class="collapse-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
+                                <div class="accordion-body">
+                                    {{ render(controller('App\\Controller\\TypeBienController::louer')) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: #31d2f2;">A VENDRE</button>
+                            </h2>
+                            <div id="collapseTwo" class="collapse-collapse collapse"aria-labelledby="headingTwo" data-bs-parent="#accordion">
+                                <div class="accordion-body">
+                                    {{ render(controller('App\\Controller\\TypeBienController::vendre')) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-content">
+                        <div class="images-part">
+                            <img src="{{ asset('assets/images/img_2.jpg') }}" alt="image" class="img-fluid"  style="border-radius: 20px; width: 65%; margin-left: 70px;" class="gest-loc-img-cout" loading="lazy">
+                        </div>
+                        <div class="rs-animations">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+       
+    <div id="services" class="style1 pt-22 pb-0 md-pt-22 md-pb-0 sm-pt-18 sm-pb-0 contenu-principal-page">
+        <div class="container">
+            <div class="sec-title text-center mb-50 md-mb-24 sm-mb-33">
+                <h2 class="title mb-0 bottom-wave"style="color: #31d2f2; margin-top: 50px;">NOS AVANTAGES</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="box-feature mb-4">
+                                <span class="flaticon-house-3 mb-4 d-flex justify-content-center"></span>
+                        <div class="content-part">
+                            <h4 class="avt">Recherche de locataires</h4>
+                            <div class="mes">
+                                Confiez-nous la recherche des locataires et faites votre choix parmi nos dossiers de qualité validés par notre équipe.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+                    <div class="box-feature mb-4 justify-content-center">
+                        <span class="flaticon-house-2 mb-4 d-flex justify-content-center"></span>
+                        <div class="content-part">
+                            <h4 class="avt">Gestion locative complète</h4>
+                            <div class="mes">
+                                Nous gérons l'intermédiation avec vos locataires, vos assureurs et les impôts et nous vous garantissons votre loyer
+                                à bonne date et régulièrement.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-12 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="box-feature mb-4">
+                            <span class="flaticon-building mb-4 d-flex justify-content-center"></span>
+                        <div class="content-part">
+                            <h4 class="avt">Assurances Loyers Impayés</h4>
+                            <div class="mes">
+                                Nous couvrons les loyers impayés, les détériorations immobilières, votre protection juridique et le taux de
+                                solvabilité de vos locataires.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    </div>
+    <!-- Main content End -->
+    <div class="modal fade confier-mon-bien-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" style="color: #f9ab18;">Vos informations</h3>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fermer">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% set message = app.session.get('message') %}
+                    {% if message == 'confier_bien' %}
+                        <div class="alert alert-success alert-dismissible fade show mb-3 text-center" role="alert">
+                            <strong>Votre demande de mise à disposition de votre bien immobilier chez ImmoPro est envoyée avec succès.</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Fermer">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endif %}
+                    {{ form_start(formCfLoge) }}
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4 mb-15">
+                                {{ form_label(formCfLoge.nomPrenom) }}
+                                {{ form_widget(formCfLoge.nomPrenom) }}
+                            </div>
+                            <div class="col-md-4 mb-15">
+                                {{ form_label(formCfLoge.telephone) }}
+                                {{ form_widget(formCfLoge.telephone) }}
+                            </div>
+                            <div class="col-md-4 mb-15">
+                                {{ form_label(formCfLoge.email) }}
+                                {{ form_widget(formCfLoge.email) }}
+                            </div>
+                            <div class="col-md-6 mb-15">
+                                {{ form_label(formCfLoge.zone) }}
+                                {{ form_widget(formCfLoge.zone) }}
+                            </div>
+                            <div class="col-md-6 mb-15">
+                                {{ form_label(formCfLoge.typeLogement) }}
+                                {{ form_widget(formCfLoge.typeLogement) }}
+                            </div>
+                            <div class="col-md-6 mb-15">
+                                {{ form_label(formCfLoge.standing) }}
+                                {{ form_widget(formCfLoge.standing) }}
+                            </div>
+                            <div class="col-md-6 mb-15">
+                                {{ form_label(formCfLoge.files) }}
+                                {{ form_widget(formCfLoge.files) }}
+                            </div>
+                            <div class="col-md-6 mb-15">
+                                {{ form_label(formCfLoge.dateHeureRdv) }}
+                                {{ form_widget(formCfLoge.dateHeureRdv) }}
+                            </div>
+                            <div class="col-md-6 mb-15">
+                                {{ form_label(formCfLoge.typeRdv) }}
+                                {{ form_widget(formCfLoge.typeRdv) }}
+                            </div>
+                            <div class="col-md-12 mb-15">
+                                {{ form_label(formCfLoge.detail) }}
+                                {{ form_widget(formCfLoge.detail) }}
+                            </div>
+                            {{ form_widget(formCfLoge._token) }}
+                            <div class="col-md-6">
+                                <button type="submit" style="width: 100px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; color: white; background-color: #f9ab18; border: none;">
+                                    Envoyer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(formCfLoge) }}
+                </div>
+            </div>
+        </div>
     </div>
   
     <div class="section bg-light">
@@ -146,140 +389,21 @@
         </div>
       </div>
     </div>
-
-    <div class="section sec-testimonials">
-      <div class="container">
-        <div class="row mb-5 align-items-center">
-          <div class="col-md-6">
-            <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0">
-              Customer Says
-            </h2>
-          </div>
-          <div class="col-md-6 text-md-end">
-            <div id="testimonial-nav">
-              <span class="prev" data-controls="prev">Prev</span>
-
-              <span class="next" data-controls="next">Next</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4 col-lg-4"></div>
-        </div>
-        <div class="testimonial-slider-wrap">
-          <div class="testimonial-slider">
-            <div class="item">
-              <div class="testimonial">
-                <img
-                  src="images/person_1-min.jpg"
-                  alt="Image"
-                  class="img-fluid rounded-circle w-25 mb-4"
-                />
-                <div class="rate">
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                </div>
-                <h3 class="h5 text-primary mb-4">James Smith</h3>
-                <blockquote>
-                  <p>
-                    &ldquo;Far far away, behind the word mountains, far from the
-                    countries Vokalia and Consonantia, there live the blind
-                    texts. Separated they live in Bookmarksgrove right at the
-                    coast of the Semantics, a large language ocean.&rdquo;
-                  </p>
-                </blockquote>
-                <p class="text-black-50">Designer, Co-founder</p>
-              </div>
-            </div>
-
-            <div class="item">
-              <div class="testimonial">
-                <img
-                  src="images/person_2-min.jpg"
-                  alt="Image"
-                  class="img-fluid rounded-circle w-25 mb-4"
-                />
-                <div class="rate">
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                </div>
-                <h3 class="h5 text-primary mb-4">Mike Houston</h3>
-                <blockquote>
-                  <p>
-                    &ldquo;Far far away, behind the word mountains, far from the
-                    countries Vokalia and Consonantia, there live the blind
-                    texts. Separated they live in Bookmarksgrove right at the
-                    coast of the Semantics, a large language ocean.&rdquo;
-                  </p>
-                </blockquote>
-                <p class="text-black-50">Designer, Co-founder</p>
-              </div>
-            </div>
-
-            <div class="item">
-              <div class="testimonial">
-                <img
-                  src="images/person_3-min.jpg"
-                  alt="Image"
-                  class="img-fluid rounded-circle w-25 mb-4"
-                />
-                <div class="rate">
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                </div>
-                <h3 class="h5 text-primary mb-4">Cameron Webster</h3>
-                <blockquote>
-                  <p>
-                    &ldquo;Far far away, behind the word mountains, far from the
-                    countries Vokalia and Consonantia, there live the blind
-                    texts. Separated they live in Bookmarksgrove right at the
-                    coast of the Semantics, a large language ocean.&rdquo;
-                  </p>
-                </blockquote>
-                <p class="text-black-50">Designer, Co-founder</p>
-              </div>
-            </div>
-
-            <div class="item">
-              <div class="testimonial">
-                <img
-                  src="images/person_4-min.jpg"
-                  alt="Image"
-                  class="img-fluid rounded-circle w-25 mb-4"
-                />
-                <div class="rate">
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                  <span class="icon-star text-warning"></span>
-                </div>
-                <h3 class="h5 text-primary mb-4">Dave Smith</h3>
-                <blockquote>
-                  <p>
-                    &ldquo;Far far away, behind the word mountains, far from the
-                    countries Vokalia and Consonantia, there live the blind
-                    texts. Separated they live in Bookmarksgrove right at the
-                    coast of the Semantics, a large language ocean.&rdquo;
-                  </p>
-                </blockquote>
-                <p class="text-black-50">Designer, Co-founder</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            let messageSucces = "{{ app.session.get('message') }}";
+            // Affichage de la boite modale après soumission du formulaire
+            let confierMonBienModal = jQuery('.confier-mon-bien-modal');
+            if (messageSucces === "confier_bien") {
+                confierMonBienModal.modal('show').find('button.close').click(function() {
+                    confierMonBienModal.modal('hide').find('div.alert').remove();
+                });
+                console.log("{{ app.session.remove('message') }}");
+            }
+        }); // Fin ready
+    </script>
 {% endblock %}
 

@@ -47,28 +47,32 @@
             let bienNbChambre = jQuery('#bien-bedrooms');
             let bienCompteur = jQuery('#bien-heat');
             let bienNiveau = jQuery('#bien-floor');
-           // let childrenFrequencePaiement = jQuery('#bien_intervalle').parent().children();
+           let childrenFrequencePaiement = jQuery('#bien_paiementLouer').parent().children();
             let labelMontantBien = jQuery('label[for="bien_price"]');
             categorieLouer.attr('checked', 'checked');
             categorieLouer.click(function () {
+                typeBienVendre.addClass('d-none');
                 typeBienLouer.show();
                 typeBienVendre.hide();
                 bienNbpiece.show();
                 bienNbChambre.show();
                 bienCompteur.show();
                 bienNiveau.show();
-               // childrenFrequencePaiement.show();
+               childrenFrequencePaiement.show();
                 labelMontantBien.text("Montant du loyer (*)");
             });
             categorieVendre.click(function () {
+                typeBienVendre.removeClass('d-none');
                 typeBienLouer.hide();
                 typeBienVendre.show();
                 bienNbpiece.hide();
                 bienNbChambre.hide();
                 bienCompteur.hide();
                 bienNiveau.hide();
-                //childrenFrequencePaiement.hide();
+                childrenFrequencePaiement.hide();
                 labelMontantBien.text("Prix de vente (*)");
+               
+                
             });
             // Traitement avant la soumission du formulaire
             let selectTypeBienLouer = jQuery('#bien_typeBienLouer');
@@ -80,6 +84,7 @@
                 if (selectTypeBienVendre.val().trim() === '') {
                     typeBienVendre.remove();
                 }
+
             });
         }); // Fin ready
     </script>

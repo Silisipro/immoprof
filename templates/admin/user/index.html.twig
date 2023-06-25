@@ -2,10 +2,10 @@
 {% extends 'admin/bien/index.html.twig' %}
 
 {% block title %}
-    Nouveau bien
+   Mon profil
 {% endblock %}
 {% block pageTitle %}
-    Nouveau bien
+   Mon profil
 {% endblock %}
 {% block breadcrumb %}
     Agent Immobilier
@@ -27,7 +27,7 @@
                       {% if app.user.roles|json_encode == '["ROLE_ADMIN"]' %}
                         Administrateur
                       {% endif %}
-                      {% if app.user.roles|json_encode == '["ROLE_USER"]' %}
+                      {% if app.user.roles|json_encode == '["ROLE_AGENT"]' %}
                         Agent Immobilier           
                       {% endif %}
                       {% if app.user.roles|json_encode == '["ROLE_CHEF_PROJET"]' %}

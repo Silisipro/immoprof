@@ -19,10 +19,18 @@ use Knp\Component\Pager\PaginatorInterface;
 #[Route('/admin')]
 class AdminController extends AbstractController
 {
-
     public function __construct(private FileUploader $fileUploader)
     {
     }
+
+    #[Route("/dashbord",name:"admin_index", methods:['GET']) ]
+    public function index() : Response
+    {
+     return $this->render('admin/bien/indexdashbord.html.twig',[
+             
+     ]);
+    } 
+
 /**
   * This controller display all bien
   * @param BienRepository $bienRepository
@@ -30,7 +38,7 @@ class AdminController extends AbstractController
   */
     #[IsGranted('ROLE_USER')]
     #[Route('/bien', name: 'app.admin.bien', methods: ['GET', 'POST'])]
-    public function index(BienRepository $bienRepository, PaginatorInterface $paginator, Request $request): Response
+    public function listebien(BienRepository $bienRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $biens = null;
         

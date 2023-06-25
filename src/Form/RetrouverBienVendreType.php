@@ -19,13 +19,12 @@ class RetrouverBienVendreType extends AbstractType
             ->add('lieu', TextType::class, [
                 'label' => 'Lieu',
                 'required' => false,
-                'mapped' => false,
                 'attr' => [
                     'placeholder' => 'Adresse du logement',
                     'class' => 'form-control',
                 ]
             ])
-            ->add('type', EntityType::class, [
+            ->add('typeBien', EntityType::class, [
                 'class' => TypeBien::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('t')
@@ -37,14 +36,12 @@ class RetrouverBienVendreType extends AbstractType
                 'multiple' => false,
                 'label' => 'Type de bien (*)',
                 'required' => true,
-                'mapped' => false,
                 'placeholder' => '-- Sélectionner --',
                 'attr' => [
                     'class' => 'form-control',
                 ]
             ])
             ->add('maxPrice', IntegerType::class, [
-                'mapped' => false,
                 'required' => false,
                 'label' => false,
                 'attr' => [

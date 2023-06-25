@@ -1,5 +1,5 @@
  <body>
- {% block header %}
+  {% block header %}
   
     <div class="site-mobile-menu site-navbar-target">
       <div class="site-mobile-menu-header">
@@ -10,54 +10,57 @@
       <div class="site-mobile-menu-body"></div>
     </div>
   
-    <nav class="site-nav">
-      
+    <nav class="site-nav">   
         <div class="menu-bg-wrap">
           <div class="site-navigation">
             <a href="{{path('app_home')}}" class="logo m-0 float-start">ImmoPro</a>
+              <ul
+                class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
+                <li class="active"><a href="{{path('app_home')}}">Aceuil</a></li>
 
-            <ul
-              class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end">
-              <li class="active"><a href="{{path('app_home')}}">Aceuil</a></li>
-
-              <li class="has-children">
-                <a href="#">Nos Biens</a>
-                <ul class="dropdown">
-                  <li class="has-children">
-                    <a href="#">A Louer</a>
-                   {{ render(controller('App\\Controller\\TypeBienController::louer')) }}
-                    
-                  </li>
-                  <li class="has-children">
-                    <a href="#">A vendre</a>
-                     {{ render(controller('App\\Controller\\TypeBienController::vendre')) }}                  
-                  </li>
-                </ul>
-              </li>
-              <li><a href="{{path('app_gestion_locative')}}">Gestion Locative</a></li>
-              <li><a href="{{ path('app.about') }}">A propos</a></li>
-              <li><a href="{{ path('app_contact') }}">Contact</a></li>
-                {% if app.user %}
                 <li class="has-children">
-                    <a href="{{ path('admin_index', {'id': app.user.id}) }}">
-                      <i class="fa fa-user"></i> &nbsp;{{ app.user.fullName }}
-                    </a>
-                  <ul class="dropdown">
-                    <li>
-                      <a href="{{ path('admin_index') }}">
-                        <i class="fa fa-dashboard"></i> &nbsp;Mon tableau de bord
-                      </a>
+                  <a href="#">Nos Biens</a>
+                  <ul class="dropdown" style="border-radius: 12px" >
+                    <li class="has-children" >
+                      <a href="#">A Louer</a>
+                    {{ render(controller('App\\Controller\\TypeBienController::louer')) }}
+                      
                     </li>
-                    <li> <a href="{{ path('app_security_logout') }}">
-                      <i class="fa fa-sign-out"></i> &nbsp;Déconnexion
-                        </a></li>
+                    <li class="has-children">
+                      <a href="#">A vendre</a>
+                      {{ render(controller('App\\Controller\\TypeBienController::vendre')) }}                  
+                    </li>
                   </ul>
-                    {% else %}
-                    <li><a href="{{path('app_security_registration')}}">Inscription</a></li>
-                    <li><a href="{{path('app_security_login')}}">Connexion</a></li>
                 </li>
-                {% endif %}
-            </ul>
+                <li><a href="{{path('app_gestion_locative')}}">Gestion Locative</a></li>
+                <li><a href="{{ path('app.about') }}">A propos</a></li>
+                <li><a href="{{ path('app_contact') }}">Contact</a></li>
+               {% if app.user %} 
+                               
+                <li class="has-children">
+                        <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"  
+                        aria-expanded="false" data-offset="20" title="Menu utilisateur">
+                            <i class="icon-person"></i>Connecté&bull;e
+                        </button>
+                        <div class="dropdown" style="border-radius: 12px">
+                            <a class="dropdown-item" href="{{ path('admin_profil', {'id': app.user.id}) }}">
+                                <i class="icon-person"></i> &nbsp;{{ app.user.fullName}}
+                            </a>
+                            <div class="dropdown"></div>
+                            <a class="dropdown-item" href="{{ path('admin_index') }}" target="_blank">
+                                <i class="icon-dashboard"></i> &nbsp;Mon tableau de bord
+                            </a>
+                            <div class="dropdown"></div>
+                            <a class="dropdown-item" href="{{ path('app_security_logout') }}">
+                                <i class="icon-sign-out"></i> &nbsp;Déconnexion
+                            </a>
+                        </div>
+                </li>
+                {% else %}
+                 <li><a href="{{path('app_security_registration')}}">Inscription</a></li>
+                 <li><a href="{{path('app_security_login')}}">Connexion</a></li>
+               {% endif %}
+              </ul>
             <a
               href="#"
               class="burger light me-auto float-end mt-1 site-menu-toggle js-menu-toggle d-inline-block d-lg-none"
@@ -66,8 +69,21 @@
             >
               <span></span>
             </a>
-          </div>
-          
         </div> 
+      </div>
+
+      <div class="menu-bg-wrap" style="padding: 0;">
+          <div class="row justify-content-center align-items-center" style="font-size: 15px;">
+              <div class="col-md-2 col-sm-12 pl-md-4 font-weight-bold text-center text-uppercase" style="color: white">
+                  Nos dernières offres :
+              </div>
+              <div class="col-md-10 col-sm-12 font-weight-bold" style="background-color: #31d2f2; font-size: 15px;">
+                  <div class="px-4 d-flex align-items-center">
+                      {{ render(controller('App\\Controller\\HomeController::favorieMarque')) }}
+                  </div>
+              </div>
+          </div>
+       </div>
     </nav>
+            
  {% endblock %}

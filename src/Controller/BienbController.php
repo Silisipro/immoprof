@@ -63,7 +63,7 @@ class BienbController extends AbstractController
         if ($form->isSubmitted()) {
             $data = [
                 'lieu' => $form->get('lieu')->getData(),
-                'typeBien' => $form->get('typeBien')->getData(),
+                'type' => $form->get('type')->getData(),
                 'standing' => $form->get('standing')->getData(),
                 'maxPrice' => $form->get('maxPrice')->getData(),
             ];

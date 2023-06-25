@@ -206,4 +206,110 @@ public function recupererBiensParCategorie(string $categorie): array
 
 
 
+
+public function recupererBiensParTypeBien(string $typeBien): array
+{
+    $entityManager=$this->getEntityManager();
+      $qb= $entityManager->createQuery(
+          '
+           SELECT b,t
+           FROM App\Entity\Bien b
+           JOIN b.typeBien t
+           WHERE t.id = :type
+           AND b.deleted = 0
+           ORDER BY b.createdAt DESC
+
+          '
+       )
+        ->setParameter('type', $typeBien);
+
+            return $qb->getResult();
+}
+
+
+public function rechercherBien(BienRecherche $rechercher): array
+    {
+        $query = $this->createQueryBuilder('b')
+            ->andWhere('b.deleted = 0')
+            ->addOrderBy('b.createdAt', 'DESC');
+
+
+        if($rechercher->getMaxPrice()){
+            $query=$query
+                   ->andWhere('b.price <= :maxprice')
+                   ->setParameter('maxprice', $rechercher->getMaxPrice());
+                   
+        }
+        if($rechercher->getMinSurface()){
+            $query=$query
+                   ->andWhere('b.surface >= :minsurface')
+                   ->setParameter('minsurface', $rechercher->getMinSurface());        
+        }
+        if($rechercher->getLieu()){
+            $query=$query
+                   ->andWhere('b.city >= :city')
+                   ->setParameter('city', $rechercher->getLieu());        
+        }
+
+      if ($rechercher->getTypeBien()) {
+        
+        $query = $query 
+                 ->join('b.typeBien', 't')
+                ->andWhere( 't.id IN (:typeBien)')
+                ->setParameter('typeBien', $rechercher ->getTypeBien());     
+
+      }
+
+      if ($rechercher->getStanding()) {
+        
+        $query = $query 
+                 ->join('b.standing', 's')
+                ->andWhere( 's.id IN (:standing)')
+                ->setParameter('standing', $rechercher ->getStanding());     
+
+      }
+      return $query
+      ->getQuery()
+      ->getResult();
+
+    } 
+
+    public function rechercherBienv(BienRecherche $rechercherv): array
+    {
+        $query = $this->createQueryBuilder('b')
+            ->andWhere('b.deleted = 0')
+            ->addOrderBy('b.createdAt', 'DESC');
+
+
+        if($rechercherv->getMaxPrice()){
+            $query=$query
+                   ->andWhere('b.price <= :maxprice')
+                   ->setParameter('maxprice', $rechercherv->getMaxPrice());
+                   
+        }
+        if($rechercherv->getMinSurface()){
+            $query=$query
+                   ->andWhere('b.surface >= :minsurface')
+                   ->setParameter('minsurface', $rechercherv->getMinSurface());        
+        }
+        if($rechercherv->getLieu()){
+            $query=$query
+                   ->andWhere('b.city >= :city')
+                   ->setParameter('city', $rechercherv->getLieu());        
+        }
+
+      if ($rechercherv->getTypeBien()) {
+        
+        $query = $query 
+                 ->join('b.typeBien', 't')
+                ->andWhere( 't.id IN (:typeBien)')
+                ->setParameter('typeBien', $rechercherv ->getTypeBien());     
+
+      }
+      return $query
+      ->getQuery()
+      ->getResult();
+
+    } 
+
 }
