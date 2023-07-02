@@ -37,9 +37,10 @@ class LogeType extends AbstractType
                     'expanded' => true,
                     'multiple' => false,
                     'mapped' => false,
-                    'label_attr' => [
-                    ],
                     'placeholder' => false,
+                    'attr' => [
+                        'class' => 'form-check'
+                    ]
                 ]) 
                 ->add('favori', ChoiceType::class, [
                     'choices' => [
@@ -51,6 +52,9 @@ class LogeType extends AbstractType
                     'expanded' => true,
                     'multiple' => false,
                     'placeholder' => false,
+                    'attr' => [
+                        'class' => 'form-check'
+                    ]
                 ])       
         ;
     }

@@ -36,6 +36,9 @@ class BienType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'mapped' => false,
+                'attr' => [
+                    'class' => 'form-check'
+                ]
             ])
 
             ->add('sold', ChoiceType::class, [
@@ -48,6 +51,9 @@ class BienType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'placeholder' => false,
+                'attr' => [
+                    'class' => 'form-check'
+                ]
             ])
             ->add('name',  TextType::class, [ 
                 'attr'=> [

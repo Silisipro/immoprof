@@ -22,11 +22,11 @@ Ajout de type de bien
                 <div class="col-md-6 col-lg-12"> {{ form_row(form.type) }}</div>
               </div>
               <div class="row mb-3">
-                <div class="col-md-6 col-lg-12"> {{ form_row(form.favori) }}</div>
+                <div class="col-md-6 col-lg-12 form-check"> {{ form_row(form.favori) }}</div>
               </div>
               <div class="row mb-3">
-                <div class="col-md-12 col-lg-12"> {{ form_row(form.chois) }}</div>
-              </div>
+                <div class="col-md-6 col-lg-12 form-check" id="love"> {{ form_row(form.chois) }}</div>
+              </div>             
           {{ form_widget(form) }}
             <button class=" col-md-12 col-lg-12 btn btn-primary mt-4">Enrégistrer</button>                    
         {{ form_end(form) }}
@@ -34,4 +34,18 @@ Ajout de type de bien
     </div>
   </div>
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+       let logementTypeLouer = jQuery('#loge_chois_0');
+       let logementTypeVendre = jQuery('#loge_chois_1');
+       logementTypeVendre.attr('checked', 'checked');
+
+
+       
+        });
+
+  {% endblock %}
+
     

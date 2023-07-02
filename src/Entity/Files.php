@@ -34,6 +34,10 @@ class Files
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private string $referenceCode;
 
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN, options: [
+        'default' => false,
+    ])]
+    private bool $temp = false;
 
     public function __construct()
     {
@@ -89,6 +93,18 @@ class Files
     public function setReferenceCode(string $referenceCode): self
     {
         $this->referenceCode = $referenceCode;
+        return $this;
+    }
+
+    public function isTemp(): ?bool
+    {
+        return $this->temp;
+    }
+
+    public function setTemp(?bool $temp): self
+    {
+        $this->temp = $temp;
+
         return $this;
     }
 

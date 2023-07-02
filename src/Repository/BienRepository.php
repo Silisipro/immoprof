@@ -47,7 +47,7 @@ class BienRepository extends ServiceEntityRepository
     public function findVisible(BienRecherche $recherche): array
     {
         $query = $this->createQueryBuilder('b')
-            ->andWhere('b.sold = true')
+            ->andWhere('b.sold = 0')
             ->addOrderBy('b.createdAt', 'DESC');
 
 
@@ -84,8 +84,8 @@ class BienRepository extends ServiceEntityRepository
     public function findLast(): array
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.sold = true')
-           ->setMaxResults(4)
+            ->andWhere('b.sold = 0')
+           ->setMaxResults(6)
             ->getQuery()
             ->getResult()
         ;

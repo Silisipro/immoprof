@@ -24,6 +24,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+    public function __construct(
+        private EmailSmsServices $emailSmsServices,
+        private FileUploader $fileUploader,
+    )
+    {
+    }
+    
     #[Route('/', name: 'app_home')]
     public function index(BienRepository $bienRepository, Request $request): Response
     {
@@ -58,7 +65,7 @@ class HomeController extends AbstractController
                 'detail' => $formEsLoyer->get('detail')->getData(),
                 'files' => $formEsLoyer->get('files')->getData(),
             ];
-         /*   $tabFichiers = [];
+            $tabFichiers = [];
            foreach ($data['files'] as $file) {
                if ($file instanceof UploadedFile) {
                    $tabFichiers[] = $this->fileUploader->saveFile(
@@ -76,7 +83,7 @@ class HomeController extends AbstractController
             // Suppression des fichiers à envoyer par mail du dossier default
             foreach ($tabFichiers as $file) {
                 unlink($file);
-            }*/
+            }
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -96,7 +103,7 @@ class HomeController extends AbstractController
                 'dateHeureRdv' => $formCfBien->get('dateHeureRdv')->getData(),
                 'typeRdv' => $formCfBien->get('typeRdv')->getData(),
             ];
-            /*$tabFichiers = [];
+            $tabFichiers = [];
             foreach ($data['files'] as $file) {
                 if ($file instanceof UploadedFile) {
                     $tabFichiers[] = $this->fileUploader->saveFile(
@@ -122,7 +129,7 @@ class HomeController extends AbstractController
             // Suppression des fichiers à envoyer par mail du dossier default
             foreach ($tabFichiers as $file) {
                 unlink($file);
-            }*/
+            }
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -142,7 +149,7 @@ class HomeController extends AbstractController
                 'typeRdv' => $formVdBien->get('typeRdv')->getData(),
                 'files' => $formVdBien->get('files')->getData(),
             ];
-           /* $tabFichiers = [];
+            $tabFichiers = [];
             foreach ($data['files'] as $file) {
                 if ($file instanceof UploadedFile) {
                     $tabFichiers[] = $this->fileUploader->saveFile(
@@ -168,7 +175,7 @@ class HomeController extends AbstractController
             // Suppression des fichiers à envoyer par mail du dossier default
             foreach ($tabFichiers as $file) {
                 unlink($file);
-            }*/
+            }
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 

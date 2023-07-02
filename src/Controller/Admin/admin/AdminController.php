@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Service\EmailSmsServices;
+use App\Service\RandomStringGeneratorServices;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Service\FileUploader;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -19,7 +21,7 @@ use Knp\Component\Pager\PaginatorInterface;
 #[Route('/admin')]
 class AdminController extends AbstractController
 {
-    public function __construct(private FileUploader $fileUploader)
+    public function __construct(private FileUploader $fileUploader, private RandomStringGeneratorServices $randomStringGeneratorServices)
     {
     }
 
@@ -80,18 +82,19 @@ class AdminController extends AbstractController
     #[Route('/creation/bien', name: 'app.bien.new', methods: ['GET', 'POST'])]
    public function new (Request $request, 
    EntityManagerInterface $manager,
-   FileUploader $fileUploader ): Response
+   ): Response
 {
         $bien = new Bien();
         $form = $this->createForm(BienType::class, $bien);
         $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-           // $fileFile = $form->get('files')->getData();
-           // dd($fileFile);
-            //if ($fileFile) {
-            //    $codeFichier = $fileUploader->upload($fileFile);
-             //   $bien->setCodeFichier($codeFichier);
-           // };
+            if ($form->isSubmitted()) {
+                $reference = $this->randomStringGeneratorServices->random_alphanumeric(7);
+                foreach ($request->files as $key => $file) {
+                    if ($key !== 'bien') {
+                        if ($file instanceof UploadedFile) $this->fileUploader->saveFile($file, false, Bien::class, null, $reference);
+                    }
+                }
+                $bien->setCodeFichier($reference);
                 $bien = $form ->getData();
 
                 $bien->setUser($this->getUser());
@@ -135,6 +138,13 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
          
          if ($form->isSubmitted() && $form->isValid()) { 
+            $reference = $bien->getCodeFichier();
+            foreach ($request->files as $key => $file) {
+                if ($key !== 'bien') {
+                    if ($file instanceof UploadedFile) $this->fileUploader->saveFile($file, false, Bien::class, null, $reference);
+                }
+            }
+            $bien->setUpdatedAt(new \DateTimeImmutable());
             $bien =$form->getData();
             if ($this->isGranted('ROLE_ADMIN')  || $this->isGranted('ROLE_CHEF_PROJET')) {
                 $bien->setEtat('en attente de publication');

@@ -5,22 +5,22 @@
 
 {% block body %}
   <div class="hero">
-        <div class="hero-slide">
-          <div
-            class="img overlay"
-            style="background-image: url('{{asset('assets/images/hero_bg_3.jpg')}}')"
-          ></div>
-          <div
-            class="img overlay"
-            style="background-image: url('{{asset('assets/images/hero_bg_2.jpg')}}')"
-          ></div>
-          <div
-            class="img overlay"
-            style="background-image: url('{{asset('assets/images/hero_bg_1.jpg')}}')"
-          ></div>
-      </div>
+    <div class="hero-slide">
+      <div
+        class="img overlay"
+        style="background-image: url('{{asset('assets/images/hero_bg_3.jpg')}}')"
+      ></div>
+      <div
+        class="img overlay"
+        style="background-image: url('{{asset('assets/images/hero_bg_2.jpg')}}')"
+      ></div>
+      <div
+        class="img overlay"
+        style="background-image: url('{{asset('assets/images/hero_bg_1.jpg')}}')"
+      ></div>
+    </div>
   
-<!--<div class="container">
+      <!--<div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-md-12 col-lg-9 text-center">
             <h1 class="heading" data-aos="fade-up">
@@ -42,14 +42,14 @@
           </div>
         </div>
       </div>
-    </div>     
--->
-<!-- Slide 1 -->
-  <div class="container">
+     </div>     
+     -->
+     <!-- Slide 1 -->
+    <div class="container">
       <div class="row justify-content-center align-items-center">
           <div class="slider-bottom d-flex justify-content-center">
             <div class="col-md-6 col-lg-6 text-center" style="border-radius: 80px;border: solid;border-color: #31d2f2;">
-                <h1 class="heading" data-aos="fade-up" style="margin-top: 50px;">
+                <h1 class="heading" data-aos="fade-up" style="margin-top: 50px;" id="bvn">
                     Bienvenue sur <span>ImmoPro</span>
                 </h1>
                   <div class="slider-bottom d-flex justify-content-center data-aos="fade-up"
@@ -70,11 +70,11 @@
             </div>
           </div>   
       </div>
-  </div>
+    </div>
 
 
-  <!-- Bloc Locataire et Propriétaire Debut -->
-  <div class="sm-mt-111">
+    <!-- Bloc Locataire et Propriétaire Debut -->
+    <div class="sm-mt-111">
       <div style="background-color: #fff; max-width: 830px; margin: auto; padding: 4px 0; border-radius: 10px; position: relative; top: -50px; z-index: 8; border: 8px solid #f1f6fd;">
           <ul class="nav justify-content-center" role="tablist">
               <li class="nav-item" role="presentation" style="width: 50%;">
@@ -123,108 +123,147 @@
               </div>
           </div>
       </div>
-  </div>
-  <!-- Bloc Locataire et Propriétaire Fin -->
+    </div>
+    <!-- Bloc Locataire et Propriétaire Fin -->
 
-  <div class="section">
-    <div class="container">
-      <div class="row mb-5 align-items-center">
-        <div class="col-md-9 col-lg-6">
-          <h2 class="font-weight-bold text-primary heading">
-            Offres disponibles
-          </h2>
+   <div class="section">
+      <div class="container">
+        <div class="row mb-5 align-items-center">
+          <div class="col-md-9 col-lg-6">
+            <h2 class="font-weight-bold text-primary heading">
+              Offres disponibles
+            </h2>
+          </div>
+          <div class="col-md-9 col-lg-6 text-lg-end">
+            <p>
+              <a
+                href="#"
+                target="_blank"
+                class="btn btn-primary text-white py-3 px-4"
+                >Voir plus d'offres</a
+              >
+            </p>
+          </div>
         </div>
-        <div class="col-md-9 col-lg-6 text-lg-end">
-          <p>
-            <a
-              href="#"
-              target="_blank"
-              class="btn btn-primary text-white py-3 px-4"
-              >Voir plus d'offres</a
-            >
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="property-slider-wrap">
-            <div class="property-slider">
-              <!-- .item -->
-                {% for bien in biens %}
-                <div class="property-item">
-                  <a href="{{path('bien.show', {id: bien.id})}}" class="img">
-                    <img src="{{asset('assets/images/img_4.jpg')}}" alt="Image" class="img-fluid" />
-                  </a>
-                  <div class="property-content">
-                    <div class="price mb-2"><span>Prix : {{bien.price}} $</span></div>
-                      <div>
-                        <span class="d-block mb-2 text-black-50"
-                          >{{bien.name}} à {{bien.city}},{{bien.adress}}</span
-                        >
-                        <span class="city d-block mb-3">Caracteristiques</span>
-
-                        <div class="specs d-flex mb-4">
-                          <span class="d-block d-flex align-items-center">
-                              <span class="icon-bath me-2"></span>
-                              <span class="caption"> Surface : {{bien.surface}} m² </span>
-                            </span>
-                            <span class="d-block d-flex align-items-center">
-                              <span class="icon-bath me-2"></span>
-                              <span class="caption"> Etage : {{bien.floor}} </span>
-                            </span>                        
+        <div class="row">
+          <div class="col-md-12">
+            <div class="property-slider-wrap">
+              <div class="property-slider">
+                <!-- .item -->
+                  {% for bien in biens %}
+                    <div class="property-item">
+                      {% if getFilesByFileCode('', '1') == bien.CodeFichier %}
+                          {% if bien.typeBien.categorie == 'a_louer' %}
+                              <a href="{{ path('bien.show', {'id': bien.id}) }}" class="img">
+                                <img src="{{asset('assets/images/img_4.jpg')}}" alt="Image" class="img-fluid" /> 
+                              </a>
+                          {% else %}
+                              <a href="{{ path('bien.show', {'id': bien.id}) }}"class="img">
+                                <img src="{{ asset('assets/images/img_3.jpg') }}"alt="Image" class="img-fluid"/>
+                              </a>
+                          {% endif %}
+                      {% else %}
+                        <a href="{{ path('bien.show', {'id': bien.id}) }}" class="img">
+                            <img src="{{ sitelink ~ getFilesByFileCode('CodeFichier', '1') }}" alt="Image" class="img-fluid"/>
+                        </a>
+                      {% endif %}
+                      <div class="property-content">
+                        <div class="price mb-2">
+                          <a class="" href="{{ path('bien.show', {'id': bien.id}) }}" title="{{ bien.price|number_format(0, ',', ' ') ~ ' FCFA '}}">
+                            <i class="fa fa-money"></i><span>Prix : {{ bien.price|number_format(0, ',', ' ') ~ ' FCFA ' }}</span>         
+                          </a>
                         </div>
-                        <div class="specs d-flex mb-4">
-                            <span class="d-block d-flex align-items-center me-3">
+                        <div>
+                          <a class ="" href="{{ path('bien.show', {'id': bien.id}) }}" title = " {{ bien.typeBien.type ~ (bien.standing ? ' - ' ~ bien.standing.name : '') }} à {{bien.city}} ">
+                          <h6> {{ bien.typeBien.type ~ (bien.standing ? ' - ' ~ bien.standing.name : '') }} 
+                            {{ bien.typeBien.categorie == 'a_louer' ? 'à louer' : 'à vendre' }} à {{bien.city}} </h6>
+                          </a>
+                          
+                          <span class="city d-block mb-3">Caracteristiques</span>
+
+                          <div class="specs d-flex mb-4">
+                              <span class="d-block d-flex align-items-center">
+                                <span class="icon-bath me-2"></span>
+                                <span class="caption"> Surface : {{bien.surface ? bien.surface : '?' }} m² </span>
+                              </span>
+                              <span class="d-block d-flex align-items-center">
+                                <span class="icon-room me-2"></span>
+                                <span class="caption"> Type de compteur :
+                                  {% if bien.heat == '0' %} Compteur personnel    {% endif %}
+                                  {% if bien.heat == '1' %} Compteur à carte      {% endif %}
+                                  {% if bien.heat == '2'  %} Decompteur           {% endif %}
+                                  {% if bien.heat == '3'  %} Panneaux solaire     {% endif %}
+                                </span>
+                              </span> 
+                                                    
+                          </div>       
+                          <div class="specs d-flex mb-4">
+                              <span class="d-block d-flex align-items-center me-3">
                               <span class="icon-bed me-2"></span>
-                              <span class="caption">{{bien.rooms}} pièces </span>
-                            </span>
-                            <span class="d-block d-flex align-items-center">
+                              <span class="caption">{{bien.rooms ? bien.rooms : '?'}} pièces </span>
+                              </span>
+                              <span class="d-block d-flex align-items-center">
                               <span class="icon-bath me-2"></span>
-                              <span class="caption"> {{bien.bedrooms}} chambres </span>
-                            </span>
-                            <span class="d-block d-flex align-items-center">
-                              <span class="icon-bath me-2"></span>
-                              <span class="caption"> Type de chauffage : {{bien.heatType}}</span>
-                            </span>
-                        </div>
-                        <a
+                              <span class="caption"> {{bien.bedrooms ? bien.bedrooms : '?' }} chambres </span>
+                              </span>
+                              <span class="d-block d-flex align-items-center">
+                                <span class="icon-bath me-2"></span><br>
+                                <span class="caption"> Niveau : {{bien.floor ? bien.floor : '?'}} </span>
+                              </span>
+                            </div>
+                            <div class="date">
+                              <i class="icon-clock"></i> Publié le {{ bien.createdAt ? bien.createdAt|date('d/m/Y') : '' }}
+                                {% if bien.reference is not null %}
+                                
+                                  <a class="d-nwrap" href="{{ path('bien.show', {'id': bien.id}) }}" title="Référence: {{ bien.reference }}">
+                                    <i class="fa fa-info-circle"></i> Réf: {{ bien.reference }}
+                                  </a>
+                                {% endif %}
+                            </div>
+                            <div>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('bien.show', {'id': bien.id}) }}" target="_blank">
+                                <i class="fa fa-facebook-official partager-reseaux-sociaux" title="Partager sur facebook"></i>
+                            </a>
+                            {% set lienACliquer = '' ~ url('bien.show', {'id': bien.id}) %}
+                            {% set textWhatsApp = "Bonjour madame/monsieur. J'ai consulté le bien immobilier \"" ~ bien.name ~ "\" dont l'adresse est " ~ lienACliquer ~ " et je pense que ça pourra vous intéresser." %}
+                            <a href="https://wa.me/?text={{ textWhatsApp }}" target="_blank">
+                                <i class="fa fa-whatsapp partager-reseaux-sociaux" title="Partager sur WhatsApp"></i>
+                            </a>
+                          </div>
+                          <a
                           href="{{path('bien.show', {id: bien.id})}}"
                           class="btn btn-primary py-2 px-3"
                           >Plus de details</a
-                        >
+                          >
+                      </div>
                     </div>
-                </div>
               </div>
                 {% endfor %}
-
             </div>
-
-            <div
-              id="property-nav"
-              class="controls"
-              tabindex="0"
-              aria-label="Carousel Navigation"
-            >
-              <span
-                class="prev"
-                data-controls="prev"
-                aria-controls="property"
-                tabindex="-1"
-                >Precedent</span
+              <div
+                id="property-nav"
+                class="controls"
+                tabindex="0"
+                aria-label="Carousel Navigation"
               >
-              <span
-                class="next"
-                data-controls="next"
-                aria-controls="property"
-                tabindex="-1"
-                >Suivant</span
-              >
-            </div>
-          </div>
+                <span
+                  class="prev"
+                  data-controls="prev"
+                  aria-controls="property"
+                  tabindex="-1"
+                  >Precedent</span
+                >
+                <span
+                  class="next"
+                  data-controls="next"
+                  aria-controls="property"
+                  tabindex="-1"
+                  >Suivant</span
+                >
+              </div>  
         </div>
       </div>
     </div>
-  </div>
 
   <section class="features-1">
     <div class="container">
@@ -277,153 +316,156 @@
     </div>
   </section>
 
-    <!-- Bloc Comment ça marche Debut -->
-      <div class="row" style="padding: 30px 0 0;">
-          <div class="col-md-12 text-center" style="font-size: 20px; padding: 0 0 20px; text-transform: uppercase;">
-              Comment ça marche ?
-          </div>
-      </div>
-      <ul class="nav justify-content-center" role="tablist">
-          <li class="nav-item" role="presentation">
-              <a class="nav-link active text-center" style="font-size: 16px; font-weight: bold; color: #37708e;" href="#" id="locataire-tab" data-bs-toggle="tab" data-bs-target="#locataire" role="tab" aria-controls="locataire" aria-selected="true">LOCATAIRE</a>
-          </li>
-          <li class="nav-item" role="presentation">
-              <a class="nav-link text-center" style="font-size: 16px; font-weight: bold; color: #37708e;" href="#" id="proprietaire-tab" data-bs-toggle="tab" data-bs-target="#proprietaire" role="tab" aria-controls="proprietaire" aria-selected="false">PROPRIETAIRE</a>
-          </li>
-      </ul>
-      <div class="tab-content" style="min-height: 150px; padding: 15px 50px 30px;">
-          <div class="tab-pane fade show active" id="locataire" role="tabpanel" aria-labelledby="locataire-tab">
-              <div class="row">
-                  <div class="col-md-3 text-center">
-                      <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
-                          1
-                      </div>
-                      <div style="font-size: 18px; margin-bottom: 15px;">
-                          Fiche locative
-                      </div>
-                      <div>
-                          Complétez une fiche qui décrit vos besoins et soumettez-nous.
-                      </div>
-                  </div>
-                  <div class="col-md-3 text-center">
-                      <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
-                          2
-                      </div>
-                      <div style="font-size: 18px; margin-bottom: 15px;">
-                          Programmation de visite
-                      </div>
-                      <div>
-                          Nous vous contacterons dans un court délai pour vous faire visiter votre nouveau logement.
-                      </div>
-                  </div>
-                  <div class="col-md-3 text-center">
-                      <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
-                          3
-                      </div>
-                      <div style="font-size: 18px; margin-bottom: 15px;">
-                          État des lieux
-                      </div>
-                      <div>
-                          Découvrez votre logement lors de l’état des lieux d’entrée.
-                      </div>
-                  </div>
-                  <div class="col-md-3 text-center">
-                      <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
-                          4
-                      </div>
-                      <div style="font-size: 18px; margin-bottom: 15px;">
-                          Signature du bail
-                      </div>
-                      <div>
-                          Signez votre contrat de bail.
-                      </div>
-                  </div>
-                  <div class="col-md-6 offset-md-3 text-center">
-                      <a href="#" data-bs-target=".laisser-demande-modal" data-bs-toggle="modal">
-                          <div style="width: 240px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; margin: 35px auto 0; color: white; background-color: #005555;" id="deposer-votre-demande-locative">
-                              Déposer votre demande locative
-                          </div>
-                      </a>
-                  </div>
-              </div>
-          </div>
-          <div class="tab-pane fade" id="proprietaire" role="tabpanel" aria-labelledby="proprietaire-tab">
-              <div class="row">
-                  <div class="col-md-3 text-center">
-                      <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
-                          1
-                      </div>
-                      <div style="font-size: 18px; margin-bottom: 15px;">
-                          Mise en valeur de votre bien
-                      </div>
-                      <div>
-                          Un reportage photo et vidéo complet de votre bien sera réalisé et diffusé sur nos plateformAskes.
-                      </div>
-                  </div>
-                  <div class="col-md-3 text-center">
-                      <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
-                          2
-                      </div>
-                      <div style="font-size: 18px; margin-bottom: 15px;">
-                          Sélection du locataire
-                      </div>
-                      <div>
-                          Nous analysons minutieusement les candidatures et validons les dossiers locatifs, rédigeons le bail et assurons l’état des lieux
-                          d’entrée.
-                      </div>
-                  </div>
-                  <div class="col-md-3 text-center">
-                      <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
-                          3
-                      </div>
-                      <div style="font-size: 18px; margin-bottom: 15px;">
-                          Gestion réactive et moderne
-                      </div>
-                      <div>
-                          Votre espace en ligne vous permet de suivre toutes les opérations et de contacter facilement votre conseiller.
-                      </div>
-                  </div>
-                  <div class="col-md-3 text-center">
-                      <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
-                          4
-                      </div>
-                      <div style="font-size: 18px; margin-bottom: 15px;">
-                          Loyer en moins de 5 jours
-                      </div>
-                      <div>
-                          Grâce à nos moyens de paiement, vous recevez vos fonds en moins de 5 jours après le paiement du locataire.
-                      </div>
-                  </div>
-                  <div class="col-md-6 offset-md-3 text-center">
-                      <a href="#" data-bs-target=".confier-mon-bien-modal" data-bs-toggle="modal">
-                          <div style="width: 240px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; margin: 35px auto 0; color: white; background-color: #005555;">
-                              Confier mon bien Immopro
-                          </div>
-                      </a>
-                  </div>
-              </div>
-          </div>
-      </div>
+  <!-- Bloc Comment ça marche Debut -->
+    <div class="row" style="padding: 30px 0 0;">
+        <div class="col-md-12 text-center" style="font-size: 20px; padding: 0 0 20px; text-transform: uppercase;">
+            Comment ça marche ?
+        </div>
+    </div>
+    <ul class="nav justify-content-center" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active text-center" style="font-size: 16px; font-weight: bold; color: #37708e;" href="#" id="locataire-tab" data-bs-toggle="tab" data-bs-target="#locataire" role="tab" aria-controls="locataire" aria-selected="true">LOCATAIRE</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link text-center" style="font-size: 16px; font-weight: bold; color: #37708e;" href="#" id="proprietaire-tab" data-bs-toggle="tab" data-bs-target="#proprietaire" role="tab" aria-controls="proprietaire" aria-selected="false">PROPRIETAIRE</a>
+        </li>
+    </ul>
+    <div class="tab-content" style="min-height: 150px; padding: 15px 50px 30px;">
+        <div class="tab-pane fade show active" id="locataire" role="tabpanel" aria-labelledby="locataire-tab">
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                        1
+                    </div>
+                    <div style="font-size: 18px; margin-bottom: 15px;">
+                        Fiche locative
+                    </div>
+                    <div>
+                        Complétez une fiche qui décrit vos besoins et soumettez-nous.
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                        2
+                    </div>
+                    <div style="font-size: 18px; margin-bottom: 15px;">
+                        Programmation de visite
+                    </div>
+                    <div>
+                        Nous vous contacterons dans un court délai pour vous faire visiter votre nouveau logement.
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                        3
+                    </div>
+                    <div style="font-size: 18px; margin-bottom: 15px;">
+                        État des lieux
+                    </div>
+                    <div>
+                        Découvrez votre logement lors de l’état des lieux d’entrée.
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                        4
+                    </div>
+                    <div style="font-size: 18px; margin-bottom: 15px;">
+                        Signature du bail
+                    </div>
+                    <div>
+                        Signez votre contrat de bail.
+                    </div>
+                </div>
+                <div class="col-md-6 offset-md-3 text-center">
+                    <a href="#" data-bs-target=".laisser-demande-modal" data-bs-toggle="modal">
+                        <div style="width: 240px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; margin: 35px auto 0; color: white; background-color: #005555;" id="deposer-votre-demande-locative">
+                            Déposer votre demande locative
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="proprietaire" role="tabpanel" aria-labelledby="proprietaire-tab">
+            <div class="row">
+                <div class="col-md-3 text-center">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                        1
+                    </div>
+                    <div style="font-size: 18px; margin-bottom: 15px;">
+                        Mise en valeur de votre bien
+                    </div>
+                    <div>
+                        Un reportage photo et vidéo complet de votre bien sera réalisé et diffusé sur nos plateformAskes.
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                        2
+                    </div>
+                    <div style="font-size: 18px; margin-bottom: 15px;">
+                        Sélection du locataire
+                    </div>
+                    <div>
+                        Nous analysons minutieusement les candidatures et validons les dossiers locatifs, rédigeons le bail et assurons l’état des lieux
+                        d’entrée.
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                        3
+                    </div>
+                    <div style="font-size: 18px; margin-bottom: 15px;">
+                        Gestion réactive et moderne
+                    </div>
+                    <div>
+                        Votre espace en ligne vous permet de suivre toutes les opérations et de contacter facilement votre conseiller.
+                    </div>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid #37708e; line-height: 50px; font-weight: bold; font-size: 22px; background-color: white; margin: 10px auto;">
+                        4
+                    </div>
+                    <div style="font-size: 18px; margin-bottom: 15px;">
+                        Loyer en moins de 5 jours
+                    </div>
+                    <div>
+                        Grâce à nos moyens de paiement, vous recevez vos fonds en moins de 5 jours après le paiement du locataire.
+                    </div>
+                </div>
+                <div class="col-md-6 offset-md-3 text-center">
+                    <a href="#" data-bs-target=".confier-mon-bien-modal" data-bs-toggle="modal">
+                        <div style="width: 240px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; margin: 35px auto 0; color: white; background-color: #005555;">
+                            Confier mon bien Immopro
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
       <!-- Bloc Comment ça marche Fin -->
 
   <div class="section sec-testimonials">
     <div class="container">
-      <div class="row mb-5 align-items-center">
+      <div class="row mb-2 align-items-center">
         <div class="col-md-6">
           <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0">
             Customer Says
           </h2>
-        </div>
-        <div class="col-md-6 text-md-end">
-          <div id="testimonial-nav">
-            <span class="prev" data-controls="prev">Precedent</span>
-            <span class="next" data-controls="next">Suivant</span>
+        </div> 
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-lg-4"></div>
+        <div class="col-md-12 text-md-end">
+          <div id="testimonial-nav"
+                class="controls"
+                tabindex="0"
+                aria-label="Carousel Navigation"
+          >
+            <span class="prev" data-controls="prev" tabindex="-1" aria-controls="testimonial">Precedent</span>
+            <span class="next" data-controls="next" tabindex="-1"aria-controls="testimonial">Suivant</span>
           </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4 col-lg-4"></div>
       </div>
       <div class="testimonial-slider-wrap">
         <div class="testimonial-slider">
@@ -1120,7 +1162,7 @@
                 jQuery(this).css('border-bottom', '3px solid #005555');
                 btnLoc.css('border-bottom', '3px solid transparent');
             });
-         
+            
             // Affichage de chaque boite modale après soumission du formulaire
             let laisserDemandeModal = jQuery('.laisser-demande-modal');
             let estimerLoyerModal = jQuery('.estimer-loyer-modal');

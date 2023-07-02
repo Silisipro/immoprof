@@ -1,8 +1,10 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    globals: 
+        sitelink: ('SITE_LINK') 
 
 when@test:
     twig:
         strict_variables: true
-      # form_themes: ['bootstrap_5_layout.html.twig'] 
+     
 

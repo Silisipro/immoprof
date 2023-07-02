@@ -88,4 +88,71 @@
             });
         }); // Fin ready
     </script>
+
+    <script type="text/javascript">
+        let fileObject = [];
+        let fildynm = document.getElementById('fildynm');
+        let frame = document.getElementById('imageHolders');
+        function previewUpload() {
+            let fileEL = document.getElementById("bien_files");
+            let fichiers = fileEL.files;
+            for (let i = 0; i < fichiers.length; i++) {
+                let file = fichiers[i];
+                let imageType = /^image\//;
+                if (!imageType.test(file.type)) {
+                    continue;
+                }
+                let rand = (Math.random() + 1).toString(36).substring(3);
+                let img = document.createElement("img");
+                img.id = rand;
+                img.classList.add('ad-im-preview');
+                img.style.margin = '5px 10px 10px';
+                img.onclick = function (e) {
+                    let confirme = confirm("Voulez-vous vraiment supprimer cette image ?");
+                    if (confirme) {
+                        let imgId = e.target.id;
+                        let fileinput = document.querySelector(`input#file${imgId}`);
+                        let fileObj = fileinput.files[0];
+                        for (let i = 0; i < fileObject.length; i++) {
+                            if (fileObject[i].name === fileObj.name && fileObject[i].size === fileObj.size && fileObject[i].type === fileObj.type) {
+                                fileObject.splice(i, 1);
+                                fileinput.remove();
+                                e.target.remove();
+                                break;
+                            }
+                        }
+                    }
+                }
+                let reader = new FileReader();
+                reader.onload = (function(aImg) {
+                    return function(e) {
+                        aImg.src = e.target.result;
+                        // Check if image exist
+                        let imageExist = false;
+                        for (let i = 0; i < fileObject.length; i++) {
+                            if (fileObject[i].name === file.name && fileObject[i].size === file.size && fileObject[i].type === file.type) {
+                                imageExist = true;
+                                break;
+                            }
+                        }
+                        // Add file to a javascript object
+                        if (imageExist === false) {
+                            fileObject.push(file);
+                            let container = new DataTransfer();
+                            container.items.add(file);
+                            let inputFile = document.createElement("input");
+                            inputFile.type = 'file';
+                            inputFile.id = 'file' + rand;
+                            inputFile.name = rand;
+                            inputFile.classList.add('d-none');
+                            inputFile.files = container.files;
+                            fildynm.appendChild(inputFile);
+                            frame.insertBefore(aImg, frame.children[0]);
+                        }
+                    };
+                })(img);
+                reader.readAsDataURL(file);
+            } // fin de la boucle
+        }
+    </script>
     {% endblock %}
