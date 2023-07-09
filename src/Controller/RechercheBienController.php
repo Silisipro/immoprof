@@ -42,7 +42,6 @@ class RechercheBienController extends AbstractController
                 $request->query->getInt('page', 1),
                 12
             );
-        dd($data);
             
             return $this->render('pages/bien/louer.html.twig', [
                 'pagination' => $pagination,

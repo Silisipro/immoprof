@@ -20,6 +20,7 @@ class ContactType extends AbstractType
             ->add('name', TextType::class,[ 
                 'attr'=> [
                      'class'=>'form-control',
+                     'style'=>'background-color: aliceblue',
                      'minlength' =>'2',
                      'maxlength' =>'60'
                       ],
@@ -31,6 +32,7 @@ class ContactType extends AbstractType
             ->add('email',  EmailType::class,[ 
                 'attr'=> [
                      'class'=>'form-control',
+                     'style'=>'background-color: aliceblue',
                      'minlength' =>'2',
                      'maxlength' =>'180'
                       ],
@@ -47,6 +49,7 @@ class ContactType extends AbstractType
             ->add('objet',  TextType::class,[ 
                 'attr'=> [
                      'class'=>'form-control',
+                     'style'=>'background-color: aliceblue',
                      'minlength' =>'2',
                      'maxlength' =>'255'
                       ],
@@ -61,7 +64,8 @@ class ContactType extends AbstractType
                 ])
             ->add('message', TextareaType::class, [ 
                 'attr'=> [
-                     'class'=>'form-control'
+                     'class'=>'form-control',
+                     'style'=>'background-color: aliceblue'
                       ],
                 'label'=> 'Votre message',
                 'label_attr'=>[

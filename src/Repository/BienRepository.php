@@ -203,10 +203,6 @@ public function recupererBiensParCategorie(string $categorie): array
 
             return $qb->getResult();
 }
-
-
-
-
 public function recupererBiensParTypeBien(string $typeBien): array
 {
     $entityManager=$this->getEntityManager();
@@ -218,16 +214,14 @@ public function recupererBiensParTypeBien(string $typeBien): array
            WHERE t.id = :type
            AND b.deleted = 0
            ORDER BY b.createdAt DESC
-
           '
        )
         ->setParameter('type', $typeBien);
 
-            return $qb->getResult();
-}
+        return $qb->getResult();
+ }
 
-
-public function rechercherBien(BienRecherche $rechercher): array
+    public function rechercherBien(BienRecherche $rechercher): array
     {
         $query = $this->createQueryBuilder('b')
             ->andWhere('b.deleted = 0')

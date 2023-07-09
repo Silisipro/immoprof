@@ -87,7 +87,22 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
+        $form = $this->createForm(ContactType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $data = [
+                'name' => $form->get('name')->getData(),
+                'email' => $form->get('email')->getData(),
+                'objet' => $form->get('objet')->getData(),
+                'message' => $form->get('message')->getData(),
+            ];
 
+            $this->addFlash(
+                'success',
+                'Votre demande a été envoyé avec succès !'
+            );
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+         }
         $formCfBien = $this->createForm(CfLogeType::class);
         $formCfBien->handleRequest($request);
         if ($formCfBien->isSubmitted() && $formCfBien->isValid()) {
@@ -184,7 +199,8 @@ class HomeController extends AbstractController
             'formAsk' => $formAsk->createView(),
             'formEsLoyer' => $formEsLoyer->createView(),
             'formVdBien' => $formVdBien->createView(),
-            'formCfBien' => $formCfBien->createView()
+            'formCfBien' => $formCfBien->createView(),
+            'form' => $form->createView()
 
         ]);
 
@@ -240,14 +256,4 @@ class HomeController extends AbstractController
 
         ]);
     }
-  
-
-
-
-
-
-
-
-
-
 }

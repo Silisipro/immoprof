@@ -37,13 +37,12 @@ class BienbController extends AbstractController
             'biens' => $biens,
             'form' => $form->createView()
         ]);
- }
+     }
 
-     #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_USER')]
     #[Route('/bien/{id}', name: 'bien.show')]
     public function show(Bien  $bien): Response
     {
-
         return $this->render('pages/bien/show.html.twig', [
             'bien' => $bien
         ]);

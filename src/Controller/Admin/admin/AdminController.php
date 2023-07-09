@@ -5,6 +5,7 @@ namespace App\Controller\Admin\admin;
 use App\Entity\Bien;
 use App\Form\BienType;
 use App\Repository\BienRepository;
+use App\Repository\FilesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,13 +88,14 @@ class AdminController extends AbstractController
         $bien = new Bien();
         $form = $this->createForm(BienType::class, $bien);
         $form->handleRequest($request);
-            if ($form->isSubmitted()) {
+            if ($form->isSubmitted()){
                 $reference = $this->randomStringGeneratorServices->random_alphanumeric(7);
-                foreach ($request->files as $key => $file) {
-                    if ($key !== 'bien') {
-                        if ($file instanceof UploadedFile) $this->fileUploader->saveFile($file, false, Bien::class, null, $reference);
+                foreach ($request-> files as $key => $file) {
+                    if ($key !=='bien') {
+                        if ($file instanceof UploadedFile) $this-> fileUploader->saveFile ($file, false, Bien::class, null, $reference);
                     }
                 }
+                
                 $bien->setCodeFichier($reference);
                 $bien = $form ->getData();
 
@@ -126,12 +128,13 @@ class AdminController extends AbstractController
         };
 
        return $this->render('admin/bien/new.html.twig', [
+           'bien' => $bien,
            'form'=>$form->createView()
        ]);
    }
     #[Security("is_granted('ROLE_USER','ROLE_ADMIN') || user===bien.getUser()")]
     #[Route('/edit/bien/{id}', name: 'app.admin.edit', methods: ['GET', 'POST'])]
-    public function edit(Bien $bien, Request $request, EntityManagerInterface $manager): Response
+    public function edit(Bien $bien,FilesRepository $filesRepository, Request $request, EntityManagerInterface $manager): Response
     {
 
         $form = $this->createForm(BienType::class, $bien);
@@ -164,7 +167,11 @@ class AdminController extends AbstractController
          };
 
         return $this->render('admin/bien/edit.html.twig', [
-            'form'=>$form->createView()
+            'form'=>$form->createView(),
+            'bien' => $bien,
+            'images' => $filesRepository->findBy([
+                'referenceCode' => $bien->getCodeFichier()
+            ]),
             
         ]);
     }
@@ -354,12 +361,5 @@ class AdminController extends AbstractController
             'biens' => $listeBiens,
         ]);
     }
-
-
-
-
-
-
-
 
 }

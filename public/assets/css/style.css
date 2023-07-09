@@ -6896,7 +6896,7 @@ textarea.form-control-lg {
 
 .text-black-50, body {
   --bs-text-opacity: 1;
-  color: rgba(0, 0, 0, 0.5) !important; }
+  color: rgba(0, 0, 0, 0.9) !important; }
 
 .text-white-50 {
   --bs-text-opacity: 1;
@@ -9679,8 +9679,8 @@ textarea {
       top: 0;
       z-index: 1; }
   .hero, .hero > .container > .row {
-    height: 100vh;
-    min-height: 600px; }
+    height: 50vh;
+    min-height: 450px; }
   .hero.page-inner, .hero.page-inner > .container > .row {
     height: 30vh;
     min-height: 200px; }
@@ -9728,8 +9728,8 @@ textarea {
   left: 0;
   right: 0; }
   .hero-slide .img {
-    height: 100vh;
-    min-height: 600px;
+    height: 50vh;
+    min-height: 450px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center; }
@@ -10387,4 +10387,10 @@ nav[aria-label="breadcrumb"] li:before {
   color: white;
   border-radius: 10px;
   text-align: center;
+}
+.mage {
+  padding-top: 0px !important;
+}
+.dispo{
+  color: #31d2f2 !important ;
 }
