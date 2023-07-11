@@ -12,13 +12,10 @@
     <a href="{{ path('admin_index') }}" class="btn btn-primary btn-sm">Tableau de bord</a>
 {% endblock %}
 
-{% block body %}
-    
+{% block body %}   
      <div class="card">
         <div class="card-body pt-3"> 
                 {{ include('admin/bien/_form.html.twig', {'button_label': 'Entregistrer'}) }}               
         </div>
-    </div>
-
-       
+    </div>      
 {% endblock %}

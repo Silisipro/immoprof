@@ -257,7 +257,6 @@ class BienType extends AbstractType
                 'required' => false,
                 'multiple' => true,
                 'attr' => [
-                    'onchange' => 'previewUpload();',
                     'accept' => 'image/*',
                     'class' => 'form-control',
                 ],
