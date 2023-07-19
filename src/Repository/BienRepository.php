@@ -104,8 +104,6 @@ class BienRepository extends ServiceEntityRepository
           '
        )
         ->setParameter('etat', $etat);
-
-       
             return $qb->getResult();
     }
     
@@ -114,40 +112,14 @@ class BienRepository extends ServiceEntityRepository
     */
 
     public function biensPubliesParToutuser(string $publie) : array
-
     {
         return $this->createQueryBuilder('b')
          ->andWhere('b.etat = :publie')        
         ->addOrderBy('b.createdAt', 'DESC')
         ->setParameter('publie', $publie)
         ->getQuery()
-        ->getResult()
-
-      ;
+        ->getResult();
      }
-
-
-   // public function biensLoueVenduParUser(string $etat, User $user)
-
-    //{
-    //   $entityManager=$this->getEntityManager();
-    //    $qb= $entityManager->createQuery(
-    //        '
-    //            SELECT b
-    //            FROM App\Entity\Bien b
-    //            WHERE b.etat = :etat 
-    //            AND b.deleted = 0
-    //            AND b.user = :user
-    //            ORDER BY b.createdAt DESC
-    //            '
-    //   )
-    //    ->setParameter('etat', $etat)
-    //    ->setParameter('user',$user);
-
-    //   
-    //       return $qb->getResult();
-    //}
-
 
     public function vendLoue(string $etat, string $etat2): array
     {
@@ -176,16 +148,8 @@ class BienRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-//    public function findOneBySomeField($value): ?Bien
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-public function recupererBiensParCategorie(string $categorie): array
+
+   public function recupererBiensParCategorie(string $categorie): array
 {
     $entityManager=$this->getEntityManager();
       $qb= $entityManager->createQuery(
@@ -203,7 +167,7 @@ public function recupererBiensParCategorie(string $categorie): array
 
             return $qb->getResult();
 }
-public function recupererBiensParTypeBien(string $typeBien): array
+   public function recupererBiensParTypeBien(string $typeBien): array
 {
     $entityManager=$this->getEntityManager();
       $qb= $entityManager->createQuery(
@@ -304,6 +268,182 @@ public function recupererBiensParTypeBien(string $typeBien): array
       ->getQuery()
       ->getResult();
 
-    } 
+    }
+
+
+    public function recupererBiensFavoris(): array
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.typeBien', 't')
+            ->addSelect('t')
+            ->andWhere('b.deleted = :deleted')
+            ->setParameter('deleted', false)
+            ->andWhere('b.sold = :sold')
+            ->setParameter('sold', true)
+            ->andWhere('b.etat = :etat')
+            ->setParameter('etat', 'publie')
+            ->orderBy('t.categorie', 'ASC')
+            ->addOrderBy('b.name', 'ASC')
+            ->addOrderBy('b.lieu', 'ASC')
+            ->addOrderBy('b.price', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function recupererBiensParCategorie(string $categorieTypeBien, ?array $tabFiltre = null): Query
+    {
+        $query = $this->createQueryBuilder('b')
+            ->innerJoin('b.typeBien', 't')
+            ->addSelect('t')
+            ->andWhere('b.deleted = :deleted')
+            ->setParameter('deleted', false)
+            ->andWhere('b.etat = :etat')
+            ->setParameter('etat', 'publie')
+            ->andWhere('t.categorie = :categorie')
+            ->setParameter('categorie', $categorieTypeBien)
+        ;
+
+        if (is_array($tabFiltre)) {
+            if (!is_null($tabFiltre['typeLogement'])) {
+                $query
+                    ->andWhere('t = :typeBien')
+                    ->setParameter('typeBien', $tabFiltre['typeLogement']->getId(), 'ulid')
+                ;
+            }
+
+            if (!is_null($tabFiltre['standing'])) {
+                $query
+                    ->andWhere('b.standing = :standing')
+                    ->setParameter('standing', $tabFiltre['standing']->getId(), 'ulid')
+                ;
+            }
+
+            if (!is_null($tabFiltre['zone'])) {
+                $query
+                    ->andWhere('LOWER(b.zone) LIKE :zone')
+                    ->setParameter('zone', '%'. strtolower($tabFiltre['zone']). '%')
+                ;
+            }
+
+            if (!is_null($tabFiltre['loyerBudget'])) {
+                $query
+                    ->andWhere('b.loyerBudget BETWEEN :loyerBudgetMin AND :loyerBudgetMax')
+                    ->setParameter('loyerBudgetMin', ((int)$tabFiltre['loyerBudget'] - 25000))
+                    ->setParameter('loyerBudgetMax', ((int)$tabFiltre['loyerBudget'] + 25000))
+                ;
+            }
+
+        } // Fin is_array sur $tabFiltre
+
+        return $query
+            ->addOrderBy('b.datePublication', 'ASC')
+            ->getQuery();
+    }
+
+    public function recupererBiensParTypeBien(TypeBien $typeBien): Query
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.typeBien', 't')
+            ->addSelect('t')
+            ->andWhere('b.deleted = :deleted')
+            ->setParameter('deleted', false)
+            ->andWhere('b.etat = :etat')
+            ->setParameter('etat', 'publie')
+            ->andWhere('t = :typeBien')
+            ->setParameter('typeBien', $typeBien->getId())
+            ->addOrderBy('b.datePublication', 'ASC')
+            ->getQuery()
+            ;
+    }
+
+    public function recupererBiensLoueVendu(object $user): array
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.typeBien', 't')
+            ->addSelect('t')
+            ->andWhere('b.deleted = :deleted')
+            ->setParameter('deleted', false)
+            ->andWhere('b.etat = :etat')
+            ->setParameter('etat', 'loue')
+            ->orWhere('b.etat = :etat2')
+            ->setParameter('etat2', 'vendu')
+            ->andWhere('b.user = :user')
+            ->setParameter('user', $user->getId())
+            ->addOrderBy('b.datePublication', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function recupererBiensLoueVenduParAgent(): array
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.typeBien', 't')
+            ->addSelect('t')
+            ->innerJoin('b.user', 'u')
+            ->addSelect('u')
+            ->andWhere('b.deleted = :deleted')
+            ->setParameter('deleted', false)
+            ->andWhere('b.etat = :etat')
+            ->setParameter('etat', 'loue')
+            ->orWhere('b.etat = :etat2')
+            ->setParameter('etat2', 'vendu')
+            ->andWhere('u.roles LIKE :role')
+            ->setParameter('role', '%'.'["ROLE_AGENT"]'.'%')
+            ->addOrderBy('b.datePublication', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function recupererBiensPubliesPourAgent(): array
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.typeBien', 't')
+            ->addSelect('t')
+            ->innerJoin('b.user', 'u')
+            ->addSelect('u')
+            ->andWhere('b.deleted = :deleted')
+            ->setParameter('deleted', false)
+            ->andWhere('b.etat = :etat')
+            ->setParameter('etat', 'publie')
+            ->andWhere('u.roles LIKE :role')
+            ->setParameter('role', '%'.'["ROLE_AGENT"]'.'%')
+            ->addOrderBy('b.datePublication', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function recupererBiensTotalALouerPourAnnee(string $annee)
+    {
+        return $this->createQueryBuilder('b')
+            ->select("COUNT(b)")
+            ->innerJoin('b.typeBien', 't')
+            ->andWhere('t.categorie = :categorie')
+            ->setParameter('categorie', 'a_louer')
+            ->andWhere('b.dateAjout BETWEEN :dateDebut AND :dateFin')
+            ->setParameter('dateDebut', new \DateTime("$annee-01-01 00:00:00"))
+            ->setParameter('dateFin', new \DateTime("$annee-12-31 23:59:59"))
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
+
+    public function recupererBiensTotalAVendrePourAnnee(string $annee)
+    {
+        return $this->createQueryBuilder('b')
+            ->select("COUNT(b)")
+            ->innerJoin('b.typeBien', 't')
+            ->andWhere('t.categorie = :categorie')
+            ->setParameter('categorie', 'a_vendre')
+            ->andWhere('b.dateAjout BETWEEN :dateDebut AND :dateFin')
+            ->setParameter('dateDebut', new \DateTime("$annee-01-01 00:00:00"))
+            ->setParameter('dateFin', new \DateTime("$annee-12-31 23:59:59"))
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
 
 }
