@@ -6,6 +6,7 @@ use App\Entity\Bien;
 use App\Form\BienType;
 use App\Repository\BienRepository;
 use App\Repository\FilesRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,19 +23,17 @@ use Knp\Component\Pager\PaginatorInterface;
 #[Route('/admin')]
 class AdminController extends AbstractController
 {
-    public function __construct(private FileUploader $fileUploader, private RandomStringGeneratorServices $randomStringGeneratorServices)
+    public function __construct(private readonly FileUploader $fileUploader, private readonly RandomStringGeneratorServices $randomStringGeneratorServices)
     {
     }
 
     #[Route("/dashbord",name:"admin_index", methods:['GET']) ]
     public function index() : Response
     {
-     return $this->render('admin/bien/indexdashbord.html.twig',[
-             
-     ]);
+     return $this->render('admin/bien/indexdashbord.html.twig');
     } 
 
-/**
+  /*
   * This controller display all bien
   * @param BienRepository $bienRepository
   * @return Response
@@ -43,8 +42,6 @@ class AdminController extends AbstractController
     #[Route('/bien', name: 'app.admin.bien', methods: ['GET', 'POST'])]
     public function listebien(BienRepository $bienRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $biens = null;
-        
         if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_CHEF_PROJET')) {
             $biens = $paginator->paginate(
                 $bienRepository->findBy(
@@ -83,6 +80,7 @@ class AdminController extends AbstractController
     #[Route('/creation/bien', name: 'app.bien.new', methods: ['GET', 'POST'])]
    public function new (Request $request, 
    EntityManagerInterface $manager,
+    BienRepository $bienRepository
    ): Response
 {
         $bien = new Bien();
@@ -109,11 +107,21 @@ class AdminController extends AbstractController
                     $bien->setTypeBien($typeBienVendre);
                 }
 
-                if ($this->isGranted('ROLE_ADMIN')) {
-                    $bien->setEtat('en attente de publication');
-                    $bien->setDatePublication(new \DateTime());
-                } else {
-                    $bien->setEtat('en attente de publication');
+                $bien->setEtat('en attente de publication');
+                if ( $this->isGranted('ROLE_ADMIN'))
+                {
+                    $bien->setDatePublication(new DateTime());
+                }
+                // Ajout de la référence du bien
+                if ($bien->getTypeBien()->getCategorie() === "a_louer") {
+                    $numBien = ((int)$bienRepository->recupererBiensTotalALouerPourAnnee(date("Y"))) + 1;
+                    $numReference = "ECY-L-".date("Y").sprintf("%08d", $numBien);
+                    $bien->setReference($numReference);
+                }
+                if ($bien->getTypeBien()->getCategorie() === "a_vendre") {
+                    $numBien = ((int)$bienRepository->recupererBiensTotalAVendrePourAnnee(date("Y"))) + 1;
+                    $numReference = "ECY-V-".date("Y").sprintf("%08d", $numBien);
+                    $bien->setReference($numReference);
                 }
             $manager->persist($bien);
             $manager->flush();
@@ -125,7 +133,7 @@ class AdminController extends AbstractController
 
 
             return $this->redirectToRoute('app.admin.bien');  
-        };
+        }
 
        return $this->render('admin/bien/new.html.twig', [
            'bien' => $bien,
@@ -149,14 +157,12 @@ class AdminController extends AbstractController
             }
             $bien->setUpdatedAt(new \DateTimeImmutable());
             $bien =$form->getData();
-            if ($this->isGranted('ROLE_ADMIN')  || $this->isGranted('ROLE_CHEF_PROJET')) {
-                $bien->setEtat('en attente de publication');
-                $bien->setDatePublication(new \DateTime());
-            } else {
-                $bien->setEtat('en attente de publication');
+             $bien->setEtat('en attente de publication');
+             if ($this->isGranted('ROLE_ADMIN')  || $this->isGranted('ROLE_CHEF_PROJET')) {
+                 $bien->setDatePublication(new DateTime());
             }
-            $manager->persist($bien);
-            $manager->flush();
+             $manager->persist($bien);
+             $manager->flush();
 
             $this->addFlash(
                 'success',
@@ -164,7 +170,7 @@ class AdminController extends AbstractController
             );
 
             return $this->redirectToRoute('app.admin.bien');
-         };
+         }
 
         return $this->render('admin/bien/edit.html.twig', [
             'form'=>$form->createView(),
@@ -232,7 +238,6 @@ class AdminController extends AbstractController
     #[Route('/en-attente-de-publication', name: 'en.attente.de.publication', methods: ['GET'])]
     public function biensEnAttenteDePublication(BienRepository $bienRepository): Response
     {
-        $listeBiens = null;
         if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_CHEF_PROJET')) {
             $listeBiens = $bienRepository->findBy(
                 [
@@ -264,7 +269,6 @@ class AdminController extends AbstractController
     #[Route('/publie-par-tout-user', name: 'publie.par.tout.user', methods: ['GET'])]
     public function publieParTout(BienRepository $bienRepository): Response
     {
-        $listeBiens = null;
         if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_CHEF_PROJET')) {
             $listeBiens = $bienRepository->biensPubliesParToutuser('publie');
               
@@ -301,7 +305,7 @@ class AdminController extends AbstractController
     {
         if ($this->isCsrfTokenValid('louer'.$bien->getId(), $request->request->get('_token'))) {
             $bien->setEtat('loue');
-            $bien->setDateLocationVente(new \DateTime());
+            $bien->setDateLocationVente(new DateTime());
             $bienRepository->save($bien, true);
         }
         if (is_null($bien->getUser())) {
@@ -320,7 +324,7 @@ class AdminController extends AbstractController
     {
         if ($this->isCsrfTokenValid('vendre'.$bien->getId(), $request->request->get('_token'))) {
             $bien->setEtat('vendu');
-            $bien->setDateLocationVente(new \DateTime());
+            $bien->setDateLocationVente(new DateTime());
             $bienRepository->save($bien, true);
         }
         if (is_null($bien->getUser())) {
@@ -350,12 +354,10 @@ class AdminController extends AbstractController
     #[Route('/loue-vendu-par-user', name: 'loue_vendu_par_user', methods: ['GET'])]
     public function loueVenduPaUser(BienRepository $bienRepository): Response
     {
-        $listeBiens = null;
         if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_CHEF_PROJET')) {
-            $listeBiens = $bienRepository->VendLoue('loue','vendu');
-        } else {
-           
-            $listeBiens = $bienRepository->VendLoueParUser('loue','vendu', $this->getUser());
+            $listeBiens = $bienRepository->recupererBiensLoueVenduParAgent();
+        }else {
+            $listeBiens = $bienRepository->recupererBiensLoueVendu($this->getUser());
         }
         return $this->render('admin/bien/loue_vendu_par_user.html.twig', [
             'biens' => $listeBiens,

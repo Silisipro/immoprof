@@ -20,6 +20,7 @@ use App\Service\EmailSmsServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
@@ -30,7 +31,10 @@ class HomeController extends AbstractController
     )
     {
     }
-    
+
+    /**
+     * @throws TransportExceptionInterface
+     */
     #[Route('/', name: 'app_home')]
     public function index(BienRepository $bienRepository, Request $request): Response
     {
@@ -249,7 +253,7 @@ class HomeController extends AbstractController
             ];
         
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
-        };
+        }
 
         return $this->render('pages/gestion_locative/index.html.twig',[ 
             'formCfLoge' => $formCfLoge->createView()

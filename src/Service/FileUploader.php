@@ -15,11 +15,11 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class FileUploader
 {
     private $targetDirectory;
-    private $slugger;
-    private $entityManager;
-    private $filesRepository;
-    private $generaleServices;
-    private $randomStringGeneratorServices;
+    private SluggerInterface $slugger;
+    private EntityManagerInterface $entityManager;
+    private FilesRepository $filesRepository;
+    private \App\Service\GeneraleServices $generaleServices;
+    private \App\Service\RandomStringGeneratorServices $randomStringGeneratorServices;
 
     public function __construct(
         $targetDirectory,
@@ -38,7 +38,7 @@ class FileUploader
         $this->randomStringGeneratorServices = $randomStringGeneratorServices;
     }
 
-    public function upload(UploadedFile $file)
+    public function upload(UploadedFile $file): string
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);

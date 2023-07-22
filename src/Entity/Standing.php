@@ -24,12 +24,12 @@ class Standing
     private ?string $name = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank()]
+    #[Assert\NotBlank]
     private ?\DateTimeImmutable $createdAt;
 
 
     #[ORM\Column]
-    #[Assert\NotBlank()]
+    #[Assert\NotBlank]
     private ?\DateTimeImmutable $updateAt;
 
     #[ORM\OneToMany(mappedBy: 'standing', targetEntity: Bien::class)]

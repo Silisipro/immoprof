@@ -36,7 +36,7 @@ class TypeBienController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/ajout/typebien', name: 'app.typebien.new', methods: ['GET', 'POST'])]
-    public function typebien(Request $request, EntityManagerInterface $manager, )
+    public function typebien(Request $request, EntityManagerInterface $manager) : Response
     {
          
        $typebien = new TypeBien();
@@ -50,7 +50,7 @@ class TypeBienController extends AbstractController
              $typebien = $form ->getData();
              $typebien->setCategorie($d);
 
-            $manager->persist($typebien,);
+            $manager->persist($typebien);
             $manager->flush();
 
             $this->addFlash(
@@ -59,7 +59,7 @@ class TypeBienController extends AbstractController
             );
 
             return $this->redirectToRoute('app.typebien.list');      
-       };
+       }
 
 
        return $this->render('admin/typebien/new.html.twig', [
@@ -94,7 +94,7 @@ class TypeBienController extends AbstractController
             );
 
             return $this->redirectToRoute('app.typebien.list');
-         };
+         }
 
         return $this->render('admin/typebien/edit.html.twig', [
             'form'=>$form->createView()

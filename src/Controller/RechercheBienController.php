@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\TypeBien;
-use App\Repository\BienRepository;
 use App\Entity\BienRecherche;
+use App\Repository\BienRepository;
 use App\Form\RetrouverBienLouerType;
 use App\Form\RetrouverBienVendreType;
 use Knp\Component\Pager\PaginatorInterface;

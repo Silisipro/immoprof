@@ -8,9 +8,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -51,7 +49,7 @@ class SecurityController extends AbstractController
                         ' Votre inscription a été effectuée avec succès'
                     );
                     return $this->redirectToRoute('app_security_login');   
-                };
+                }
                 
         return $this->render('pages/security/inscription.html.twig',[
             'form'=>$form->createView()          

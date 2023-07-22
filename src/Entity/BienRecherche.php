@@ -8,10 +8,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class BienRecherche {
 
     #[Assert\LessThan(10000001)]
-    #[Assert\Positive()]
+    #[Assert\Positive]
     private ?int $maxPrice = null;
 
-    #[Assert\Positive()]
+    #[Assert\Positive]
     #[Assert\LessThan(40000)]
     private ?int $minSurface = null;
 

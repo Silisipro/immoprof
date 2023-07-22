@@ -272,7 +272,7 @@ class BienType extends AbstractType
         ]);
     }
 
-    private function getChoices()
+    private function getChoices(): array
     {
         $choices = Bien::HEAT;
         $output = [];
@@ -283,7 +283,7 @@ class BienType extends AbstractType
     }
 
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'bien';
     }

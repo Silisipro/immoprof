@@ -29,19 +29,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 60)]
-    #[Assert\NotBlank()]
+    #[Assert\NotBlank]
     #[Assert\Length(min:2, max: 60)]
     private ?string $fullName ;
 
     #[ORM\Column]
-    #[Assert\NotNull()]
+    #[Assert\NotNull]
     private ?int $telephone ;
 
     #[ORM\Column(length: 60, nullable: true)]
     private ?string $lieu = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\Email()]
+    #[Assert\Email]
     #[Assert\Length(min:2, max: 180)]
     private ?string $email = null;
 
@@ -49,7 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $bloque = false;
 
     #[ORM\Column]
-    #[Assert\NotNull()]
+    #[Assert\NotNull]
     private array $roles = [];
 
 
@@ -62,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank()]
+    #[Assert\NotBlank]
     private ?string $password = 'password';
 
 

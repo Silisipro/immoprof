@@ -7,6 +7,8 @@ use App\Form\StandingType;
 use App\Repository\StandingRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\ORMException;
+use Doctrine\ORM\OptimisticLockException;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +37,7 @@ class StandingController extends AbstractController
 
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/ajout/standing', name: 'app.standing.new', methods: ['GET', 'POST'])]
-    public function standing(Request $request, EntityManagerInterface $manager )
+    public function standing(Request $request, EntityManagerInterface $manager ) : Response
     {
 
        $standing = new Standing();
@@ -50,23 +52,22 @@ class StandingController extends AbstractController
     $manager->persist($standing);
     $manager->flush();
 
-
-            return $this->redirectToRoute('app.standing.liste');      
-       };
+    return $this->redirectToRoute('app.standing.liste');
+       }
 
        return $this->render('admin/standing/new.html.twig', [
         'form'=>$form->createView()
     ]);
-
     }
 
-
-
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/standing_edit', name:'app.standing.edit')]
     public function edit(Standing $standing ,
-    Request $request,
-     EntityManager $manager ): Response
+    Request $request, EntityManager $manager ): Response
     {
       $form = $this->createForm(standingType::class, $standing);
       $form->handleRequest($request);
@@ -84,7 +85,10 @@ class StandingController extends AbstractController
 
         return $this->redirectToRoute('app.standing.liste');
         
-      };
-
+      }
+        return $this->render('admin/edit_standing.html.twig', [
+            'form'=>$form->createView()
+        ]);
     }
 }
+

@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ContactController extends AbstractController
 {
@@ -36,7 +35,7 @@ class ContactController extends AbstractController
 
             return $this->redirectToRoute('app_contact');
         
-        };
+        }
         return $this->render('pages/contact/index.html.twig', [
             'form' => $form->createView()
         ]);
@@ -52,7 +51,7 @@ class ContactController extends AbstractController
     }
    
     #[Route('/contact/supression/{id}', name: 'app_contact_delete', methods:['GET','POST'])]
-    public function delete(Contact  $contact, Request $request, EntityManagerInterface $manager ) : Response
+    public function delete(Contact  $contact, EntityManagerInterface $manager ) : Response
     {    
         $manager->remove($contact);
         $manager->flush();

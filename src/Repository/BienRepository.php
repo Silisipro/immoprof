@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Bien;
+use App\Entity\TypeBien;
 use App\Entity\BienRecherche;
 use App\Entity\User;
+use Doctrine\ORM\Query;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Bien[]    findAll()
  * @method Bien[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
+
 class BienRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -41,7 +44,7 @@ class BienRepository extends ServiceEntityRepository
         }
     }
 
-   /**
+   /*
     * @return Bien[] Returns an array of Bien objects
     */
     public function findVisible(BienRecherche $recherche): array
@@ -77,7 +80,7 @@ class BienRepository extends ServiceEntityRepository
       ->getResult();
 
     } 
-    /**
+    /*
     * @return Bien[] Returns an array of Bien objects
     */
 
@@ -107,7 +110,7 @@ class BienRepository extends ServiceEntityRepository
             return $qb->getResult();
     }
     
- /**
+    /*
     * @return Bien[] Returns an array of Bien objects
     */
 
@@ -149,7 +152,7 @@ class BienRepository extends ServiceEntityRepository
         ;
     }
 
-   public function recupererBiensParCategorie(string $categorie): array
+   public function recupererBiensParCategories(string $categorie): array
 {
     $entityManager=$this->getEntityManager();
       $qb= $entityManager->createQuery(
@@ -167,7 +170,7 @@ class BienRepository extends ServiceEntityRepository
 
             return $qb->getResult();
 }
-   public function recupererBiensParTypeBien(string $typeBien): array
+   public function recupererBiensParTypeBiens(string $typeBien): array
 {
     $entityManager=$this->getEntityManager();
       $qb= $entityManager->createQuery(
@@ -305,32 +308,32 @@ class BienRepository extends ServiceEntityRepository
         ;
 
         if (is_array($tabFiltre)) {
-            if (!is_null($tabFiltre['typeLogement'])) {
+            if (!is_null($tabFiltre['typeBien'])) {
                 $query
                     ->andWhere('t = :typeBien')
-                    ->setParameter('typeBien', $tabFiltre['typeLogement']->getId(), 'ulid')
+                    ->setParameter('typeBien', $tabFiltre['typeBien']->getId())
                 ;
             }
 
             if (!is_null($tabFiltre['standing'])) {
                 $query
                     ->andWhere('b.standing = :standing')
-                    ->setParameter('standing', $tabFiltre['standing']->getId(), 'ulid')
+                    ->setParameter('standing', $tabFiltre['standing']->getId())
                 ;
             }
 
-            if (!is_null($tabFiltre['zone'])) {
+            if (!is_null($tabFiltre['lieu'])) {
                 $query
-                    ->andWhere('LOWER(b.zone) LIKE :zone')
-                    ->setParameter('zone', '%'. strtolower($tabFiltre['zone']). '%')
+                    ->andWhere('LOWER(b.lieu) LIKE :lieu')
+                    ->setParameter('lieu', '%'. strtolower($tabFiltre['lieu']). '%')
                 ;
             }
 
-            if (!is_null($tabFiltre['loyerBudget'])) {
+            if (!is_null($tabFiltre['price'])) {
                 $query
-                    ->andWhere('b.loyerBudget BETWEEN :loyerBudgetMin AND :loyerBudgetMax')
-                    ->setParameter('loyerBudgetMin', ((int)$tabFiltre['loyerBudget'] - 25000))
-                    ->setParameter('loyerBudgetMax', ((int)$tabFiltre['loyerBudget'] + 25000))
+                    ->andWhere('b.price BETWEEN :loyerBudgetMin AND :loyerBudgetMax')
+                    ->setParameter('loyerBudgetMin', ((int)$tabFiltre['price'] - 25000))
+                    ->setParameter('loyerBudgetMax', ((int)$tabFiltre['price'] + 25000))
                 ;
             }
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Egulias\EmailValidator\EmailValidator;
@@ -24,6 +25,7 @@ class EmailSmsServices
 
     /**
      * Envoie un email
+     * @throws TransportExceptionInterface
      */
     public function sendEmail(
         string|array $to,

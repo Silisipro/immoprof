@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use App\Entity\Trait\EntityTimestampTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[UniqueEntity('type')]
 #[ORM\HasLifecycleCallbacks]

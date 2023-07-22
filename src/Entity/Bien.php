@@ -34,8 +34,8 @@ class Bien
     private ?string $name = null;
 
     #[ORM\Column]
-    #[Assert\NotNull()]
-    #[Assert\Positive()]
+    #[Assert\NotNull]
+    #[Assert\Positive]
     #[Assert\LessThan(10000001)]
     private ?float $price;
 
@@ -44,22 +44,22 @@ class Bien
     private ?string $description = null;
 
     #[ORM\Column( nullable: true)]
-    #[Assert\Positive()]
+    #[Assert\Positive]
     #[Assert\LessThan(4000)]
     private ?int $surface;
 
     #[ORM\Column ( nullable: true)]
-    #[Assert\Positive()]
+    #[Assert\Positive]
     #[Assert\LessThan(50)]
     private ?int $rooms = null;
 
     #[ORM\Column( nullable: true)]
-    #[Assert\Positive()]
+    #[Assert\Positive]
     #[Assert\LessThan(50)]
     private ?int $bedrooms = null;
 
     #[ORM\Column( nullable: true)]
-    #[Assert\Positive()]
+    #[Assert\Positive]
     #[Assert\LessThan(10)]
     private ?int $floor = null;
 
@@ -139,12 +139,6 @@ class Bien
     {
         return $this->price;
     }
-      
-    public function getFormattedPrice()
-    {
-        return number_format($this->price ,  0, '', '');
-    }
-
     public function setPrice(float $price): self
     {
         $this->price = $price;

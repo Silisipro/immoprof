@@ -39,13 +39,12 @@ class UserController extends AbstractController
     * This controller edit user information
     *@param  User $choosenUser
     * @param UserPasswordHasherInterface $hasher
-    *@param EntityManagerInterface $manager
     * @param Request $request
     * @return Response
     */
     #[Security("is_granted('ROLE_USER') and user===choosenUser")]
     #[Route('/utilisateur/edition/{id}', name: 'app_user_edit', methods:['GET','POST']) ]
-    public function edit(User $choosenUser,Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $hasher ): Response
+    public function edit(User $choosenUser,Request $request, UserPasswordHasherInterface $hasher ): Response
     {
        /**  ceci peut remplacer security
         *  if (!$this->getUser()){

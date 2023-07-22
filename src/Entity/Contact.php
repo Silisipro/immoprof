@@ -13,15 +13,15 @@ class Contact
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id;
+    private ?int $id=null;
 
     #[ORM\Column(length: 60)]
-    #[Assert\NotBlank()]
+    #[Assert\NotBlank]
     #[Assert\Length(min:2, max: 60)]
     private ?string $name;
 
     #[ORM\Column(length: 180)]
-    #[Assert\Email()]
+    #[Assert\Email]
     #[Assert\Length(min:2, max: 180)]
     private ?string $email;
 
@@ -30,11 +30,11 @@ class Contact
     private ?string $objet;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\NotBlank()]
+    #[Assert\NotBlank]
     private ?string $message ;
 
     #[ORM\Column]
-    #[Assert\NotNull()]
+    #[Assert\NotNull]
     private ?\DateTimeImmutable $createdAt;
 
    
