@@ -1,6 +1,6 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
-    globals: 
+    globals:
         sitelink: '%env(SITE_LINK)%'
 
 when@test:

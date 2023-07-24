@@ -23,7 +23,7 @@ use Knp\Component\Pager\PaginatorInterface;
 #[Route('/admin')]
 class AdminController extends AbstractController
 {
-    public function __construct(private readonly FileUploader $fileUploader, private readonly RandomStringGeneratorServices $randomStringGeneratorServices)
+    public function __construct(private FileUploader $fileUploader, private RandomStringGeneratorServices $randomStringGeneratorServices)
     {
     }
 
@@ -343,7 +343,7 @@ class AdminController extends AbstractController
     {
         $listeBiens = null;
         if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_CHEF_PROJET')) {
-            $listeBiens = $bienRepository->biensLoueVendu('loue','vendu');
+            $listeBiens = $bienRepository->recupererBiensLoueVendu($this->getUser());
         }
         return $this->render('admin/bien/loue_vendu_moi_meme.html.twig', [
             'biens' => $listeBiens,
