@@ -148,7 +148,7 @@
                 <!-- .item -->
                   {% for bien in biens %}
                     <div class="property-item">
-                      {% if getFilesByFileCode('', '1') == bien.CodeFichier %}
+                      {% if getFilesByFileCode(bien.CodeFichier, '1') == bien.CodeFichier %}
                           {% if bien.typeBien.categorie == 'a_louer' %}
                               <a href="{{ path('bien.show', {'id': bien.id}) }}" class="img">
                                 <img src="{{asset('assets/images/img_4.jpg')}}" alt="Image" class="img-fluid" /> 
@@ -160,7 +160,7 @@
                           {% endif %}
                       {% else %}
                         <a href="{{ path('bien.show', {'id': bien.id}) }}" class="img">
-                            <img src="{{ sitelink ~ getFilesByFileCode('', '1') }}" alt="Image" class="img-fluid"/>
+                            <img src="{{ sitelink ~ getFilesByFileCode(bien.CodeFichier, '1') }}" alt="Image" class="img-fluid"/>
                         </a>
                       {% endif %}
                       <div class="property-content">

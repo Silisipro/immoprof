@@ -128,7 +128,7 @@ class FileUploader
     private function getFileFolderDependOnEntity($entityClass)
     {
         switch ($entityClass) {
-            case 'bien':
+            case'bien':
                 return AppConstants::BIEN_FOLDER;           
             default:
                 return AppConstants::DEFAULT_FOLDER;

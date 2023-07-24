@@ -90,7 +90,14 @@ class AdminController extends AbstractController
                 $reference = $this->randomStringGeneratorServices->random_alphanumeric(7);
                 foreach ($request-> files as $key => $file) {
                     if ($key !=='bien') {
-                        if ($file instanceof UploadedFile) $this-> fileUploader->saveFile ($file, false, Bien::class, null, $reference);
+                        if ($file instanceof UploadedFile) {
+                            $this-> fileUploader->saveFile(
+                                $file,
+                                false,
+                                Bien::class,
+                                null,
+                                $reference);
+                        }
                     }
                 }
                 
@@ -152,7 +159,9 @@ class AdminController extends AbstractController
             $reference = $bien->getCodeFichier();
             foreach ($request->files as $key => $file) {
                 if ($key !== 'bien') {
-                    if ($file instanceof UploadedFile) $this->fileUploader->saveFile($file, false, Bien::class, null, $reference);
+                    if ($file instanceof UploadedFile) {
+                        $this->fileUploader->saveFile($file, false, Bien::class, null, $reference);
+                    }
                 }
             }
             $bien->setUpdatedAt(new \DateTimeImmutable());

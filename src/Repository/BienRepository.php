@@ -341,7 +341,7 @@ class BienRepository extends ServiceEntityRepository
         } // Fin is_array sur $tabFiltre
 
         return $query
-            ->addOrderBy('b.datePublication', 'ASC')
+            ->addOrderBy('b.createdAt', 'ASC')
             ->getQuery();
     }
 
@@ -356,7 +356,7 @@ class BienRepository extends ServiceEntityRepository
             ->setParameter('etat', 'publie')
             ->andWhere('t = :typeBien')
             ->setParameter('typeBien', $typeBien->getId())
-            ->addOrderBy('b.datePublication', 'ASC')
+            ->addOrderBy('b.createdAt', 'ASC')
             ->getQuery()
             ;
     }
@@ -374,7 +374,7 @@ class BienRepository extends ServiceEntityRepository
             ->setParameter('etat2', 'vendu')
             ->andWhere('b.user = :user')
             ->setParameter('user', $user->getId())
-            ->addOrderBy('b.datePublication', 'DESC')
+            ->addOrderBy('b.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
             ;
@@ -395,7 +395,7 @@ class BienRepository extends ServiceEntityRepository
             ->setParameter('etat2', 'vendu')
             ->andWhere('u.roles LIKE :role')
             ->setParameter('role', '%'.'["ROLE_AGENT"]'.'%')
-            ->addOrderBy('b.datePublication', 'DESC')
+            ->addOrderBy('b.b.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
             ;
@@ -414,7 +414,7 @@ class BienRepository extends ServiceEntityRepository
             ->setParameter('etat', 'publie')
             ->andWhere('u.roles LIKE :role')
             ->setParameter('role', '%'.'["ROLE_AGENT"]'.'%')
-            ->addOrderBy('b.datePublication', 'DESC')
+            ->addOrderBy('b.createdAt', 'DESC')
             ->getQuery()
             ->getResult()
             ;
