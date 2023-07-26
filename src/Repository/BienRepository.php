@@ -51,7 +51,10 @@ class BienRepository extends ServiceEntityRepository
     public function findVisible(BienRecherche $recherche): array
     {
         $query = $this->createQueryBuilder('b')
-            ->andWhere('b.sold = 0')
+            ->andWhere('b.deleted = :deleted')
+            ->setParameter('deleted', false)
+            ->andWhere('b.etat = :etat')
+            ->setParameter('etat', 'publie')
             ->addOrderBy('b.createdAt', 'DESC');
 
 

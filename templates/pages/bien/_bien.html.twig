@@ -1,0 +1,109 @@
+
+<div class="row">
+    {% for bien in pagination %}
+    <div class="col-md-3">
+        <div class="property-item mb-30">
+            {% if getFilesByFileCode(bien.CodeFichier, '1') == bien.CodeFichier %}
+                {% if bien.typeBien.categorie == 'a_louer' %}
+                    <a href="{{ path('bien.show', {'id': bien.id}) }}" class="img">
+                        <img src="{{asset('assets/images/img_4.jpg')}}" alt="Image" class="img-fluid" />
+                    </a>
+                {% else %}
+                    <a href="{{ path('bien.show', {'id': bien.id}) }}"class="img">
+                        <img src="{{ asset('assets/images/img_3.jpg') }}"alt="Image" class="img-fluid"/>
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="{{ path('bien.show', {'id': bien.id}) }}" class="img">
+                    <img src="{{ sitelink ~ getFilesByFileCode(bien.CodeFichier, '1') }}" alt="Image" class="img-fluid"/>
+                </a>
+            {% endif %}
+            <div class="property-content">
+                <div class="price mb-2">
+                    <a class="" href="{{ path('bien.show', {'id': bien.id}) }}" title="{{ bien.price|number_format(0, ',', ' ') ~ ' FCFA '}}">
+                        <i class="fa fa-money"></i><span>Prix : {{ bien.price|number_format(0, ',', ' ') ~ ' FCFA ' }}
+                                        <span class="caption" style="font-size: 10px"> {{bien.paiementLouer ? '/'~ bien.paiementLouer :''}} </span>
+                                    </span>
+                    </a>
+                </div>
+
+                <div>
+                    <a class ="" href="{{ path('bien.show', {'id': bien.id}) }}" title = " {{ bien.typeBien.type ~ (bien.standing ? ' - ' ~ bien.standing.name : '') }} à {{bien.city}} ">
+                        <h6> {{ bien.typeBien.type ~ (bien.standing ? ' - ' ~ bien.standing.name : '') }}
+                            {{ bien.typeBien.categorie == 'a_louer' ? 'à louer' : 'à vendre' }} à {{bien.city}} </h6>
+                    </a>
+                    <span class="city d-block mb-3">Caracteristiques</span>
+                    <div class="specs d-flex mb-4">
+                                      <span class="d-block d-flex align-items-center">
+                                        <span class="icon-bath me-2"></span>
+                                        <span class="caption"> Surface : {{bien.surface ? bien.surface : '?' }} m² </span>
+                                      </span>
+
+                    </div>
+                    <div class="specs d-flex mb-4">
+                                  <span class="d-block d-flex align-items-center me-3">
+                                  <span class="icon-bed me-2"></span>
+                                  <span class="caption">{{bien.rooms ? bien.rooms : '?'}} pièces </span>
+                                  </span>
+                        <span class="d-block d-flex align-items-center">
+                                  <span class="icon-bath me-2"></span>
+                                  <span class="caption"> {{bien.bedrooms ? bien.bedrooms : '?' }} chambres </span>
+                                  </span>
+                    </div>
+                    <div class="d-block mb-3" style="font-size:12px;">
+                        {% if bien.reference is not null %}
+
+                            <a class="d-nwrap" href="{{ path('bien.show', {'id': bien.id}) }}" title="Référence: {{ bien.reference }}">
+                                <i class="icon-info-circle"></i> Réf: {{ bien.reference }}
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="social" >
+                        <ul class="social list-unstyled list-inline dark-hover d-flex">
+                            <li class="list-inline-item">
+                                <i class="icon-clock-o caption"></i> Publié le {{ bien.createdAt ? bien.createdAt|date('d/m/Y') : '' }}
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('bien.show', {'id': bien.id}) }}" target="_blank">
+                                    <span class="icon-facebook partager-reseaux-sociaux" title="Partager sur facebook"></span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item ">
+                                {% set lienACliquer = '' ~ url('bien.show', {'id': bien.id}) %}
+                                {% set textWhatsApp = "Bonjour madame/monsieur. J'ai consulté le bien immobilier \"" ~ bien.name ~ "\" dont l'adresse est " ~ lienACliquer ~ " et je pense que ça pourra vous intéresser." %}
+                                <a href="https://wa.me/?text={{ textWhatsApp }}" target="_blank">
+                                    <span class="icon-whatsapp  partager-reseaux-sociaux" title="Partager sur WhatsApp"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="text-center">
+                        <a
+                                href="{{path('bien.show', {id: bien.id})}}"
+                                class="btn btn-primary py-2 px-3 text-center"
+                        >Plus de details</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-md-12 mb-2">
+        <div class="card border-info text-center pt-10">
+            <div class="mt-3">
+                <strong>
+                    Aucun bien correspondant aux critères de votre recherche
+                </strong>
+            </div>
+            <div>
+                <p>Contactez-nous :</p>
+                <p><a href="tel:67922379">67 92 23 79</a>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="navigation-lg d-flex justify-content-center mt-20">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+</div>

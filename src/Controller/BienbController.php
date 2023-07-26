@@ -26,18 +26,20 @@ class BienbController extends AbstractController
        $form = $this->createForm(BienRechercheType::class, $recherche);
        $form->handleRequest($request);
 
-       $biens= $paginator->paginate(
-        $bienRepository->findVisible($recherche),
-        $request->query->getInt('page', 1)
+       $biens = $bienRepository->findVisible($recherche);
+         $pagination = $paginator->paginate(
+               $biens,
+        $request->query->getInt('page', 1),12
         );
 
         return $this->render('pages/bien/index.html.twig', [
             'biens' => $biens,
+            'pagination' => $pagination,
             'form' => $form->createView()
         ]);
      }
 
-    #[IsGranted('ROLE_USER')]
+
     #[Route('/bien/{id}', name: 'bien.show')]
     public function show(Bien  $bien): Response
     {

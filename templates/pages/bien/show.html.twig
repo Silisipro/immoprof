@@ -11,8 +11,9 @@
       <div class="container">
         <div class="row justify-content-center align-items-center">
           <div class="col-md-9 col-lg-9 text-center mt-5">
-            <h1 class="heading" data-aos="fade-up">
-              5232 California AVE. 21BC
+            <h1 class="heading" data-aos="fade-up" style="padding-top:50px;">
+              {{ bien.typeBien.type ~ (bien.standing ? ' - ' ~ bien.standing.name : '') }}
+              {{ bien.typeBien.categorie == 'a_louer' ? 'à louer' : 'à vendre' }} à {{bien.city}}
             </h1>
 
             <nav
@@ -21,15 +22,15 @@
               data-aos-delay="200"
             >
               <ol class="breadcrumb text-center justify-content-center">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Accueil</a></li>
                 <li class="breadcrumb-item">
-                  <a href="#">Properties</a>
+                  <a href="#">NOs Biens</a>
                 </li>
                 <li
                   class="breadcrumb-item active text-white-50"
                   aria-current="page"
                 >
-                  5232 California AVE. 21BC
+                  {{ bien.name}}
                 </li>
               </ol>
             </nav>
@@ -51,21 +52,21 @@
             </div>
           </div>
           <div class="col-md-4 col-lg-4">
-            <h2 class="heading text-primary">Prix : {{bien.price}} $</h2>
-            <p class="meta">California, United States</p>
+            <h2 class="heading text-primary"> <i class="fa fa-money"></i><span>Prix : {{ bien.price|number_format(0, ',', ' ') ~ ' FCFA ' }}{{bien.paiementLouer ? '/'~ bien.paiementLouer :''}}</span></h2>
+            <p class="meta">{{ bien.typeBien.type ~ (bien.standing ? ' - ' ~ bien.standing.name : '') }}
+              {{ bien.typeBien.categorie == 'a_louer' ? 'à louer' : 'à vendre' }} à {{bien.city}}</p>
             <p class="text-black-50">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione
-              laborum quo quos omnis sed magnam id, ducimus saepe, debitis error
-              earum, iste dicta odio est sint dolorem magni animi tenetur.
+              Nombre de pièces: {{bien.rooms ? bien.rooms : 'Non renseignés' }}
             </p>
             <p class="text-black-50">
-              Perferendis eligendi reprehenderit, assumenda molestias nisi eius
-              iste reiciendis porro tenetur in, repudiandae amet libero.
-              Doloremque, reprehenderit cupiditate error laudantium qui, esse
-              quam debitis, eum cumque perferendis, illum harum expedita.
+              Nombre de chambres: {{bien.bedrooms ? bien.bedrooms : 'Non renseignés'}}
+            </p>
+            <p class="text-black-50">
+              Description : <br>
+              {{bien.description}}
             </p>
 
-            <div class="d-block agent-box p-5">
+            <div class="d-block agent-box p-5 text-center">
               <div class="img mb-4">
                 <img
                   src="{{asset('assets/images/person_2-min.jpg')}}"
@@ -75,12 +76,11 @@
               </div>
               <div class="text">
                 <h3 class="mb-0">Alicia Huston</h3>
-                <div class="meta mb-3">Real Estate</div>
+                <div class="meta mb-3">Contacter l'Agent</div>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Ratione laborum quo quos omnis sed magnam id ducimus saepe
+                 +229 67922379
                 </p>
-                <ul class="list-unstyled social dark-hover d-flex">
+                <ul class="list-unstyled social dark-hover d-flex justify-content-center align-items-center">
                   <li class="me-1">
                     <a href="#"><span class="icon-instagram"></span></a>
                   </li>

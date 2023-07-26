@@ -133,7 +133,7 @@ class BienType extends AbstractType
                     'Journalier' => 'Jour',
                     'Semestiel' => 'Semaine',
                     'Mensuel' => 'Mois',
-                    'Annuel' => 'Annuel',
+                    'Annuel' => 'An',
                 ],
                 'label' => "Fréquence de paiement du loyer",
                 'required' => false,

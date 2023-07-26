@@ -18,7 +18,7 @@
                                 <i class="bi bi-circle"></i><span>Ajouté un bien</span>
                                 </a>
                             </li>
-                        {% if is_granted('ROLE_AGENT') %}
+                        {% if is_granted('ROLE_AGENT')%}
                             <li>
                                 <a href="{{ path('app.admin.bien') }}">
                                 <i class="bi bi-circle"></i><span>Liste des biens</span>
