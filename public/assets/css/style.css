@@ -9746,8 +9746,8 @@ textarea {
         background: rgba(34, 34, 34, 0.4); }
 
 .section {
-  padding-top: 4rem;
-  padding-bottom: 4rem; }
+  padding-top: 1rem;
+  padding-bottom: 1rem; }
   .section .heading {
     font-weight: 500; }
     @media (max-width: 767.98px) {
@@ -9841,7 +9841,7 @@ textarea {
 .property-slider-wrap, .img-property-slide-wrap {
   position: relative; }
   .property-slider-wrap .tns-outer .tns-inner, .img-property-slide-wrap .tns-outer .tns-inner {
-    padding-bottom: 100px !important; }
+    padding-bottom: 35px !important; }
   .property-slider-wrap .tns-nav, .img-property-slide-wrap .tns-nav {
     position: absolute;
     left: 50%;
@@ -10288,7 +10288,7 @@ nav[aria-label="breadcrumb"] li:before {
     width: 0%; }
 
 .sec-testimonials {
-  padding-bottom: 8rem; }
+  padding-bottom: 4rem; }
 
 .contact-info i {
   font-size: 20px;

@@ -2,18 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Bien;
-use App\Entity\Standing;
-use App\Entity\User;
+
 use App\Form\VdLogeType;
 use App\Form\ContactType;
 use App\Form\AskLogeType;
 use App\Form\EsLoyerType;
-use App\Form\ProgrammerVisiteType;
-use App\Form\UserType;
 use App\Form\CfLogeType;
 use App\Repository\BienRepository;
-use App\Repository\UserRepository;
 use App\Service\FileUploader;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Service\EmailSmsServices;
@@ -52,6 +47,15 @@ class HomeController extends AbstractController
                 'loyer' => (int) $formAsk->get('loyer')->getData(),
                 'detail' => $formAsk->get('detail')->getData(),
             ];
+
+            $this->emailSmsServices->sendEmail(
+                ['silisipro@gmail.com'],
+                'emails/confier_mon_bien.html.twig',
+                "Mise à disposition de mon bien à Immoprof",
+                $data['emailForm'],
+                $data['nomPrenom'],
+                $data,
+            );
          
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
@@ -83,6 +87,15 @@ class HomeController extends AbstractController
                     );
                }
             }
+            $this->emailSmsServices->sendEmail(
+                ['silisipro@gmail.com'],
+                'emails/confier_mon_bien.html.twig',
+                "Mise à disposition de mon bien à Immoprof",
+                $data['emailForm'],
+                $data['nomPrenom'],
+                $data,
+                $tabFichiers
+            );
            
             // Suppression des fichiers à envoyer par mail du dossier default
             foreach ($tabFichiers as $file) {
@@ -105,6 +118,16 @@ class HomeController extends AbstractController
                 'success',
                 'Votre demande a été envoyé avec succès !'
             );
+            $this->emailSmsServices->sendEmail(
+                ['silisipro@gmail.com'],
+                'emails/contact.html.twig',
+                "Mise à disposition de mon bien à Immoprof",
+                $data['emailForm'],
+                $data['nomPrenom'],
+                $data,
+            );
+
+            $request->getSession()->set('message', "contact");
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
          }
         $formCfBien = $this->createForm(CfLogeType::class);
@@ -137,8 +160,8 @@ class HomeController extends AbstractController
                 }
             }
             $this->emailSmsServices->sendEmail(
-                ['contact@immoprof.com', 'silisipro@gmail.com'],
-                'email_templates/confier_mon_bien.html.twig',
+                ['silisipro@gmail.com'],
+                'emails/confier_mon_bien.html.twig',
                 "Mise à disposition de mon bien à Immoprof",
                 $data['emailForm'],
                 $data['nomPrenom'],
@@ -183,8 +206,8 @@ class HomeController extends AbstractController
                 }
             }
             $this->emailSmsServices->sendEmail(
-                ['contact@e-immoprof.com', 'silisipro@gmail.com'],
-                'email_templates/vendre_mon_bien.html.twig',
+                ['silisipro@gmail.com'],
+                'emails/vendre_mon_bien.html.twig',
                 "Vente de mon bien immobilier",
                 $data['emailForm'],
                 $data['nomPrenom'],
@@ -251,6 +274,39 @@ class HomeController extends AbstractController
                 'dateHeureRdv' => $formCfLoge->get('dateHeureRdv')->getData(),
                 'typeRdv' => $formCfLoge->get('typeRdv')->getData(),
             ];
+
+            $tabFichiers = [];
+
+            foreach ($data['files'] as $file) {
+                if ($file instanceof UploadedFile) {
+                    $tabFichiers[] = $this->fileUploader->saveFile(
+                        $file,
+                        false,
+                        null,
+                        null,
+                        null,
+                        false,
+                        true
+                    );
+                }
+            }
+
+            $this->emailSmsServices->sendEmail(
+                ['contact@e-coyeimmo.com', 'yessoufousuaib@gmail.com'],
+                'emails/confier_mon_bien.html.twig',
+                "Mise à disposition de mon bien chez Immoprof",
+                $data['emailForm'],
+                $data['nomPrenom'],
+                $data,
+                $tabFichiers
+            );
+
+            // Suppression des fichiers à envoyer par mail du dossier default
+            foreach ($tabFichiers as $file) {
+                unlink($file);
+            }
+
+            $request->getSession()->set('message', "confier_bien");
         
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }

@@ -19,7 +19,7 @@
                     data-aos-delay="200"
                     >
                     <ol class="breadcrumb text-center justify-content-center">
-                        <li class="breadcrumb-item"><a href="#">Aceuil</a></li>
+                        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Aceuil</a></li>
                         <li
                         class="breadcrumb-item active text-white-50"
                         aria-current="page"
@@ -91,7 +91,7 @@
         <div class="container">
             <div class="row y-middle">
                 <div class="col-lg-6 md-mb-25 sm-mt-25">
-                    <img src="{{ asset('assets/images/autr/gestion_locative_2.jpg') }}" alt="image" class="img-fluid" style="border-radius: 80px; transform: scale(0.75);" class="gest-loc-img-serv" loading="lazy">
+                    <img src="{{ asset('assets/images/autr/gestion_locative_2.jpg') }}" alt="image" class="img-fluid" style="border-radius: 80px; transform: scale(0.75);"  loading="lazy">
                 </div>
                 <div class="col-lg-6 pl-40 pr-60">
                     <div class="sec-title">
@@ -142,7 +142,7 @@
                             <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: #31d2f2;">A VENDRE</button>
                             </h2>
-                            <div id="collapseTwo" class="collapse-collapse collapse"aria-labelledby="headingTwo" data-bs-parent="#accordion">
+                            <div id="collapseTwo" class="collapse-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion">
                                 <div class="accordion-body">
                                     {{ render(controller('App\\Controller\\TypeBienController::vendre')) }}
                                 </div>
@@ -153,7 +153,7 @@
                 <div class="col-lg-6">
                     <div class="about-content">
                         <div class="images-part">
-                            <img src="{{ asset('assets/images/img_2.jpg') }}" alt="image" class="img-fluid"  style="border-radius: 20px; width: 65%; margin-left: 70px;" class="gest-loc-img-cout" loading="lazy">
+                            <img src="{{ asset('assets/images/img_2.jpg') }}" alt="image" class="img-fluid"  style="border-radius: 20px; width: 65%; margin-left: 70px;"  loading="lazy">
                         </div>
                         <div class="rs-animations">
                     </div>
@@ -166,7 +166,7 @@
     <div id="services" class="style1 pt-22 pb-0 md-pt-22 md-pb-0 sm-pt-18 sm-pb-0 contenu-principal-page">
         <div class="container">
             <div class="sec-title text-center mb-50 md-mb-24 sm-mb-33">
-                <h2 class="title mb-0 bottom-wave"style="color: #31d2f2; margin-top: 50px;">NOS AVANTAGES</h2>
+                <h2 class="title mb-0 bottom-wave" style="color: #31d2f2; margin-top: 50px;">NOS AVANTAGES</h2>
             </div>
             <div class="row">
                 <div class="col-md-12 col-lg-4" data-aos="fade-up" data-aos-delay="600">
@@ -214,7 +214,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" style="color: #f9ab18;">Vos informations</h3>
+                    <h3 class="modal-title" style="color: #005555;">Vos informations</h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fermer">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -274,7 +274,7 @@
                             </div>
                             {{ form_widget(formCfLoge._token) }}
                             <div class="col-md-6">
-                                <button type="submit" style="width: 100px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; color: white; background-color: #f9ab18; border: none;">
+                                <button type="submit" style="width: 100px; height: 40px; border-radius: 25px; font-size: 15px; line-height: 40px; color: white; background-color: #005555; border: none;">
                                     Envoyer
                                 </button>
                             </div>

@@ -47,8 +47,8 @@
      <!-- Slide 1 -->
     <div class="container">
       <div class="row justify-content-center align-items-center">
-          <div class="slider-bottom d-flex justify-content-center">
-            <div class="col-md-6 col-lg-6 text-center" style="border-radius: 80px;border: solid;border-color: #31d2f2;width: auto;height: 211px;">
+          <div class="slider-bottom d-flex justify-content-center" style="height: 136px;">
+            <div class="col-md-6 col-lg-6 text-center" style="border-radius: 60px; border: solid #31d2f2;width: 500px;height: 180px;">
                 <h1 class="heading" data-aos="fade-up" style="margin: 10px 10px;" id="bvn">
                     Bienvenue sur <span>ImmoPro</span>
                 </h1>
@@ -57,12 +57,12 @@
                       Votre partenaire de référence en matière de gestion immobilière.
                   </div>
                   <div class="slider-bottom d-flex justify-content-center">
-                      <ul style="background-color: aliceblue;border-radius: 20px;border-style: solid;text-decoration: none !important;height: 70px;">
-                        <li class="heading" data-aos="fade-up">
+                      <ul  style="margin: -17px" >
+                        <li class="heading" data-aos="fade-up" style="text-decoration: none !important;">
                             {% if app.user %}
-                                <a href="{{ path('app.bien.new') }}" target="_blank" class="readon banner-style" style="color: #005555;font-size: 17px; padding-right: 17px; " >Publier une annonce</a>                           
+                                <a href="{{ path('app.bien.new') }}" target="_blank" class="readon banner-style" style="color: #005555;font-size: 15px;background-color: aliceblue;border-radius: 20px;border: solid; padding: 4px;text-decoration: none !important;">Publier une annonce</a>
                             {% else %}
-                                <a href="{{path('app_security_registration')}}" target="_blank" class="readon banner-style" style="color: #005555;font-size: 25px; padding-right: 15px; ">Publier une annonce</a>                                 
+                                <a href="{{path('app_security_registration')}}" target="_blank" class="readon banner-style" style="color: #005555;font-size: 15px;background-color: aliceblue;border-radius: 20px;border: solid; padding: 4px;text-decoration: none !important;">Publier une annonce</a>
                             {% endif %}
                         </li>
                       </ul>
@@ -87,7 +87,7 @@
                 <div class="row">
                     <div class="col-md-6 offset-md-3 col-sm-12 text-center">
                         <a href="#" data-bs-target=".laisser-demande-modal" data-bs-toggle="modal">
-                            <div style="width: 460px; height: auto; border-radius: 25px; font-size: 15px; line-height: 36px; margin: 16px auto; color: white; background-color: #005555;">
+                            <div style="width: 274px; height: auto; border-radius: 20px; font-size: 15px; line-height: 36px; margin: 16px auto; color: white; background-color: #005555;">
                                 Recherchez-vous un bien immobilier ?
                             </div>
                         </a>
@@ -96,21 +96,21 @@
             </div>
             <div class="tab-pane fade" id="pro" role="tabpanel" aria-labelledby="pro-tab">
                 <div class="row">
-                    <div class="col-4 col-sm-12 text-center sm-mt--6 sm-mb--6 ">
+                    <div class="col-md-4 col-sm-12 text-center">
                         <a href="#" data-bs-target=".estimer-loyer-modal" data-bs-toggle="modal">
                             <div style="width: 170px; height: auto; border-radius: 25px; font-size: 15px; line-height: 36px; margin: 16px auto; color: #005555; background-color: white; border: 1px solid #005555;">
                                 Estimer mon loyer
                             </div>
                         </a>
                     </div>
-                    <div class="col-4 col-sm-12 text-center sm-mt--6 sm-mb--6">
+                    <div class="col-md-4 col-sm-12 text-center">
                         <a href="#" data-bs-target=".confier-mon-bien-modal" data-bs-toggle="modal">
                             <div style="width: 270px; height: auto; border-radius: 25px; font-size: 15px; line-height: 36px; margin: 16px auto; color: white; background-color: #005555;">
                                 Confier mon bien à Immoprof
                             </div>
                         </a>
                     </div>
-                    <div class="col-md-4 col-sm-12 text-center sm-mt--6 sm-mb--6">
+                    <div class="col-md-4 col-sm-12 text-center">
                         <a href="#" data-bs-target=".mettre-mon-bien-modal" data-bs-toggle="modal">
                             <div style="width: 170px; height: auto; border-radius: 25px; font-size: 15px; line-height: 36px; margin: 16px auto; color: #005555; background-color: white; border: 1px solid #005555;">
                                 Vendre mon bien
@@ -135,7 +135,7 @@
               <a
                 href="{{ path('bien.tout.index') }}"
                 target="_blank"
-                class="btn btn-primary text-white py-3 px-4"
+                class="btn btn-primary text-white py-2 px-3"
                 >Voir plus d'offres</a
               >
             </p>
@@ -154,8 +154,8 @@
                                 <img src="{{asset('assets/images/img_4.jpg')}}" alt="Image" class="img-fluid" /> 
                               </a>
                           {% else %}
-                              <a href="{{ path('bien.show', {'id': bien.id}) }}"class="img">
-                                <img src="{{ asset('assets/images/img_3.jpg') }}"alt="Image" class="img-fluid"/>
+                              <a href="{{ path('bien.show', {'id': bien.id}) }}" class="img">
+                                <img src="{{ asset('assets/images/img_3.jpg') }}" alt="Image" class="img-fluid"/>
                               </a>
                           {% endif %}
                       {% else %}
@@ -190,8 +190,7 @@
                                   {% if bien.heat == '2'  %} Decompteur  {% endif %}
                                   {% if bien.heat == '3'  %} solaire     {% endif %}
                                 </span>
-                              </span> 
-                                                    
+                              </span>
                           </div>       
                           <div class="specs d-flex mb-4">
                               <span class="d-block d-flex align-items-center me-3">
@@ -207,7 +206,7 @@
                                 <span class="caption"> Niveau : {{bien.floor ? bien.floor : '?'}} </span>
                               </span>
                             </div>
-                            <div class="d-block mb-3" style"font-size:12px;">
+                            <div class="d-block mb-3" style=font-size:12px;">
                                 {% if bien.reference is not null %}
                                 
                                   <a class="d-nwrap" href="{{ path('bien.show', {'id': bien.id}) }}" title="Référence: {{ bien.reference }}">
@@ -215,7 +214,7 @@
                                   </a>
                                 {% endif %}
                             </div>
-                            <div class"social" >
+                            <div class="social" >
                                 <ul class="social list-unstyled list-inline dark-hover">
                                     <li class="list-inline-item">
                                        <i class="icon-clock-o caption"></i> Publié le {{ bien.createdAt ? bien.createdAt|date('d/m/Y') : '' }}
@@ -242,11 +241,11 @@
                               >
                             </div>
                       </div>
+                      </div>
                     </div>
-              </div>
-                {% endfor %}
+                  {% endfor %}
             </div>
-              <div
+                <div
                 id="property-nav"
                 class="controls"
                 tabindex="0"
@@ -267,8 +266,10 @@
                   >Suivant</span
                 >
               </div>  
+            </div>
+          </div>
         </div>
-      </div>
+     </div>
   </div>
   <section class="features-1">
     <div class="container">
@@ -449,9 +450,9 @@
      
   <div class="section sec-testimonials mage">
     <div class="container">
-      <div class="row mb-2 align-items-center" style="background-color: cadetblue;">
+      <div class="row mb-2 align-items-center">
         <div class="col-md-12">
-          <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0 text-center" style="font-size: 20px;">
+          <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0 text-center" style="font-size: 30px;">
             Nos client en parlent
           </h2>
         </div> 
@@ -464,7 +465,7 @@
                 aria-label="Carousel Navigation"
           >
             <span class="prev d-none" data-controls="prev" tabindex="-1" aria-controls="testimonial">Precedent</span>
-            <span class="next d-none" data-controls="next" tabindex="-1"aria-controls="testimonial">Suivant</span>
+            <span class="next d-none" data-controls="next" tabindex="-1" aria-controls="testimonial">Suivant</span>
           </div>
         </div>
       </div>
@@ -598,7 +599,7 @@
       <div class="row justify-content-between mb-5">
         <div class="col-md-9 col-lg-7 mb-5 mb-lg-0 order-lg-2">
           <div class="img-about dots">
-            <img src="{{asset('assets/images/hero_bg_3.jpg')}}" alt="Image" class="img-fluid" style="transform: scale(1) translateX(-20px) translateY(-12px); border-radius: 50px;" loading="lazy" />
+            <img src="{{asset('assets/images/hero_bg_3.jpg')}}" alt="Image" class="img-fluid" style="transform: scale(1) translateX(-100px) translateY(-12px); border-radius: 50px; height:372px;"/>
           </div>
         </div>
         <div class="col-md-4 col-lg-4">
@@ -744,7 +745,7 @@
         data-aos="fade-up" data-aos-delay="500">
             <div class="box-feature" style="background: #31d2f2;">
               <span class="flaticon-building"></span>
-              <h3 class="mb-3">Nos Bien A Louer</h3>
+              <h3 class="mb-3">Nos Biens A Louer</h3>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Voluptates, accusamus.
@@ -754,14 +755,14 @@
           </div>
         </div>
       </div>
-    <!-- /.row -->
+     <!-- /.row -->
   </section>
 
   <div class="section section-5 bg-light mage" >
     <div class="container">
       <div class="row justify-content-center text-center mb-5">
         <div class="col-md-6 col-lg-6 mb-5">
-          <h2 class="font-weight-bold heading text-primary mb-4 dispo" style="font-size: 20px;">
+          <h2 class="font-weight-bold heading text-primary mb-4 mt-4 dispo" style="font-size: 30px;">
             Our Agents
           </h2>
           <p class="text-black-50">
@@ -1095,7 +1096,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h3 class="modal-title" style="color: #005555;">Vos informations</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Fermer">
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Fermer">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -1169,7 +1170,6 @@
       </div>
     </div>
   </div>
-{% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
@@ -1231,6 +1231,7 @@
            });
          // Fin ready
       </script>
-
 {% endblock %}
 
+
+{% endblock %}

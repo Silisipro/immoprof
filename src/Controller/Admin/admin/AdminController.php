@@ -11,7 +11,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Service\EmailSmsServices;
 use App\Service\RandomStringGeneratorServices;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Service\FileUploader;

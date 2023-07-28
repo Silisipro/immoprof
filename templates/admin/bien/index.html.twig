@@ -139,15 +139,15 @@
                                                     <tr>
                                                         <td > {{bien.name ? bien.name : '' }}</td>
                                                         <td >{{bien.price|number_format(0, ',', ' ') }} $</td>
-                                                        <td scope="row">{{ bien.createdAt ? bien.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                                                        <td scope="row">{{ bien.updatedAt ? bien.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                                                        <td scope="row"> {{ bien.user.fullName ? bien.user.fullName : '' }}</td>
-                                                        <td scope="row">
+                                                        <td >{{ bien.createdAt ? bien.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                                        <td >{{ bien.updatedAt ? bien.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                                        <td > {{ bien.user.fullName ? bien.user.fullName : '' }}</td>
+                                                        <td >
                                                             <span class="{{ bien.sold ? 'badge bg-success' : '' }}">
                                                                 {{ bien.sold ? 'Oui' : 'Non' }}
                                                             </span>
                                                         </td>
-                                                        <td scope="row">
+                                                        <td >
                                                         {% if bien.etat == 'publie' %}
                                                                 <span class="badge bg-success">
                                                                     Publié
@@ -192,9 +192,10 @@
                                               {{knp_pagination_render(biens) }}
                                         </div>
                                     </div>
-                            </div>
-                        {% endblock %}
-                    </div>
+                                </div>
+                               {% endblock %}
+                          </div>
+                      </div>
                 </div>
            </section>
         </main><!-- End #main -->
@@ -232,7 +233,7 @@
                     jQuery('.select2').select2();
                     jQuery('.flatpicker').flatpickr({
                         locale: 'fr',
-                        enableTime: false,6+-
+                        enableTime: false,
                         altInput: true,
                         altFormat: "j F Y",
                         dateFormat: "Y-m-d H:i",
