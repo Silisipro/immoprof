@@ -9,8 +9,8 @@
                         <img src="{{asset('assets/images/img_4.jpg')}}" alt="Image" class="img-fluid" />
                     </a>
                 {% else %}
-                    <a href="{{ path('bien.show', {'id': bien.id}) }}"class="img">
-                        <img src="{{ asset('assets/images/img_3.jpg') }}"alt="Image" class="img-fluid"/>
+                    <a href="{{ path('bien.show', {'id': bien.id}) }}" class="img">
+                        <img src="{{ asset('assets/images/img_3.jpg') }}" alt="Image" class="img-fluid"/>
                     </a>
                 {% endif %}
             {% else %}
@@ -58,17 +58,17 @@
                             </a>
                         {% endif %}
                     </div>
-                    <div class="social" >
+                    <div class="social float-end" >
                         <ul class="social list-unstyled list-inline dark-hover d-flex">
                             <li class="list-inline-item">
                                 <i class="icon-clock-o caption"></i> Publié le {{ bien.createdAt ? bien.createdAt|date('d/m/Y') : '' }}
                             </li>
-                            <li class="list-inline-item">
+                            <li class="list-inline-item ">
                                 <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('bien.show', {'id': bien.id}) }}" target="_blank">
                                     <span class="icon-facebook partager-reseaux-sociaux" title="Partager sur facebook"></span>
                                 </a>
                             </li>
-                            <li class="list-inline-item ">
+                            <li class="list-inline-item">
                                 {% set lienACliquer = '' ~ url('bien.show', {'id': bien.id}) %}
                                 {% set textWhatsApp = "Bonjour madame/monsieur. J'ai consulté le bien immobilier \"" ~ bien.name ~ "\" dont l'adresse est " ~ lienACliquer ~ " et je pense que ça pourra vous intéresser." %}
                                 <a href="https://wa.me/?text={{ textWhatsApp }}" target="_blank">

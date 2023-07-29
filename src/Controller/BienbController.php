@@ -11,7 +11,6 @@ use App\Repository\BienRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -61,10 +60,10 @@ class BienbController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $data = [
-                'lieu' => $form->get('lieu')->getData(),
-                'type' => $form->get('type')->getData(),
+                'city' => $form->get('city')->getData(),
+                'typeBien' => $form->get('typeBien')->getData(),
                 'standing' => $form->get('standing')->getData(),
-                'maxPrice' => $form->get('maxPrice')->getData(),
+                'price' => $form->get('price')->getData(),
             ];
             $listeBienQuery = $bienRepository->recupererBiensParCategorie('a_louer', $data);
             $pagination = $paginator->paginate(
@@ -98,10 +97,10 @@ class BienbController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = [
-                'lieu' => $form->get('lieu')->getData(),
+                'city' => $form->get('city')->getData(),
                 'typeBien' => $form->get('typeBien')->getData(),
                 'standing' => null,
-                'maxPrice' => $form->get('maxPrice')->getData(),
+                'price' => $form->get('price')->getData(),
             ];
             $listeBienQuery = $bienRepository->recupererBiensParCategorie('a_vendre', $data);
             $pagination = $paginator->paginate(

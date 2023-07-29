@@ -124,7 +124,7 @@
   </div>
   <div class="section mage">
       <div class="container">
-        <div class="row mb-5 align-items-center">
+        <div class="row align-items-center">
           <div class="col-md-9 col-lg-6">
             <h2 class="font-weight-bold text-primary heading dispo" style="font-size: 22px;">
               Offres disponibles
@@ -277,18 +277,18 @@
         <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
           <div class="box-feature" style="background: #31d2f2;">
             <span class="flaticon-house"></span>
-            <h3 class="mb-3">Nos Bien</h3>
+            <h3 class="mb-3">Nos Biens</h3>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               Voluptates, accusamus.
             </p>
-            <p><a href="#" class="learn-more">Voir</a></p>
+            <p><a href="{{ path('bien.tout.index') }}" class="learn-more">Voir</a></p>
           </div>
         </div>
         <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="500">
           <div class="box-feature">
             <span class="flaticon-building"></span>
-            <h3 class="mb-3">Nos Bien A Louer</h3>
+            <h3 class="mb-3">Nos Biens A Louer</h3>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               Voluptates, accusamus.
@@ -299,7 +299,7 @@
         <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
           <div class="box-feature" style="background: #31d2f2;">
             <span class="flaticon-house-3"></span>
-            <h3 class="mb-3">Nos Bien A Vendre</h3>
+            <h3 class="mb-3">Nos Biens A Vendre</h3>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               Voluptates, accusamus.
@@ -310,7 +310,7 @@
         <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="600">
           <div class="box-feature">
             <span class="flaticon-house-1"></span>
-            <h3 class="mb-3">Nos Guest Housse</h3>
+            <h3 class="mb-3">Nos Guests Houses</h3>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               Voluptates, accusamus.
@@ -439,7 +439,7 @@
               </div>
               <div class="col-md-6 offset-md-3 text-center">
                   <a href="#" data-bs-target=".confier-mon-bien-modal" data-bs-toggle="modal">
-                      <div style="width: 240px; height: 40px; border-radius: 10px; font-size: 15px; line-height: 40px; margin: 35px auto 0; color: white; background-color: #005555;">
+                      <div style="width: 195px; height: 40px; border-radius: 10px; font-size: 15px; line-height: 40px; margin: 35px auto 0; color: white; background-color: #005555;">
                           Confier mon bien Immopro
                       </div>
                   </a>
@@ -452,7 +452,7 @@
     <div class="container">
       <div class="row mb-2 align-items-center">
         <div class="col-md-12">
-          <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0 text-center" style="font-size: 30px;">
+          <h2 class="font-weight-bold heading text-primary mb-4 mb-md-0 text-center dispo" style="font-size: 30px;">
             Nos client en parlent
           </h2>
         </div> 
@@ -735,7 +735,7 @@
                     </div>
                   </div>
                   <div class="col-md-12 mt-2">
-                  {{ form_row(form.submit) }}  
+                  {{ form_row(form.submit) }} {{ style="padding:2px !important;"}}
                   </div>
                 </div>
               </form>
@@ -763,7 +763,7 @@
       <div class="row justify-content-center text-center mb-5">
         <div class="col-md-6 col-lg-6 mb-5">
           <h2 class="font-weight-bold heading text-primary mb-4 mt-4 dispo" style="font-size: 30px;">
-            Our Agents
+            Nos Agents
           </h2>
           <p class="text-black-50">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam

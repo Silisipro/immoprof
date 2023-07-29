@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-
 use App\Form\VdLogeType;
 use App\Form\ContactType;
 use App\Form\AskLogeType;
@@ -123,7 +122,7 @@ class HomeController extends AbstractController
                 'emails/contact.html.twig',
                 "Mise à disposition de mon bien à Immoprof",
                 $data['emailForm'],
-                $data['nomPrenom'],
+                $data['name'],
                 $data,
             );
 
@@ -292,7 +291,7 @@ class HomeController extends AbstractController
             }
 
             $this->emailSmsServices->sendEmail(
-                ['contact@e-coyeimmo.com', 'yessoufousuaib@gmail.com'],
+                ['silisipro@gmail.com'],
                 'emails/confier_mon_bien.html.twig',
                 "Mise à disposition de mon bien chez Immoprof",
                 $data['emailForm'],

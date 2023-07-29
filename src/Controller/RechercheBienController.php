@@ -29,12 +29,12 @@ class RechercheBienController extends AbstractController
         );
         $formLouer = $this->createForm(RetrouverBienLouerType::class);
         $formLouer->handleRequest($request);
-        if ($formLouer->isSubmitted() && $formLouer->isValid()) {
+        if ($formLouer->isSubmitted()) {
             $data = [
-                'lieu' => $formLouer->get('lieu')->getData(),
+                'city' => $formLouer->get('city')->getData(),
                 'typeBien' => $formLouer->get('typeBien')->getData(),
                 'standing' => $formLouer->get('standing')->getData(),
-                'maxPrice' => $formLouer->get('maxPrice')->getData(),
+                'price' => $formLouer->get('price')->getData(),
             ];
             $listeBienQuery = $bienRepository->recupererBiensParCategorie('a_louer', $data);
             $pagination = $paginator->paginate(
@@ -51,12 +51,12 @@ class RechercheBienController extends AbstractController
         }
         $formVendre = $this->createForm(RetrouverBienVendreType::class);
         $formVendre->handleRequest($request);
-        if ($formVendre->isSubmitted() && $formVendre->isValid()) {
+        if ($formVendre->isSubmitted()) {
             $data = [
-                'lieu' => $formVendre->get('lieu')->getData(),
+                'city' => $formVendre->get('city')->getData(),
                 'typeBien' => $formVendre->get('typeBien')->getData(),
                 'standing' => $formVendre->get('standing')->getData(),
-                'maxPrice' => $formVendre->get('maxPrice')->getData(),
+                'price' => $formVendre->get('price')->getData(),
             ];
             $listeBienQuery = $bienRepository->recupererBiensParCategorie('a_vendre', $data);
             $pagination = $paginator->paginate(
@@ -85,51 +85,49 @@ class RechercheBienController extends AbstractController
         }
     }
 
-    #[Route('/bien/a/louer', name: 'app_rechercher')]
-    public function rechercher(BienRepository $bienRepository, Request $request, PaginatorInterface $paginator): Response
-     {
-
-       $rechercher= new BienRecherche();
-       $form = $this->createForm(RetrouverBienLouerType::class, $rechercher);
-       $form->handleRequest($request);
-
-       $biens= $bienRepository->rechercherBien( $rechercher);
-       $pagination = $paginator->paginate(
-        $biens,
-        $request->query->getInt('page', 1),
-        12
-           );
-        return $this->render('pages/bien/louer.html.twig', [
-            'biens' => $biens,
-            'pagination' => $pagination,
-            'form' => $form->createView()
-        ]);
-
- }
-
-
- #[Route('/bien/a/vendre', name: 'app_rechercher_v')]
- public function rechercherBienVendre(BienRepository $bienRepository, Request $request, PaginatorInterface $paginator): Response
-  {
-
-    $rechercherv= new BienRecherche();
-    $form = $this->createForm(RetrouverBienVendreType::class, $rechercherv);
-    $form->handleRequest($request);
-
-    $biens= $bienRepository->rechercherBienv($rechercherv);
-    $pagination = $paginator->paginate(
-     $biens,
-     $request->query->getInt('page', 1),
-     12
-        );
-     return $this->render('pages/bien/vendre.html.twig', [
-         'biens' => $biens,
-         'pagination' => $pagination,
-         'form' => $form->createView()
-     ]);
-
-}
+//    #[Route('/bien/a/louer', name: 'app_rechercher')]
+//    public function rechercher(BienRepository $bienRepository, Request $request, PaginatorInterface $paginator): Response
+//     {
+//
+//       $rechercher= new BienRecherche();
+//       $form = $this->createForm(RetrouverBienLouerType::class, $rechercher);
+//       $form->handleRequest($request);
+//
+//       $biens= $bienRepository->rechercherBien( $rechercher);
+//       $pagination = $paginator->paginate(
+//        $biens,
+//        $request->query->getInt('page', 1),
+//        12
+//           );
+//        return $this->render('pages/bien/louer.html.twig', [
+//            'biens' => $biens,
+//            'pagination' => $pagination,
+//            'form' => $form->createView()
+//        ]);
+//
+// }
 
 
+// #[Route('/bien/a/vendre', name: 'app_rechercher_v')]
+// public function rechercherBienVendre(BienRepository $bienRepository, Request $request, PaginatorInterface $paginator): Response
+//  {
+//
+//    $rechercherv= new BienRecherche();
+//    $form = $this->createForm(RetrouverBienVendreType::class, $rechercherv);
+//    $form->handleRequest($request);
+//
+//    $biens= $bienRepository->rechercherBienv($rechercherv);
+//    $pagination = $paginator->paginate(
+//     $biens,
+//     $request->query->getInt('page', 1),
+//     12
+//        );
+//     return $this->render('pages/bien/vendre.html.twig', [
+//         'biens' => $biens,
+//         'pagination' => $pagination,
+//         'form' => $form->createView()
+//     ]);
+//
+//}
 
 }

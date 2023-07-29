@@ -17,7 +17,7 @@ class RetrouverBienLouerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('lieu', TextType::class, [
+            ->add('city', TextType::class, [
                 'label' => 'Lieu',
                 'required' => false,
                 'attr' => [
@@ -58,7 +58,7 @@ class RetrouverBienLouerType extends AbstractType
                     'class' => 'form-control',
                 ]
             ])
-            ->add('maxPrice', IntegerType::class, [
+            ->add('price', IntegerType::class, [
                 'required' => false,
                 'label' => false,
                 'attr' => [
