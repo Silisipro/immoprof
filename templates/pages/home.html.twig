@@ -53,12 +53,12 @@
                     Bienvenue sur <span>ImmoPro</span>
                 </h1>
                   <div class="slider-bottom d-flex justify-content-center" data-aos="fade-up"
-                        data-aos-delay="50" style="color: white; font-size: 20px;">
+                        data-aos-delay="50" style="color: white; font-size: 16px; margin-bottom: 7px">
                       Votre partenaire de référence en matière de gestion immobilière.
                   </div>
                   <div class="slider-bottom d-flex justify-content-center">
                       <ul  style="margin: -17px" >
-                        <li class="heading" data-aos="fade-up" style="text-decoration: none !important;">
+                        <li class="heading volope" data-aos="fade-up" style="text-decoration: none !important;margin-top: 12px;margin-right: 15px; ">
                             {% if app.user %}
                                 <a href="{{ path('app.bien.new') }}" target="_blank" class="readon banner-style" style="color: #005555;font-size: 15px;background-color: aliceblue;border-radius: 20px;border: solid; padding: 4px;text-decoration: none !important;">Publier une annonce</a>
                             {% else %}
@@ -87,7 +87,7 @@
                 <div class="row">
                     <div class="col-md-6 offset-md-3 col-sm-12 text-center">
                         <a href="#" data-bs-target=".laisser-demande-modal" data-bs-toggle="modal">
-                            <div style="width: 274px; height: auto; border-radius: 20px; font-size: 15px; line-height: 36px; margin: 16px auto; color: white; background-color: #005555;">
+                            <div style="width: 301px; height: auto; border-radius: 20px; font-size: 15px; line-height: 36px; margin: 16px auto; color: white; background-color: #005555;">
                                 Recherchez-vous un bien immobilier ?
                             </div>
                         </a>
@@ -105,7 +105,7 @@
                     </div>
                     <div class="col-md-4 col-sm-12 text-center">
                         <a href="#" data-bs-target=".confier-mon-bien-modal" data-bs-toggle="modal">
-                            <div style="width: 270px; height: auto; border-radius: 25px; font-size: 15px; line-height: 36px; margin: 16px auto; color: white; background-color: #005555;">
+                            <div style="width: 256px; height: auto; border-radius: 25px; font-size: 15px; line-height: 36px; margin: 16px auto; color: white; background-color: #005555;">
                                 Confier mon bien à Immoprof
                             </div>
                         </a>
@@ -391,7 +391,7 @@
               </div>
               <div class="col-md-6 offset-md-3 text-center">
                   <a href="#" data-bs-target=".laisser-demande-modal" data-bs-toggle="modal">
-                      <div style="width: 240px; height: 40px; border-radius: 10px; font-size: 15px; line-height: 40px; margin: 35px auto 0; color: white; background-color: #005555;" id="deposer-votre-demande-locative">
+                      <div style="width: 300px; height: 40px; border-radius: 10px; font-size: 15px; line-height: 40px; margin: 35px auto 0; color: white; background-color: #005555;" id="deposer-votre-demande-locative">
                           Déposer votre demande locative
                       </div>
                   </a>
@@ -447,7 +447,7 @@
               </div>
               <div class="col-md-6 offset-md-3 text-center">
                   <a href="#" data-bs-target=".confier-mon-bien-modal" data-bs-toggle="modal">
-                      <div style="width: 195px; height: 40px; border-radius: 10px; font-size: 15px; line-height: 40px; margin: 35px auto 0; color: white; background-color: #005555;">
+                      <div style="width: 250px; height: 40px; border-radius: 10px; font-size: 15px; line-height: 40px; margin: 35px auto 0; color: white; background-color: #005555;">
                           Confier mon bien Immopro
                       </div>
                   </a>
@@ -742,7 +742,7 @@
                         {{ form_errors(form.message) }}
                     </div>
                   </div>
-                  <div class="col-md-12 mt-2">
+                  <div class="col-md-12 mt-2 mb-0">
                   {{ form_row(form.submit) }}
                       
                   </div>
@@ -1187,10 +1187,12 @@
             let btnProprietaire = jQuery('#proprietaire-tab');
             let btnLoc = jQuery('#loc-tab');
             let btnPro = jQuery('#pro-tab');
+            let contact_submit = jQuery('#contact_submit')
             btnLocataire.css('border', '3px solid #005555').css('border-radius', '20px');
             btnProprietaire.css('border', '3px solid transparent');
             btnLoc.css('border-bottom', '3px solid #005555');
             btnPro.css('border-bottom', '3px solid transparent');
+            contact_submit.addClass('contact-bouton')
             btnLocataire.click(function () {
                 jQuery(this).css('border', '3px solid #005555').css('border-radius', '20px');
                 btnProprietaire.css('border', '3px solid transparent');

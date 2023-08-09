@@ -31,6 +31,7 @@ class RechercheBienController extends AbstractController
         $formLouer->handleRequest($request);
         if ($formLouer->isSubmitted()) {
             $data = [
+
                 'city' => $formLouer->get('city')->getData(),
                 'typeBien' => $formLouer->get('typeBien')->getData(),
                 'standing' => $formLouer->get('standing')->getData(),
@@ -55,7 +56,7 @@ class RechercheBienController extends AbstractController
             $data = [
                 'city' => $formVendre->get('city')->getData(),
                 'typeBien' => $formVendre->get('typeBien')->getData(),
-                'standing' => $formVendre->get('standing')->getData(),
+                'standing' => null,
                 'price' => $formVendre->get('price')->getData(),
             ];
             $listeBienQuery = $bienRepository->recupererBiensParCategorie('a_vendre', $data);

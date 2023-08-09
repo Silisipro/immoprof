@@ -9,7 +9,7 @@ Immopro | Inscription
       <div class="pt-4 pb-2">
         <h5 class="card-title text-center pb-0 fs-4">Création de compte</h5>
         <p class="text-center small">Entrer vos informations pour créer votre compte</p>
-        <p class="text-center small">Avez vous déjà un compte ? <a href="{{path('app_security_login')}}">Connecter</a></p>
+        <p class="text-center small mt-2">Avez vous déjà un compte ? <a href="{{path('app_security_login')}}"> Se connecter</a></p>
       </div>                 
     {% for message in app.flashes('success') %}
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -58,7 +58,7 @@ Immopro | Inscription
             <button class="btn btn-primary w-100" type="submit">Créer mon compte</button>
           </div>
           <div class="col-12">
-            <p class="small mb-0">Avez vous déjà un compte ? <a href="{{path('app_security_login')}}">Connecter</a></p>
+            <p class="small mb-0 mt-2">Avez vous déjà un compte ? <a href="{{path('app_security_login')}}"> Se connecter</a></p>
           </div>
       </form>
         {{ form_end(form) }}
